@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Morning Queue</title>
+<style>
+:root{--bg:#f6f6f3;--card:#fff;--ink:#1c1c1a;--mute:#6b6b66;--line:#e3e3dd;--accent:#1f5eff;--good:#17794a;--mid:#a56a00;--low:#a33a3a;--chip:#efefe9}
+@media (prefers-color-scheme:dark){:root{--bg:#141413;--card:#1e1e1c;--ink:#ecece6;--mute:#9a9a92;--line:#33332f;--accent:#7aa2ff;--good:#4cc38a;--mid:#e0a43a;--low:#e07a7a;--chip:#2a2a27}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 16px}
+.wrap{max-width:760px;margin:0 auto}
+h1{font-size:18px;margin:0 0 2px}
+.sub{color:var(--mute);font-size:13px}
+.tabs{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;align-items:center}
+.tab,.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 11px;font:inherit;font-size:14px;cursor:pointer}
+.tab[aria-selected=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tab .n{opacity:.65;margin-left:4px}
+.spacer{flex:1}
+main{padding:14px 16px 60px}
+.notes{background:var(--chip);border-radius:8px;padding:8px 12px;font-size:13px;color:var(--mute);margin-bottom:12px}
+.notes div+div{margin-top:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
+.top{display:flex;gap:10px;justify-content:space-between;align-items:flex-start}
+.title{font-weight:600;font-size:16px;margin:0}
+.title a{color:inherit;text-decoration:none}.title a:hover{text-decoration:underline}
+.co{color:var(--mute);font-size:14px}
+.fit{flex:none;text-align:center;border-radius:10px;padding:4px 9px;font-weight:700;font-size:14px;border:1.5px solid currentColor}
+.fit small{display:block;font-weight:500;font-size:10px;opacity:.8}
+.fit.good{color:var(--good)}.fit.mid{color:var(--mid)}.fit.low{color:var(--low)}.fit.none{color:var(--mute)}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;font-size:12.5px;color:var(--mute)}
+.chip{background:var(--chip);border-radius:6px;padding:2px 8px}
+.chip.warn{color:var(--mid)}.chip.bad{color:var(--low)}
+.reason{margin:6px 0;font-size:14px}
+.gaps{margin:4px 0 8px;font-size:13px;color:var(--mute)}
+details{margin:6px 0;font-size:13.5px;color:var(--mute)}
+details p{white-space:pre-wrap;margin:6px 0 0}
+.actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.act{flex:1;min-width:90px;padding:9px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:600;cursor:pointer}
+.act.interested[aria-pressed=true]{background:var(--good);color:#fff;border-color:var(--good)}
+.act.maybe[aria-pressed=true]{background:var(--mid);color:#fff;border-color:var(--mid)}
+.act.pass[aria-pressed=true]{background:var(--low);color:#fff;border-color:var(--low)}
+textarea{width:100%;margin-top:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:13.5px;padding:7px;resize:vertical;min-height:34px}
+.empty{text-align:center;color:var(--mute);padding:40px 10px}
+dialog{border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);max-width:460px;width:calc(100% - 32px)}
+dialog label{display:block;margin:10px 0 3px;font-size:13px;color:var(--mute)}
+dialog input,dialog select{width:100%;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+.row{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+.minfit{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--mute)}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div style="display:flex;align-items:center;gap:8px">
+    <div><h1>Morning Queue</h1><div class="sub" id="sub">Loading…</div></div>
+    <span class="spacer"></span>
+    <button class="btn" id="settings" aria-label="Connection settings">Settings</button>
+  </div>
+  <div class="tabs" role="tablist" id="tabs"></div>
+</div></header>
+<main><div class="wrap">
+  <div id="notes"></div>
+  <div class="minfit" id="minfitRow"><label for="minfit">Min fit</label><input type="range" id="minfit" min="0" max="90" step="10" value="0"><span id="minfitVal">0</span></div>
+  <div id="list" style="margin-top:12px"></div>
+</div></main>
+
+<dialog id="dlg">
+  <form method="dialog" id="form">
+    <h2 style="margin:0 0 4px;font-size:17px">Where does the data live?</h2>
+    <div class="sub">Pick how this page reads the queue and saves your decisions.</div>
+    <label for="mode">Connection</label>
+    <select id="mode">
+      <option value="server">Local server (python3 -m automations.jobhunt serve)</option>
+      <option value="github">GitHub repo (works from any device)</option>
+      <option value="file">Load a queue file (read-only, decisions saved in this browser)</option>
+    </select>
+    <div id="ghFields">
+      <label for="repo">Repo (owner/name)</label><input id="repo" placeholder="you/Career" autocomplete="off">
+      <label for="branch">Branch</label><input id="branch" placeholder="main" autocomplete="off">
+      <label for="token">Fine-grained token (Contents: read &amp; write on this repo only)</label>
+      <input id="token" type="password" autocomplete="off">
+      <div class="sub" style="margin-top:4px">Stored only in this browser.</div>
+    </div>
+    <div id="fileFields"><label for="file">Queue JSON</label><input id="file" type="file" accept=".json"></div>
+    <div class="row"><button class="btn" value="cancel">Cancel</button><button class="btn" id="save" value="default" style="background:var(--accent);color:#fff;border-color:var(--accent)">Connect</button></div>
+  </form>
+</dialog>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const store = {
+  get(k, d){ try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+};
+const STATUSES = ["interested", "maybe", "pass"];
+const LABEL = {interested: "Interested", maybe: "Maybe", pass: "Pass"};
+let cfg = store.get("cfg", {mode: "server"});
+let queue = {jobs: [], notes: [], generated: null};
+let decisions = {};
+let tab = "review";
+let remoteSha = {};
+
+function esc(s){ const d = document.createElement("div"); d.textContent = s ?? ""; return d.innerHTML; }
+function toast(msg){ const t = $("#toast"); t.textContent = msg; t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 2200); }
+function b64decode(s){ return new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\n/g, "")), c => c.charCodeAt(0))); }
+function b64encode(s){ let bin = ""; new TextEncoder().encode(s).forEach(b => bin += String.fromCharCode(b)); return btoa(bin); }
+function safeUrl(u){ try { const x = new URL(u); return /^https?:$/.test(x.protocol) ? x.href : ""; } catch { return ""; } }
+
+/* ---------- data access ---------- */
+const gh = {
+  url: p => `https://api.github.com/repos/${cfg.repo}/contents/${p}?ref=${encodeURIComponent(cfg.branch || "main")}`,
+  headers: () => ({Authorization: `Bearer ${cfg.token}`, Accept: "application/vnd.github+json"}),
+  async read(path, fallback){
+    const r = await fetch(gh.url(path), {headers: gh.headers(), cache: "no-store"});
+    if (r.status === 404) return {data: fallback, sha: null};
+    if (!r.ok) throw new Error(`GitHub ${r.status} reading ${path}`);
+    const j = await r.json();
+    return {data: JSON.parse(b64decode(j.content)), sha: j.sha};
+  },
+  async write(path, data, sha, message){
+    const body = {message, content: b64encode(JSON.stringify(data, null, 2) + "\n"), branch: cfg.branch || "main"};
+    if (sha) body.sha = sha;
+    const r = await fetch(`https://api.github.com/repos/${cfg.repo}/contents/${path}`, {method: "PUT", headers: gh.headers(), body: JSON.stringify(body)});
+    if (!r.ok) { const e = new Error(`GitHub ${r.status}`); e.status = r.status; throw e; }
+    return (await r.json()).content.sha;
+  }
+};
+
+async function load(){
+  $("#sub").textContent = "Loading…";
+  try {
+    if (cfg.mode === "server") {
+      queue = await (await fetch("/api/queue", {cache: "no-store"})).json();
+      decisions = (await (await fetch("/api/decisions", {cache: "no-store"})).json()).decisions || {};
+    } else if (cfg.mode === "github") {
+      const q = await gh.read("data/queue/latest.json", {jobs: [], notes: [], generated: null});
+      const d = await gh.read("data/decisions.json", {decisions: {}});
+      queue = q.data; decisions = d.data.decisions || {}; remoteSha.decisions = d.sha;
+    } else {
+      queue = store.get("fileQueue", {jobs: [], notes: [], generated: null});
+      decisions = store.get("localDecisions", {});
+    }
+  } catch (e) {
+    queue = {jobs: [], notes: [`Couldn't load: ${e.message}. Open Settings to check the connection.`], generated: null};
+  }
+  render();
+}
+
+async function persist(id, rec, job){
+  const snap = job && {title: job.title, company: job.company, location: job.location, url: job.url, fit: job.fit, fit_reason: job.fit_reason, salary_text: job.salary_text};
+  if (cfg.mode === "server") {
+    const r = await fetch("/api/decision", {method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({id, status: rec.status, note: rec.note || "", job: snap})});
+    if (!r.ok) throw new Error("save failed");
+  } else if (cfg.mode === "github") {
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const cur = await gh.read("data/decisions.json", {decisions: {}});
+        const merged = {decisions: {...cur.data.decisions, [id]: {...(cur.data.decisions[id] || {}), ...rec, job: snap || cur.data.decisions[id]?.job}}};
+        remoteSha.decisions = await gh.write("data/decisions.json", merged, cur.sha, `Morning queue: ${rec.status} ${snap?.company || id}`);
+        return;
+      } catch (e) { if (e.status !== 409 && e.status !== 422 || attempt) throw e; }
+    }
+  } else {
+    store.set("localDecisions", decisions);
+  }
+}
+
+/* ---------- rendering ---------- */
+function fitClass(f){ return f == null ? "none" : f >= 75 ? "good" : f >= 55 ? "mid" : "low"; }
+function ago(d){ if (!d) return ""; const n = Math.floor((Date.now() - new Date(d)) / 864e5); return n <= 0 ? "today" : n === 1 ? "yesterday" : `${n}d ago`; }
+
+function jobsFor(t){
+  const min = +$("#minfit").value;
+  if (t === "review") return queue.jobs.filter(j => !decisions[j.id] && (j.fit == null || j.fit >= min));
+  const byId = Object.fromEntries(queue.jobs.map(j => [j.id, j]));
+  return Object.entries(decisions).filter(([, d]) => d.status === t)
+    .map(([id, d]) => ({...(d.job || {}), ...(byId[id] || {}), id, _draft: d.draft_folder}))
+    .sort((a, b) => (b.fit ?? -1) - (a.fit ?? -1));
+}
+
+function card(j){
+  const d = decisions[j.id] || {};
+  const el = document.createElement("article");
+  el.className = "card";
+  const url = safeUrl(j.url);
+  const meta = [j.location, j.remote && !/remote/i.test(j.location || "") ? "Remote" : "", j.salary_text || (j.salary_min ? `${j.salary_min}${j.salary_max ? "–" + j.salary_max : "+"} ${j.currency || ""}` : ""),
+    j.posted ? "Posted " + ago(j.posted) : ""].filter(Boolean).map(x => `<span class="chip">${esc(x)}</span>`).join("");
+  const link = j.link_status === "live" ? "" : j.link_status === "dead" ? `<span class="chip bad">Link dead</span>` : j.link_status === "unverified" ? `<span class="chip warn">Link unverified</span>` : "";
+  const src = (j.sources || (j.source ? [j.source] : [])).map(s => `<span class="chip">${esc(s)}</span>`).join("");
+  el.innerHTML = `
+    <div class="top"><div><h2 class="title">${url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(j.title)}</a>` : esc(j.title)}</h2><div class="co">${esc(j.company)}</div></div>
+    <div class="fit ${fitClass(j.fit)}">${j.fit == null ? "–" : j.fit + "%"}<small>fit</small></div></div>
+    <div class="meta">${meta}${link}${src}</div>
+    ${j.fit_reason ? `<div class="reason">${esc(j.fit_reason)}</div>` : ""}
+    ${j.gaps && j.gaps.length ? `<div class="gaps"><b>Gaps:</b> ${j.gaps.map(esc).join("; ")}</div>` : ""}
+    ${j.description ? `<details><summary>Description</summary><p>${esc(j.description)}</p></details>` : ""}
+    ${j._draft ? `<div class="chip" style="display:inline-block">Drafted: ${esc(j._draft)}</div>` : ""}
+    <div class="actions">${STATUSES.map(s => `<button class="act ${s}" data-s="${s}" aria-pressed="${d.status === s}">${LABEL[s]}</button>`).join("")}</div>
+    <textarea placeholder="Note (optional)" aria-label="Note">${esc(d.note || "")}</textarea>`;
+  el.querySelectorAll(".act").forEach(b => b.onclick = () => decide(j, b.dataset.s, el.querySelector("textarea").value));
+  el.querySelector("textarea").onchange = e => { if (decisions[j.id]) decide(j, decisions[j.id].status, e.target.value, true); };
+  return el;
+}
+
+async function decide(j, status, note, keepTab){
+  const rec = {...(decisions[j.id] || {}), status, note, at: new Date().toISOString()};
+  decisions[j.id] = rec;
+  if (!keepTab) render();
+  try { await persist(j.id, rec, j); toast(`${LABEL[status]}: ${j.company}`); }
+  catch (e) { toast("Couldn't save: " + e.message); }
+}
+
+function render(){
+  const counts = {review: jobsFor("review").length, interested: 0, maybe: 0, pass: 0};
+  Object.values(decisions).forEach(d => counts[d.status]++);
+  $("#tabs").innerHTML = "";
+  [["review", "To review"], ["interested", "Interested"], ["maybe", "Maybe"], ["pass", "Passed"]].forEach(([k, l]) => {
+    const b = document.createElement("button");
+    b.className = "tab"; b.setAttribute("role", "tab"); b.setAttribute("aria-selected", tab === k);
+    b.innerHTML = `${l}<span class="n">${counts[k]}</span>`;
+    b.onclick = () => { tab = k; render(); };
+    $("#tabs").append(b);
+  });
+  $("#minfitRow").style.display = tab === "review" ? "flex" : "none";
+  $("#minfitVal").textContent = $("#minfit").value;
+  $("#sub").textContent = queue.generated ? `Queue built ${new Date(queue.generated).toLocaleString([], {dateStyle: "medium", timeStyle: "short"})} · ${queue.jobs.length} jobs` : "No queue yet";
+  $("#notes").innerHTML = (queue.notes || []).length ? `<div class="notes">${queue.notes.map(n => `<div>${esc(n)}</div>`).join("")}</div>` : "";
+  const list = $("#list"); list.innerHTML = "";
+  const jobs = jobsFor(tab);
+  if (!jobs.length) list.innerHTML = `<div class="empty">${tab === "review" ? "Nothing to review. Ask Claude to run a search, or check back after the next scheduled run." : "Nothing here yet."}</div>`;
+  jobs.forEach(j => list.append(card(j)));
+}
+
+/* ---------- settings ---------- */
+function syncDialog(){ const m = $("#mode").value; $("#ghFields").style.display = m === "github" ? "" : "none"; $("#fileFields").style.display = m === "file" ? "" : "none"; }
+$("#settings").onclick = () => { $("#mode").value = cfg.mode; $("#repo").value = cfg.repo || ""; $("#branch").value = cfg.branch || "main"; $("#token").value = cfg.token || ""; syncDialog(); $("#dlg").showModal(); };
+$("#mode").onchange = syncDialog;
+$("#form").onsubmit = async ev => {
+  if (ev.submitter?.value === "cancel") return;
+  const mode = $("#mode").value;
+  cfg = {mode, repo: $("#repo").value.trim(), branch: $("#branch").value.trim() || "main", token: $("#token").value.trim()};
+  if (mode === "file" && $("#file").files[0]) {
+    try { store.set("fileQueue", JSON.parse(await $("#file").files[0].text())); } catch { toast("That file isn't valid JSON"); }
+  }
+  store.set("cfg", cfg); load();
+};
+$("#minfit").oninput = render;
+if (location.protocol === "file:" && cfg.mode === "server") cfg.mode = "file";
+load();
+</script>
+</body>
+</html>
