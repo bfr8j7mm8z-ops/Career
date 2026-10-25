@@ -46,7 +46,7 @@
 ### Summary variants (pick one, then tailor)
 
 **A. Enterprise Account Manager / Strategic AM**
-> Enterprise Account Manager at Fospha (Blenheim Chalcot), owning a Tier 1–2 book of ~$1.15M ARR across Dyson, Samsonite Group, TJX (TK Maxx), Huel, GANT, Footasylum and FitFlop. Second-highest active MRR in the AM team. Closed $216K ARR of renewals and a Google-funded MMM upsell in his first two months in role, with ~$31K MRR of expansion pipeline open. Works directly with Heads of Marketing, Global Insights leads and PE owners across 8+ European markets and the US, and was promoted three times in two years.
+> Enterprise Account Manager at Fospha (Blenheim Chalcot), owning a Tier 1–2 book of ~$118K MRR (~$1.42M ARR) across Dyson, Samsonite Group, TJX (TK Maxx), Huel, GANT, Footasylum and FitFlop. Second-highest active MRR in the AM team. Closed $216K ARR of renewals and a Google-funded MMM upsell in his first two months in role, with ~$31K MRR of expansion pipeline open. Works directly with Heads of Marketing, Global Insights leads and PE owners across 8+ European markets and the US, and was promoted three times in two years.
 
 **B. Customer Success Manager / CS Lead**
 > Customer success leader who ran a pod of up to 6 CSMs and 45+ clients (~$160K MRR, about a fifth of company revenue) at a high-growth martech scale-up, while personally owning 19 accounts. Stabilised a struggling pod (rated "over-performing" by his manager) and developed four team members into new roles. Turned TJX's health score from 2 to 5 in a quarter, and saved at-risk accounts through partner-funded programmes and trust-rebuild plans.
@@ -66,7 +66,7 @@
 
 | Metric | Value | Source | Confidence |
 |---|---|---|---|
-| Current book (AM, Aug 2026–) | **~$95.8K MRR active ≈ $1.15M ARR**; $118K MRR ≈ $1.42M ARR including paused Dyson SEU | HubSpot, 25 Oct 2026 | ✅ verified |
+| Current book (AM, Aug 2026–) | **$118.4K MRR ≈ $1.42M ARR** under management (includes Dyson SEU $22.6K/m, currently paused). $95.8K MRR active. When Dyson DACH signs (+£5K ≈ $6.35K/m, contract out for signature): ~$124.7K MRR ≈ $1.5M ARR | HubSpot, 25 Oct 2026 | ✅ verified. Use "under management", and only count DACH once it's signed |
 | Rank | **2nd-highest active MRR in the AM team** | Q4 2026 review; matches HubSpot | ✅ |
 | Accounts | 21 records across ~13 brand groups. Tier 1: Dyson (6 entities), Huel, TJX Europe | HubSpot | ✅ |
 | Renewals closed as AM | Footasylum ($11.7K/m) and FitFlop ($6.35K/m) = **~$216K ARR**, within ~6 weeks of starting the role | HubSpot | ✅ |
@@ -155,7 +155,7 @@
 - **DV360 measurement:** identified it as a pain point across Samsonite, Dyson, TJX and Cricut, and got it prioritised and shipped. It shipped in Q4 2025 and Q1 2026 after being outstanding since 2024. Since then he joins the weekly product development meetings.
 
 ### 4.4 Enterprise Account Manager (Aug 2026–present)
-**Scope:** selected by the Head of AM and the CCO for the new Enterprise AM role, as "quarterback" for Tier 1 and 2 accounts. The brief: "high autonomy; deliver exec-ready updates without handholding". Book: **~$95.8K MRR active, 2nd-highest in the AM team.** Also sits in the MMM go-to-market weekly and the AM forecast weekly.
+**Scope:** selected by the Head of AM and the CCO for the new Enterprise AM role, as "quarterback" for Tier 1 and 2 accounts. The brief: "high autonomy; deliver exec-ready updates without handholding". Book: **$118.4K MRR (~$1.42M ARR) under management, including paused Dyson SEU. $95.8K active, 2nd-highest in the AM team.** Dyson DACH (+£5K/m) is out for signature. Also sits in the MMM go-to-market weekly and the AM forecast weekly.
 
 **Highlights so far:**
 - **Renewals closed:** Footasylum ($11.7K/m) and FitFlop ($6.35K/m), ~$216K ARR.
@@ -177,7 +177,7 @@
 
 ### Dyson (Tier 1, largest relationship)
 - **Markets:** UK, Italy, France, Spain/Portugal (= SEU), with DACH in new business. US-record SEU Enterprise contract.
-- **Value:** active ~$59K/m across UK, FR, IT, ES/PT, plus SEU $22.6K/m (paused). DACH open at ~$6.35K/m.
+- **Value:** active ~$59K/m across UK, FR, IT, ES/PT, plus SEU $22.6K/m (paused) = ~$81K/m. DACH new market (+£5K ≈ $6.35K/m) out for signature.
 - **Stakeholders:**
   - Mehmet Uluç Akkirpikler, SEU e-commerce lead → Global E-com (Amsterdam)
   - Céline Lambert, Head of Marketing France
@@ -308,7 +308,7 @@
 > XYZ format. Tags: `COM` commercial/renewal · `EXP` expansion · `RET` retention · `STK` senior stakeholders · `DATA` analytics/insight · `LEAD` leadership · `XF` cross-functional · `PART` partnerships · `AI` automation/AI · `INTL` international. ✅ = verified, ⚠️ = verify first.
 
 **Book and commercial**
-- ✅ `COM` Own a Tier 1–2 enterprise book of ~$1.15M ARR (Dyson, Samsonite Group, TJX, Huel, GANT, Footasylum, FitFlop): 2nd-highest active MRR in the AM team.
+- ✅ `COM` Manage a Tier 1–2 enterprise book of ~$1.42M ARR (Dyson, Samsonite Group, TJX, Huel, GANT, Footasylum, FitFlop): 2nd-highest active MRR in the AM team. (After DACH signs: "~$1.5M ARR".)
 - ✅ `COM RET` Closed ~$216K ARR of renewals (Footasylum, FitFlop) within six weeks of moving into the Enterprise AM role.
 - ✅ `EXP PART COM` Won Huel's MMM business from an incumbent charging ~£90K/yr: structured a Google-funded 3-month start (~£70K) converting into a 12-month paid contract.
 - ✅ `EXP` Built ~$31K MRR of expansion pipeline in two months (MMM upsells at GANT, FitFlop and Samsonite; Dyson DACH new market).
@@ -681,7 +681,7 @@
 | Likely probe | Framing |
 |---|---|
 | "Why leave after two years?" | "I've moved through four roles in two years and now own Tier 1 enterprise accounts. I want [bigger book / larger ACVs / a partnerships remit / a sector I care about]. Fospha taught me the craft. The next role should let me apply it at more scale." Stay positive about Fospha. |
-| "Your CV says 46 accounts / £2M. Is that yours?" | Be precise: "As pod lead I oversaw 45+ accounts (~$160K MRR, a fifth of company revenue) through a team of up to six. As Enterprise AM I directly own ~$1.15M ARR." |
+| "Your CV says 46 accounts / £2M. Is that yours?" | Be precise: "As pod lead I oversaw 45+ accounts (~$160K MRR, a fifth of company revenue) through a team of up to six. As Enterprise AM I directly manage ~$1.42M ARR, including one Dyson market that's currently paused." |
 | "Did you close those renewals?" | Before Aug 2026: "I ran the accounts as CSM or pod lead and supported the AM's renewal." Since Aug 2026: "I closed them." |
 | "Team of 5: real line management?" | Yes. Weekly 1-1s, OKRs, coaching, promotion cases (four progressed), an intern hire and placement, interview panels. |
 | "What's your retention rate?" | ⚠️ Compute it before interviews. Otherwise: "Every renewal I've owned as AM has renewed, and I've saved three accounts that served notice (Prep Kitchen, Craftd, Give Me Cosmetics)." |
