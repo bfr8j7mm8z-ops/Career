@@ -10,7 +10,7 @@ import os
 import re
 import urllib.error
 from datetime import datetime
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlsplit
 
 from . import SourceUnavailable
 from .http import fetch_json as _fetch
@@ -75,7 +75,7 @@ def search(spec, fetch_json=None):
                 "location": r.get("locationName"),
                 "url": _job_url(r),
                 "posted": _reed_date(r.get("date")),
-                "description": r.get("jobDescription"),
+                "description": _text(r.get("jobDescription")),
                 "salary_min": r.get("minimumSalary"),
                 "salary_max": r.get("maximumSalary"),
                 "currency": r.get("currency"),
@@ -104,7 +104,10 @@ def enrich(jobs, fetch_json=None, limit=40):
         if d.get("yearlyMinimumSalary") and not job.get("salary_min"):
             job["salary_min"], job["salary_max"] = d["yearlyMinimumSalary"], d.get("yearlyMaximumSalary")
             job["currency"] = d.get("currencyCode") or d.get("currency") or job.get("currency")
-        if d.get("externalUrl"):
+        if d.get("salary") and not job.get("salary_text"):
+            job["salary_text"] = d["salary"]
+        ext_host = urlsplit(d.get("externalUrl") or "").netloc.lower()
+        if ext_host and not ext_host.endswith("reed.co.uk"):  # Reed echoes its own URL when you apply on Reed
             job["tags"] = sorted(set(job.get("tags") or []) | {"external-apply"})
         done += 1
     return f"reed details: full descriptions for {done} of {len(todo)} jobs" if todo else None

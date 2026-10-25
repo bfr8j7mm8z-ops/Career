@@ -66,7 +66,7 @@ class SourceTests(unittest.TestCase):
             seen.append(url)
             if "/jobs/55" in url:
                 return {"jobDescription": "<p>Full &amp; real</p><ul><li>One</li></ul>", "yearlyMinimumSalary": 60000,
-                        "yearlyMaximumSalary": 70000, "currencyCode": "GBP", "externalUrl": "https://x.com/apply"}
+                        "yearlyMaximumSalary": 70000, "currencyCode": "GBP", "salary": "£60,000 - £70,000 per annum", "externalUrl": "https://x.com/apply"}
             return {"results": [{"jobId": 55, "jobTitle": "AM", "employerName": "Acme", "locationName": "Leeds",
                                  "jobDescription": "snippet"}]}
         spec = {"results_per_source": 500, "queries": [{"keywords": "am", "fullTime": True, "distanceFromLocation": 20}]}
@@ -80,7 +80,12 @@ class SourceTests(unittest.TestCase):
         self.assertEqual(merged[0]["description"], "Full & real One")
         self.assertEqual((merged[0]["salary_min"], merged[0]["currency"]), (60000, "GBP"))
         self.assertIn("external-apply", merged[0]["tags"])
+        self.assertEqual(merged[0]["salary_text"], "£60,000 - £70,000 per annum")
         self.assertIn("1 of 1", note)
+        # Reed echoing its own URL as externalUrl is not an external apply
+        own = pipeline.merge([dict(jobs[0], source="reed")])
+        reed.enrich(own, fetch_json=lambda url, headers=None: {"jobDescription": "x", "externalUrl": "https://www.reed.co.uk/jobs/am/55"})
+        self.assertNotIn("external-apply", own[0]["tags"])
 
     def test_reed_uk_only_and_date(self):
         with mock.patch.dict(os.environ, {"REED_API_KEY": "k"}):
