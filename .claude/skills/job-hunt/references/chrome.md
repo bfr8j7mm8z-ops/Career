@@ -2,8 +2,8 @@
 
 Config: `[sources.chrome] mode` = `off` | `ask` | `on`.
 
-- `off`: never use it. Don't mention it beyond a note "chrome: off".
-- `ask` (default): at the start of an interactive run, offer once ("Want me to also check
+- `off` (current default): never use it. Don't mention it beyond a note "chrome: off".
+- `ask`: at the start of an interactive run, offer once ("Want me to also check
   LinkedIn in your browser? About N page loads.") and proceed only on yes.
 - `on`: use it without asking, still interactive only.
 - Never in scheduled/unattended runs, whatever the mode.

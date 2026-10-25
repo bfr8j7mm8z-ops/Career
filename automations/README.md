@@ -68,7 +68,7 @@ Data files: `data/queue/YYYY-MM-DD.json` + `latest.json` (the queue), `data/deci
 
 ### Configuration
 
-`config/jobhunt.toml` turns sources on/off. Chrome is `mode = "ask"` by default: Claude offers it
+`config/jobhunt.toml` turns sources on/off. Chrome is `mode = "off"` for now. With `"ask"`, Claude offers it
 each interactive run and only uses it on a yes (`"off"` to never, `"on"` to skip asking). It is
 never used in scheduled runs. Details in `.claude/skills/job-hunt/references/`.
 

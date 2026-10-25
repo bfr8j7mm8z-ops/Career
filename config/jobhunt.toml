@@ -10,8 +10,8 @@ results_per_source = 50
 [sources.indeed_mcp]    # claude: official Indeed connector
 enabled = true
 
-[sources.adzuna]        # api: aggregates many boards in one call; needs a key; may be paid (check developer.adzuna.com), optional
-enabled = true
+[sources.adzuna]        # api: aggregator; needs a key and may cost ~£8/month. Not used (decided 25 Oct 2026)
+enabled = false
 
 [sources.reed]          # api: UK only; free key from reed.co.uk
 fetch_details = true    # fetch the full description for each Reed job that makes the queue (1 call each, max 40)
@@ -25,7 +25,7 @@ providers = ["boards.greenhouse.io", "jobs.lever.co", "jobs.ashbyhq.com", "apply
 enabled = true
 
 [sources.chrome]        # claude: Claude in Chrome, your own logged-in browser, read-only
-mode = "ask"            # "off" = never | "ask" = offer each run | "on" = use when available
+mode = "off"            # "off" = never | "ask" = offer each run | "on" = use when available. Off to start (decided 25 Oct 2026)
 sites = ["linkedin", "glassdoor"]
 max_pages_per_site = 3  # keep usage light
 # Glassdoor is best used for salary/review research on shortlisted companies,
