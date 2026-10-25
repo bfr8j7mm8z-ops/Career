@@ -77,9 +77,9 @@ Title varies: "Investment Analyst Intern" (GC) vs "Finance Analyst Intern" (inve
 
 ---
 
-## 4. Schneider Electric: Energy and Sustainability Analyst (Apr – Sep 2024)
-Appears in the investment CVs (`PE, PE-May25, Inv-*`) but dropped from the GoCardless CVs.
-- ESG impact analysis and carbon strategy insights for FTSE100 and PE-backed clients, informing investment risk, decarbonisation roadmaps and regulatory alignment (SBTi, TCFD).
+## 4. Schneider Electric: Energy and Sustainability Analyst (Apr – Sep 2024, ~3 months in post per Harry)
+**Default: leave off CVs** (short tenure; removed from the GoCardless CVs). **Keep as context** and include only where it clearly helps, e.g. ESG, sustainability, energy, or investment roles, or when asked about 2024 in an interview. Check the exact dates with Harry before using them (the CV says Apr–Sep 2024; Harry says about 3 months).
+- ESG impact analysis and carbon strategy insights for FTSE100 and PE-backed clients, informing investment risk, decarbonisation roadmaps and regulatory alignment (SBTi, TCFD). `PE, PE-May25, Inv-*`
 
 ---
 
@@ -111,10 +111,16 @@ Appears in the investment CVs (`PE, PE-May25, Inv-*`) but dropped from the GoCar
 
 ---
 
-## Open questions (to resolve with Harry)
-1. **Portfolio figures:** the latest is 46 accounts / ~£2M ARR / 93% retention / 5 CSMs. Earlier: 13 accounts / £650K ARR. Is the latest right, and is it fine to use "20% of MRR" alongside (they may not both hold)?
-2. **SalesWolf partners:** 8 (latest) vs 10+ (earlier). Which is accurate?
-3. **Savings figure:** "saving £25K+ per month" vs "per account"? Which is right?
-4. **Tool metrics:** are the 85% prep-time cut, 25h/month saved and ~40% reporting reduction all valid, and which tool does each refer to?
-5. **Schneider Electric:** Apr–Sep 2024 overlaps with SalesWolf, and was removed from GoCardless CVs. Keep omitting for CS roles?
-6. **Titles:** was the title Customer Success Executive then Senior, and what were the actual dates of each promotion?
+## Canonical figures (decided: the most recent CV wins)
+Use these unless Harry updates them. Source: `GC-Jun26` (8 Jun 2026).
+- Title: Senior Customer Success Executive. Promoted twice (CS coordinator → CS executive → Senior CS) in 18 months. Exact promotion dates not recorded.
+- Portfolio: 46 enterprise accounts, ~£2M ARR, 93% retention in 2026 to date, team of 5 CSMs. Older figures (9–13 accounts, £50K MRR, £650K ARR) were true at the time and are historic only.
+- "Owning 20% of company MRR" appears in April 2026 CVs but was dropped from the June version. Don't use it alongside the £2M figure.
+- SalesWolf: 8 retail partners, 1,000+ products, 100+ users in the 3-month MVP, Apr 2024 – Jan 2026. The earlier "10+" is superseded.
+- Budget efficiency: >5%, saving £25K+ per month.
+- Tool metrics (85% prep-time cut, 25h/month saved, ~40% reporting reduction) are dropped from the latest CV. Treat as unverified and don't use without checking with Harry.
+
+## Still to confirm with Harry (only if needed)
+1. Exact dates of the two promotions.
+2. Exact Schneider Electric start and end dates.
+3. Whether any of the dropped tool metrics are still valid, and which tool each belongs to.
