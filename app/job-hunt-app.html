@@ -1,0 +1,782 @@
+<title>Job Hunt</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: app shell. Desktop = left rail (projects + global views) and a work column.
+   Phone = the rail becomes a "Projects" tab in a bottom bar. Status colour is the only loud thing. */
+:root{
+  --bg:#f1f4f6; --surface:#ffffff; --ink:#16212b; --mute:#566370; --line:#d8dee4; --soft:#e8edf1;
+  --accent:#2457d6; --on-accent:#ffffff; --ok:#17784f; --warn:#9c5a00; --bad:#a8321f;
+  --ok-bg:#e1f3ea; --warn-bg:#fbefd6; --info-bg:#e3ebfc; --bad-bg:#fbe3de;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1419; --surface:#171e26; --ink:#e7ecf1; --mute:#92a0ad; --line:#2a3440; --soft:#1f2832;
+  --accent:#7fa3ff; --on-accent:#0f1419; --ok:#4cc38a; --warn:#e3a640; --bad:#ef8a78;
+  --ok-bg:#163226; --warn-bg:#35280f; --info-bg:#1b2842; --bad-bg:#3a1f1a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1419; --surface:#171e26; --ink:#e7ecf1; --mute:#92a0ad; --line:#2a3440; --soft:#1f2832;
+  --accent:#7fa3ff; --on-accent:#0f1419; --ok:#4cc38a; --warn:#e3a640; --bad:#ef8a78;
+  --ok-bg:#163226; --warn-bg:#35280f; --info-bg:#1b2842; --bad-bg:#3a1f1a; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--body)}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
+h1{font-size:26px;letter-spacing:-.01em}
+h2{font-size:19px}
+h3{font-size:16px}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--mono);font-size:12.5px}
+.mute{color:var(--mute)}
+.small{font-size:13px}
+.label{font:500 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+
+.shell{display:grid;grid-template-columns:250px minmax(0,1fr);min-height:100%}
+.rail{border-right:1px solid var(--line);background:var(--surface);padding:18px 14px;display:flex;flex-direction:column;gap:18px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{display:flex;align-items:baseline;gap:8px}
+.brand b{font:700 20px var(--display)}
+.navlist{display:grid;gap:2px}
+.navbtn{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;text-align:left;border:0;background:transparent;border-radius:8px;padding:8px 10px;font-size:14.5px;color:var(--ink)}
+.navbtn:hover{background:var(--soft)}
+.navbtn[aria-current="true"]{background:var(--info-bg);color:var(--accent);font-weight:600}
+.navbtn .count{font:500 11.5px var(--mono);color:var(--mute)}
+.navbtn .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none}
+.navbtn .dot.paused{background:var(--line)}
+.newbtn{border:1px dashed var(--line);background:transparent;border-radius:8px;padding:8px 10px;text-align:left;color:var(--mute);font-size:14px}
+.newbtn:hover{border-color:var(--accent);color:var(--accent)}
+
+main{padding-block:22px 90px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));min-width:0}
+.col{max-width:860px;margin:0 auto;display:grid;gap:16px}
+.head{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:flex-end;justify-content:space-between}
+.head .sub{color:var(--mute);font-size:14px;margin-top:2px}
+
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tab{border:0;background:transparent;padding:9px 12px;border-bottom:2px solid transparent;color:var(--mute);font-weight:500;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.tab .n{font:500 11.5px var(--mono);margin-left:4px}
+
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:8px 14px;font-weight:600;font-size:14px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.ghost{background:transparent}
+.btn.danger{color:var(--bad)}
+.btn:disabled{opacity:.55;cursor:default}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0}
+.banner{border-radius:10px;padding:10px 14px;font-size:14px;background:var(--info-bg)}
+.banner.warn{background:var(--warn-bg)}
+.banner.bad{background:var(--bad-bg)}
+.empty{text-align:center;padding:36px 16px;color:var(--mute)}
+.empty h2{color:var(--ink);margin-bottom:6px}
+
+/* job cards */
+.job{display:grid;gap:8px}
+.job .top{display:flex;gap:12px;justify-content:space-between;align-items:flex-start}
+.job .t{font-weight:600;font-size:16px}
+.job .t a{color:inherit;text-decoration:none}.job .t a:hover{text-decoration:underline}
+.job .co{color:var(--mute);font-size:14px}
+.score{flex:none;text-align:center;border:1.5px solid currentColor;border-radius:10px;padding:3px 9px;font-weight:700;font-size:14px;font-variant-numeric:tabular-nums}
+.score small{display:block;font:500 9.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+.s-hi{color:var(--ok)}.s-mid{color:var(--warn)}.s-lo{color:var(--bad)}.s-na{color:var(--mute)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12.5px;background:var(--soft);border-radius:6px;padding:2px 8px}
+.chip.ok{background:var(--ok-bg);color:var(--ok)}.chip.warn{background:var(--warn-bg);color:var(--warn)}.chip.bad{background:var(--bad-bg);color:var(--bad)}
+.reason{font-size:14px}
+.gaps{font-size:13px;color:var(--mute)}
+details{font-size:13.5px;color:var(--mute)}
+details p{white-space:pre-wrap;margin-top:6px}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.acts .btn{flex:1;min-width:120px}
+.btn.yes{border-color:var(--ok);color:var(--ok)}
+.btn.no{border-color:var(--line);color:var(--bad)}
+
+/* brief / filters */
+.field{display:grid;gap:6px}
+textarea,input[type=text],input[type=number],input[type=date],select{width:100%;border:1px solid var(--line);border-radius:9px;background:var(--bg);padding:8px 10px;min-width:0}
+textarea{resize:vertical;min-height:110px;line-height:1.5}
+.fgroup{display:grid;gap:12px}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.toggle{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:5px 10px;font-size:13.5px}
+.toggle[aria-pressed="true"]{border-color:var(--accent);background:var(--info-bg);color:var(--accent)}
+.toggle.off-source[aria-pressed="false"]{color:var(--mute)}
+.changed{animation:flash 1.6s ease-out}
+@keyframes flash{from{background:var(--warn-bg)}to{background:transparent}}
+@media (prefers-reduced-motion:reduce){.changed{animation:none}}
+.section-title{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+
+/* insights bars */
+.bars{display:grid;gap:6px}
+.bar{display:grid;grid-template-columns:120px minmax(0,1fr) 34px;gap:10px;align-items:center;font-size:13.5px}
+.bar .track{height:10px;background:var(--soft);border-radius:99px;overflow:hidden}
+.bar .fill{height:100%;background:var(--accent);border-radius:99px}
+.bar .v{font-variant-numeric:tabular-nums;text-align:right;color:var(--mute)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+
+/* applications */
+.app-row{display:grid;grid-template-columns:minmax(0,1.4fr) 170px 150px;gap:10px 14px;align-items:start}
+@media(max-width:700px){.app-row{grid-template-columns:1fr}}
+
+/* sheet */
+dialog{border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);width:min(480px,calc(100% - 32px));padding:18px}
+dialog::backdrop{background:rgba(10,15,20,.45)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:9px;font-size:13.5px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:30;max-width:calc(100% - 32px)}
+.toast.show{opacity:1}
+
+/* phone */
+.bottom{display:none}
+@media(max-width:820px){
+  .shell{grid-template-columns:1fr}
+  .rail{display:none}
+  main{padding-bottom:calc(90px + env(safe-area-inset-bottom,0px))}
+  .bottom{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);
+    padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
+  .bottom button{flex:1;border:0;background:transparent;padding:8px 2px;font-size:12px;color:var(--mute);border-radius:8px}
+  .bottom button[aria-current="true"]{color:var(--accent);font-weight:600;background:var(--info-bg)}
+  .bar{grid-template-columns:96px minmax(0,1fr) 30px}
+}
+</style>
+
+<div class="shell">
+  <aside class="rail" id="rail" aria-label="Navigation"></aside>
+  <main id="main"><div class="col"><div class="empty"><h2>Loading…</h2></div></div></main>
+</div>
+<nav class="bottom" id="bottom" aria-label="Sections"></nav>
+
+<dialog id="sheet"><form method="dialog" id="sheetForm"></form></dialog>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ------------------------------------------------------------------ constants */
+const PASS_REASONS = ["Pay", "Industry", "Role", "Location", "Company type", "Seniority", "Office days", "Benefits", "Company", "Other"];
+const SIZES = ["Startup", "Scale-up", "Mid-size", "Corporate", "Enterprise"];
+const SENIORITY = ["Manager", "Senior", "Lead", "Head of", "Director"];
+const CONTRACT = ["Permanent", "Contract", "Full-time", "Part-time"];
+const BENEFITS = ["Work abroad", "Equity", "Bonus", "Pension match", "Private health", "Learning budget", "Parental leave", "4-day week"];
+const INDUSTRIES = ["Fintech", "Payments", "SaaS", "Banking", "Investment", "Insurance", "E-commerce", "Media", "Healthcare", "Climate", "Consulting"];
+const REMOTE = [["any", "Any"], ["remote", "Fully remote"], ["hybrid", "Hybrid"], ["onsite", "On-site"]];
+const POSTED = [1, 3, 7, 14, 30];
+const SOURCES = [["indeed", "Indeed"], ["reed", "Reed"], ["career_pages", "Career pages"], ["alert_emails", "Job alert emails"], ["chrome", "Chrome (desk only)"]];
+const APP_STATUSES = ["Preparing", "Ready to apply", "Applied", "Interviewing", "Offer", "Rejected", "Withdrawn", "Ghosted"];
+const DOC_KINDS = ["CV", "Cover letter", "Annual review", "Claude profile report", "LinkedIn export", "Other"];
+
+const blankProject = () => ({
+  name: "", brief: "", status: "active", nightly: true, daily_cap: 50,
+  filters: {
+    locations: [], radius_miles: null, remote: "any", max_office_days: null,
+    pay_min: null, include_no_salary: true, leave_min_days: null, benefits: [],
+    industries: [], exclude_industries: [], company_sizes: [], seniority: [], contract: [],
+    posted_within_days: 14, watch_companies: [], block_companies: [], must_words: [], never_words: [],
+  },
+  sources: { indeed: true, reed: true, career_pages: true, alert_emails: true, chrome: false },
+});
+
+/* ------------------------------------------------------------------ state */
+const S = {
+  db: null, assets: null, sample: null, status: "loading",
+  projects: [], jobs: [], decisions: {}, deep: {}, apps: [], docs: [], runs: [], insights: [],
+  view: "home", pid: null, ptab: "review", draft: null, dirty: false, changedKeys: new Set(),
+  period: "all", confirm: null,
+};
+try { const saved = JSON.parse(localStorage.getItem("jh.nav") || "{}"); Object.assign(S, {view: saved.view || "home", pid: saved.pid || null, ptab: saved.ptab || "review"}); } catch {}
+const saveNav = () => { try { localStorage.setItem("jh.nav", JSON.stringify({view: S.view, pid: S.pid, ptab: S.ptab})); } catch {} };
+
+/* ------------------------------------------------------------------ helpers */
+const $ = s => document.querySelector(s);
+const h = (tag, attrs = {}, ...kids) => {
+  const el = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v == null || v === false) continue;
+    if (k === "class") el.className = v;
+    else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+    else if (k === "html") el.innerHTML = v;
+    else el.setAttribute(k, v === true ? "" : v);
+  }
+  for (const k of kids.flat()) if (k != null && k !== false) el.append(k.nodeType ? k : document.createTextNode(String(k)));
+  return el;
+};
+const nowIso = () => new Date().toISOString();
+const uid = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
+const safeUrl = u => { try { const x = new URL(u); return /^https?:$/.test(x.protocol) ? x.href : ""; } catch { return ""; } };
+const daysAgo = d => { if (!d) return null; const n = Math.floor((Date.now() - new Date(d)) / 864e5); return n; };
+const agoText = d => { const n = daysAgo(d); return n == null ? "" : n <= 0 ? "today" : n === 1 ? "yesterday" : `${n}d ago`; };
+const scoreClass = s => s == null ? "s-na" : s >= 75 ? "s-hi" : s >= 55 ? "s-mid" : "s-lo";
+const toList = s => String(s || "").split(",").map(x => x.trim()).filter(Boolean);
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("show"), 2400); }
+function dbErr(e) { return e?.code === "quota_exceeded" ? "Storage is full. Delete old jobs or uploads, then try again." : "Couldn't save just now. Try again in a moment."; }
+async function write(fn, ok) { try { await fn(); if (ok) toast(ok); return true; } catch (e) { toast(dbErr(e)); return false; } }
+
+const project = () => S.projects.find(p => p.id === S.pid) || null;
+const jobsFor = pid => S.jobs.filter(j => (j.project_ids || []).includes(pid));
+const decisionOf = id => S.decisions[id] || null;
+
+/* ------------------------------------------------------------------ data */
+async function boot() {
+  render();
+  const c = window.claude;
+  if (!c?.use) { S.status = "nodb"; render(); return; }
+  const [db, assets, sample] = await Promise.all([c.use("db"), c.use("assets").catch(() => null), c.use("sample").catch(() => null)]);
+  S.db = db; S.assets = assets; S.sample = sample;
+  if (!db) { S.status = "nodb"; render(); return; }
+  S.status = "ready";
+  const sub = (q, fn) => q.onSnapshot(snap => { fn(snap.docs.map(d => ({id: d.id, ...d.data()}))); render(); }, () => { S.status = "error"; render(); });
+  sub(db.collection("projects"), r => S.projects = r.sort((a, b) => (a.created_at || "").localeCompare(b.created_at || "")));
+  sub(db.collection("jobs").orderBy("found_at", "desc").limit(1000), r => S.jobs = r);
+  sub(db.collection("decisions").limit(1000), r => S.decisions = Object.fromEntries(r.map(d => [d.id, d])));
+  sub(db.collection("deep").limit(1000), r => S.deep = Object.fromEntries(r.map(d => [d.id, d])));
+  sub(db.collection("applications").limit(500), r => S.apps = r);
+  sub(db.collection("profile_docs").limit(300), r => S.docs = r.sort((a, b) => (b.uploaded_at || "").localeCompare(a.uploaded_at || "")));
+  sub(db.collection("runs").orderBy("requested_at", "desc").limit(40), r => S.runs = r);
+  sub(db.collection("insights").orderBy("week", "desc").limit(12), r => S.insights = r);
+}
+
+/* ------------------------------------------------------------------ navigation */
+function go(view, pid = null, ptab = null) {
+  if (S.dirty && !(view === "project" && pid === S.pid && ptab === "brief")) {
+    if (S.confirm !== "leave") { S.confirm = "leave"; toast("Unsaved brief changes. Tap again to leave without saving."); return; }
+  }
+  S.confirm = null; S.dirty = false; S.draft = null; S.changedKeys.clear();
+  S.view = view; if (pid !== null) S.pid = pid; if (ptab) S.ptab = ptab;
+  saveNav(); render(); window.scrollTo(0, 0);
+}
+
+function renderRail() {
+  const rail = $("#rail"); rail.innerHTML = "";
+  rail.append(h("div", {class: "brand"}, h("b", {}, "Job Hunt"), h("span", {class: "mono mute"}, "beta")));
+  const list = h("div", {class: "navlist"});
+  list.append(h("div", {class: "label", style: "margin:0 0 6px 10px"}, "Projects"));
+  for (const p of S.projects.filter(p => p.status !== "archived")) {
+    const n = jobsFor(p.id).filter(j => !decisionOf(j.id)).length;
+    list.append(h("button", {class: "navbtn", "aria-current": String(S.view === "project" && S.pid === p.id), onclick: () => go("project", p.id, "review")},
+      h("span", {class: "row", style: "gap:8px;flex-wrap:nowrap;min-width:0"}, h("span", {class: "dot" + (p.status === "paused" ? " paused" : "")}), h("span", {style: "overflow:hidden;text-overflow:ellipsis;white-space:nowrap"}, p.name || "Untitled")),
+      n ? h("span", {class: "count"}, n) : null));
+  }
+  list.append(h("button", {class: "newbtn", onclick: newProject}, "+ New project"));
+  rail.append(list);
+  const g = h("div", {class: "navlist"});
+  const pending = S.apps.filter(a => a.follow_up && a.follow_up <= new Date().toISOString().slice(0, 10) && !["Rejected", "Withdrawn", "Offer"].includes(a.status)).length;
+  for (const [v, label, n] of [["applications", "Applications", pending || null], ["insights", "Why I said no", null], ["profile", "Profile", S.docs.length || null]]) {
+    g.append(h("button", {class: "navbtn", "aria-current": String(S.view === v), onclick: () => go(v)}, label, n ? h("span", {class: "count"}, n) : null));
+  }
+  rail.append(g);
+
+  const b = $("#bottom"); b.innerHTML = "";
+  for (const [v, label] of [["home", "Projects"], ["applications", "Applications"], ["insights", "Why no"], ["profile", "Profile"]]) {
+    const cur = v === "home" ? (S.view === "home" || S.view === "project") : S.view === v;
+    b.append(h("button", {"aria-current": String(cur), onclick: () => go(v)}, label));
+  }
+}
+
+function render() {
+  renderRail();
+  const main = $("#main");
+  // Don't rebuild the brief form under someone's fingers.
+  if (S.view === "project" && S.ptab === "brief" && S.dirty && main.dataset.view === "brief:" + S.pid) return;
+  main.innerHTML = "";
+  main.dataset.view = S.view === "project" && S.ptab === "brief" ? "brief:" + S.pid : S.view;
+  const col = h("div", {class: "col"});
+  main.append(col);
+  if (S.status === "loading") { col.append(h("div", {class: "empty"}, h("h2", {}, "Loading…"))); return; }
+  if (S.status === "nodb") {
+    col.append(h("div", {class: "empty"}, h("h2", {}, "Open this in Claude to use it"),
+      h("p", {}, "Your projects and jobs are saved in this page's own storage, which only works when the page is opened from claude.ai or the Claude app, signed in.")));
+    return;
+  }
+  if (S.status === "error") col.append(h("div", {class: "banner bad"}, "Lost connection to your saved data. Reload the page to reconnect."));
+  if (S.view === "project" && !project()) S.view = "home";
+  ({home: viewHome, project: viewProject, applications: viewApps, insights: viewInsights, profile: viewProfile}[S.view] || viewHome)(col);
+}
+
+/* ------------------------------------------------------------------ home */
+function viewHome(col) {
+  col.append(h("div", {class: "head"}, h("div", {}, h("h1", {}, "Projects"), h("p", {class: "sub"}, "Each project is one job hunt with its own brief, filters and results. They run side by side.")),
+    h("button", {class: "btn primary", onclick: newProject}, "+ New project")));
+  const live = S.projects.filter(p => p.status !== "archived");
+  if (!live.length) {
+    col.append(h("div", {class: "card empty"}, h("h2", {}, "Start your first project"),
+      h("p", {}, "Describe the job you want in your own words, set the filters, and save. Every active project is searched at 8pm, and new matches land in its review list ranked by how well they suit you."),
+      h("div", {style: "margin-top:14px"}, h("button", {class: "btn primary", onclick: newProject}, "Create a project"))));
+  }
+  for (const p of live) {
+    const js = jobsFor(p.id);
+    const toReview = js.filter(j => !decisionOf(j.id)).length;
+    const yes = js.filter(j => decisionOf(j.id)?.status && decisionOf(j.id).status !== "passed").length;
+    const lastRun = S.runs.find(r => r.project_id === p.id);
+    col.append(h("button", {class: "card", style: "text-align:left;display:grid;gap:6px;cursor:pointer", onclick: () => go("project", p.id, "review")},
+      h("div", {class: "row", style: "justify-content:space-between"}, h("h2", {}, p.name || "Untitled"),
+        h("span", {class: "chip " + (p.status === "paused" ? "" : "ok")}, p.status === "paused" ? "Paused" : (p.nightly ? "Active · 8pm" : "Active · manual"))),
+      p.brief ? h("p", {class: "mute small", style: "display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden"}, p.brief) : null,
+      h("div", {class: "chips"}, h("span", {class: "chip"}, `${toReview} to review`), h("span", {class: "chip"}, `${yes} interested`),
+        lastRun ? h("span", {class: "chip"}, `Last run: ${lastRun.status} ${agoText(lastRun.finished_at || lastRun.requested_at)}`) : h("span", {class: "chip"}, "Not run yet"))));
+  }
+  profileNudge(col);
+}
+
+function profileNudge(col) {
+  if (S.docs.length) return;
+  col.append(h("div", {class: "banner warn"}, "Rankings get much better once Claude knows you. ",
+    h("button", {class: "btn ghost", style: "padding:2px 8px;margin-left:4px", onclick: () => go("profile")}, "Add your CV and other documents")));
+}
+
+async function newProject() {
+  if (!S.db) return;
+  const id = "p-" + uid();
+  const body = {...blankProject(), name: "New project", created_at: nowIso(), updated_at: nowIso()};
+  if (await write(() => S.db.doc("projects/" + id).set(body))) {
+    S.projects.push({id, ...body}); S.dirty = false;
+    go("project", id, "brief");
+  }
+}
+
+/* ------------------------------------------------------------------ project */
+function viewProject(col) {
+  const p = project();
+  const js = jobsFor(p.id);
+  const review = js.filter(j => !decisionOf(j.id));
+  const interested = js.filter(j => { const d = decisionOf(j.id); return d && d.status !== "passed"; });
+  const passed = js.filter(j => decisionOf(j.id)?.status === "passed");
+  const lastRun = S.runs.find(r => r.project_id === p.id);
+
+  col.append(h("div", {class: "head"},
+    h("div", {}, h("h1", {}, p.name || "Untitled"), h("p", {class: "sub"}, p.status === "paused" ? "Paused. Not searched at night." : p.nightly ? `Searched every night at 8pm · up to ${p.daily_cap || 50} jobs a day` : "Searched only when you press Run now")),
+    h("div", {class: "row"}, h("button", {class: "btn", onclick: () => requestRun(p)}, "Run now"))));
+
+  if (lastRun && ["requested", "running"].includes(lastRun.status)) {
+    col.append(h("div", {class: "banner"}, lastRun.status === "running" ? "Searching now. New jobs appear below as they're scored." :
+      "Run requested. Automatic pickup is the next build phase. Until then, ask Claude in chat to “process my run requests”."));
+  } else if (lastRun?.status === "failed") {
+    col.append(h("div", {class: "banner bad"}, "The last run failed: " + (lastRun.error || "no detail recorded") + "."));
+  }
+  if (lastRun?.notes?.length && lastRun.status === "done") col.append(h("div", {class: "banner"}, lastRun.notes.join(" · ")));
+
+  const tabs = h("div", {class: "tabs", role: "tablist"});
+  for (const [k, label, n] of [["review", "To review", review.length], ["interested", "Interested", interested.length], ["passed", "Not for me", passed.length], ["brief", "Brief & filters", null]]) {
+    tabs.append(h("button", {class: "tab", role: "tab", "aria-selected": String(S.ptab === k), onclick: () => go("project", p.id, k)}, label, n != null ? h("span", {class: "n"}, n) : null));
+  }
+  col.append(tabs);
+
+  if (S.ptab === "brief") return viewBrief(col, p);
+  if (S.ptab === "review") {
+    col.append(h("p", {class: "mute small"}, "Stage 1: a quick pass. Ranked by how well each job suits your profile and brief. Mark the ones worth a closer look."));
+    if (!review.length) col.append(h("div", {class: "card empty"}, h("h2", {}, js.length ? "All caught up" : "No jobs yet"),
+      h("p", {}, js.length ? "New matches arrive after the next run." : "Fill in the brief, then press Run now or wait for the 8pm search.")));
+    review.sort((a, b) => (b.rank ?? -1) - (a.rank ?? -1) || (b.found_at || "").localeCompare(a.found_at || ""));
+    for (const j of review) col.append(jobCard(j, p, 1));
+  }
+  if (S.ptab === "interested") {
+    col.append(h("p", {class: "mute small"}, "Stage 2: Claude checks suitability in depth and researches the company. Shortlist the ones you want to apply for."));
+    if (!interested.length) col.append(h("div", {class: "card empty"}, h("h2", {}, "Nothing here yet"), h("p", {}, "Jobs you mark Interested move here.")));
+    for (const j of interested) col.append(jobCard(j, p, 2));
+  }
+  if (S.ptab === "passed") {
+    if (!passed.length) col.append(h("div", {class: "card empty"}, h("h2", {}, "Nothing passed yet")));
+    for (const j of passed) col.append(jobCard(j, p, 0));
+  }
+}
+
+function checksChips(j) {
+  const out = [];
+  for (const [k, c] of Object.entries(j.checks || {})) {
+    if (!c) continue;
+    const cls = c.state === "pass" ? "ok" : c.state === "fail" ? "bad" : "";
+    out.push(h("span", {class: "chip " + cls, title: c.note || ""}, `${k}: ${c.state === "unknown" ? "unknown" : (c.note || c.state)}`));
+  }
+  return out;
+}
+
+function jobCard(j, p, stage) {
+  const d = decisionOf(j.id), deep = S.deep[j.id];
+  const url = safeUrl(j.url);
+  const score = stage === 2 && deep?.fit != null ? deep.fit : j.rank;
+  const meta = [j.location, j.salary_text, j.posted ? "Posted " + agoText(j.posted) : null].filter(Boolean);
+  const card = h("article", {class: "card job"},
+    h("div", {class: "top"},
+      h("div", {style: "min-width:0"}, h("div", {class: "t"}, url ? h("a", {href: url, target: "_blank", rel: "noopener noreferrer"}, j.title || "Untitled role") : (j.title || "Untitled role")), h("div", {class: "co"}, j.company || "")),
+      h("div", {class: "score " + scoreClass(score)}, score == null ? "–" : score + "%", h("small", {}, stage === 2 && deep?.fit != null ? "fit" : "match"))),
+    h("div", {class: "chips"}, meta.map(m => h("span", {class: "chip"}, m)), (j.sources || []).map(s => h("span", {class: "chip"}, s)), checksChips(j),
+      (j.project_ids || []).length > 1 ? h("span", {class: "chip"}, "Also in " + (j.project_ids.length - 1) + " other project" + (j.project_ids.length > 2 ? "s" : "")) : null),
+    j.rank_reason ? h("p", {class: "reason"}, j.rank_reason) : null,
+    (j.gaps || []).length ? h("p", {class: "gaps"}, "Gaps: " + j.gaps.join("; ")) : null,
+    j.description ? h("details", {}, h("summary", {}, "Description"), h("p", {}, j.description)) : null);
+
+  if (stage === 2) {
+    const box = h("div", {class: "banner" + (deep ? "" : " warn")});
+    if (!deep) box.append("Deep review pending: suitability check and company research run on Interested jobs (next build phases).");
+    else box.append(h("div", {style: "display:grid;gap:4px"}, h("b", {}, "Deep review"), deep.reason ? h("p", {}, deep.reason) : null,
+      (deep.gaps || []).length ? h("p", {class: "gaps"}, "Gaps: " + deep.gaps.join("; ")) : null,
+      deep.intel ? h("p", {class: "small"}, deep.intel) : null));
+    card.append(box);
+  }
+
+  const acts = h("div", {class: "acts"});
+  if (stage === 1) {
+    acts.append(h("button", {class: "btn yes", onclick: () => decide(j, p, "interested", 1)}, "Interested"),
+      h("button", {class: "btn no", onclick: () => passSheet(j, p, 1)}, "Not for me"));
+  } else if (stage === 2) {
+    const shortlisted = d?.status === "shortlisted";
+    acts.append(shortlisted ? h("button", {class: "btn", onclick: () => go("applications")}, "In Applications →")
+      : h("button", {class: "btn yes", onclick: () => shortlist(j, p)}, "Shortlist to apply"),
+      h("button", {class: "btn no", onclick: () => passSheet(j, p, 2)}, "Not for me"));
+  } else {
+    if (d) card.append(h("p", {class: "small mute"}, `Passed at stage ${d.stage || 1}` + ((d.reasons || []).length ? ": " + d.reasons.join(", ") : "") + (d.note ? ` · “${d.note}”` : "")));
+    acts.append(h("button", {class: "btn", onclick: () => undoDecision(j)}, "Move back to review"));
+  }
+  card.append(acts);
+  return card;
+}
+
+const snap = j => ({title: j.title || "", company: j.company || "", url: j.url || "", location: j.location || ""});
+async function decide(j, p, status, stage, extra = {}) {
+  const body = {status, stage, project_id: p.id, at: nowIso(), job: snap(j), reasons: [], note: "", ...extra};
+  await write(() => S.db.doc("decisions/" + j.id).set(body), status === "interested" ? "Moved to Interested" : "Saved");
+}
+async function undoDecision(j) { await write(() => S.db.doc("decisions/" + j.id).delete(), "Moved back to review"); }
+async function shortlist(j, p) {
+  const ok = await write(() => S.db.doc("decisions/" + j.id).update({status: "shortlisted", stage: 2, at: nowIso()}));
+  if (!ok) return;
+  await write(() => S.db.doc("applications/" + j.id).set({job_id: j.id, project_id: p.id, ...snap(j), status: "Preparing",
+    next_step: "Claude drafts your CV and cover letter (review studio, coming next)", follow_up: "", notes: "", created_at: nowIso(), updated_at: nowIso()}), "Added to Applications");
+}
+
+function passSheet(j, p, stage) {
+  const f = $("#sheetForm"); f.innerHTML = "";
+  const picked = new Set();
+  const note = h("textarea", {id: "passNote", placeholder: "Anything else? (optional)", style: "min-height:70px"});
+  f.append(h("h2", {}, "Why not this one?"), h("p", {class: "mute small", style: "margin:4px 0 12px"}, `${j.title} · ${j.company}. Your answers build the “Why I said no” bank, which tunes future searches.`));
+  const chips = h("div", {class: "chips", style: "gap:8px"});
+  for (const r of PASS_REASONS) {
+    const b = h("button", {type: "button", class: "toggle", "aria-pressed": "false", onclick: () => { picked.has(r) ? picked.delete(r) : picked.add(r); b.setAttribute("aria-pressed", String(picked.has(r))); }}, r);
+    chips.append(b);
+  }
+  f.append(chips, h("div", {style: "margin-top:12px"}, note),
+    h("div", {class: "row", style: "justify-content:flex-end;margin-top:14px"},
+      h("button", {class: "btn ghost", value: "cancel"}, "Cancel"),
+      h("button", {class: "btn primary", type: "button", onclick: async () => {
+        $("#sheet").close();
+        await decide(j, p, "passed", stage, {reasons: [...picked], note: note.value.trim()});
+      }}, "Not for me")));
+  $("#sheet").showModal();
+}
+
+async function requestRun(p) {
+  const id = "r-" + uid();
+  await write(() => S.db.doc("runs/" + id).set({project_id: p.id, kind: "manual", status: "requested", requested_at: nowIso(), notes: []}), "Run requested");
+}
+
+/* ------------------------------------------------------------------ brief & filters */
+function viewBrief(col, p) {
+  if (!S.draft || S.draft.id !== p.id) S.draft = JSON.parse(JSON.stringify({...blankProject(), ...p, filters: {...blankProject().filters, ...(p.filters || {})}, sources: {...blankProject().sources, ...(p.sources || {})}}));
+  const D = S.draft;
+  const mark = () => { if (!S.dirty) { S.dirty = true; saveBar.hidden = false; } };
+  const flash = key => S.changedKeys.has(key) ? " changed" : "";
+
+  const nameIn = h("input", {type: "text", id: "pname", value: D.name, oninput: e => { D.name = e.target.value; mark(); }});
+  const briefIn = h("textarea", {id: "pbrief", placeholder: "e.g. Partnerships roles in London at fintech or payments scale-ups. Strategic partner management, not pure sales. £75k+ base, hybrid up to 3 days in the office.", oninput: e => { D.brief = e.target.value; mark(); }}, D.brief);
+  const fillBtn = h("button", {class: "btn", type: "button", onclick: () => fillFromWords(fillBtn)}, "Fill filters from my words");
+  if (!S.sample) fillBtn.hidden = true;
+
+  col.append(h("div", {class: "card fgroup"},
+    h("div", {class: "field"}, h("label", {class: "label", for: "pname"}, "Project name"), nameIn),
+    h("div", {class: "field"}, h("label", {class: "label", for: "pbrief"}, "What are you looking for? Write it the way you'd say it"), briefIn),
+    h("div", {class: "row"}, fillBtn, h("span", {class: "mute small", id: "fillMsg"}, S.sample ? "Claude reads your words and sets the filters below. You can still change anything." : ""))));
+
+  const F = D.filters;
+  const chipSet = (key, options, labelOf = x => x) => {
+    const wrap = h("div", {class: "chips" + flash(key), style: "gap:6px"});
+    for (const o of options) {
+      const val = Array.isArray(o) ? o[0] : o, lab = Array.isArray(o) ? o[1] : labelOf(o);
+      const on = () => F[key].includes(val);
+      const b = h("button", {type: "button", class: "toggle", "aria-pressed": String(on()), onclick: () => {
+        F[key] = on() ? F[key].filter(x => x !== val) : [...F[key], val]; b.setAttribute("aria-pressed", String(on())); mark(); }}, lab);
+      wrap.append(b);
+    }
+    return wrap;
+  };
+  const single = (key, options) => {
+    const wrap = h("div", {class: "chips" + flash(key), style: "gap:6px"});
+    const btns = options.map(([val, lab]) => h("button", {type: "button", class: "toggle", "aria-pressed": String(F[key] === val), onclick: () => {
+      F[key] = val; btns.forEach((b, i) => b.setAttribute("aria-pressed", String(options[i][0] === val))); mark(); }}, lab));
+    wrap.append(...btns); return wrap;
+  };
+  const listIn = (key, ph) => h("input", {type: "text", id: "f-" + key, class: flash(key).trim(), placeholder: ph, value: F[key].join(", "), oninput: e => { F[key] = toList(e.target.value); mark(); }});
+  const numIn = (key, ph) => h("input", {type: "number", id: "f-" + key, class: flash(key).trim(), min: "0", placeholder: ph, value: F[key] ?? "", oninput: e => { F[key] = e.target.value === "" ? null : Number(e.target.value); mark(); }});
+  const fld = (label, id, ...kids) => h("div", {class: "field"}, h("label", {class: "label", for: id || null}, label), ...kids);
+
+  col.append(h("div", {class: "card fgroup"}, h("h2", {}, "Place and working pattern"),
+    h("div", {class: "fgrid"}, fld("Locations (comma separated)", "f-locations", listIn("locations", "London, Manchester")), fld("Radius (miles)", "f-radius_miles", numIn("radius_miles", "10"))),
+    fld("Remote", null, single("remote", REMOTE)),
+    h("div", {class: "fgrid"}, fld("Max days in the office", "f-max_office_days", numIn("max_office_days", "3")))));
+
+  const noSal = h("button", {type: "button", class: "toggle", "aria-pressed": String(F.include_no_salary), onclick: () => { F.include_no_salary = !F.include_no_salary; noSal.setAttribute("aria-pressed", String(F.include_no_salary)); mark(); }}, "Include jobs with no salary listed");
+  col.append(h("div", {class: "card fgroup"}, h("h2", {}, "Pay and perks"),
+    h("div", {class: "fgrid"}, fld("Minimum base pay (£)", "f-pay_min", numIn("pay_min", "75000")), fld("Minimum annual leave (days)", "f-leave_min_days", numIn("leave_min_days", "25"))),
+    h("div", {}, noSal), fld("Benefits that matter", null, chipSet("benefits", BENEFITS))));
+
+  col.append(h("div", {class: "card fgroup"}, h("h2", {}, "Company and role"),
+    fld("Industries", null, chipSet("industries", [...new Set([...INDUSTRIES, ...F.industries])])),
+    fld("Avoid industries (comma separated)", "f-exclude_industries", listIn("exclude_industries", "Gambling, Crypto")),
+    fld("Company size", null, chipSet("company_sizes", SIZES)), fld("Seniority", null, chipSet("seniority", SENIORITY)), fld("Contract", null, chipSet("contract", CONTRACT))));
+
+  col.append(h("div", {class: "card fgroup"}, h("h2", {}, "Sharpen the search"),
+    fld("Posted within", null, single("posted_within_days", POSTED.map(n => [n, n === 1 ? "1 day" : n + " days"]))),
+    h("div", {class: "fgrid"}, fld("Must mention", "f-must_words", listIn("must_words", "partnerships")), fld("Never mention", "f-never_words", listIn("never_words", "commission only"))),
+    h("div", {class: "fgrid"}, fld("Always check these companies", "f-watch_companies", listIn("watch_companies", "Stripe, Wise")), fld("Never show these companies", "f-block_companies", listIn("block_companies", "")))));
+
+  const srcWrap = h("div", {class: "chips", style: "gap:6px"});
+  for (const [k, lab] of SOURCES) {
+    const b = h("button", {type: "button", class: "toggle off-source", "aria-pressed": String(!!D.sources[k]), onclick: () => { D.sources[k] = !D.sources[k]; b.setAttribute("aria-pressed", String(D.sources[k])); mark(); }}, lab);
+    srcWrap.append(b);
+  }
+  const cap = h("input", {type: "number", id: "pcap", min: "5", max: "200", value: D.daily_cap ?? 50, oninput: e => { D.daily_cap = Math.max(5, Math.min(200, Number(e.target.value) || 50)); mark(); }});
+  const nightly = h("button", {type: "button", class: "toggle", "aria-pressed": String(!!D.nightly), onclick: () => { D.nightly = !D.nightly; nightly.setAttribute("aria-pressed", String(D.nightly)); mark(); }}, "Search every night at 8pm");
+  col.append(h("div", {class: "card fgroup"}, h("h2", {}, "Sources and schedule"), srcWrap,
+    h("p", {class: "mute small"}, "Chrome works only when you're at your computer and is never used in the nightly run."),
+    h("div", {class: "fgrid"}, fld("Jobs to review per day (cap)", "pcap", cap), fld("Schedule", null, h("div", {}, nightly)))));
+
+  const statusBtn = h("button", {class: "btn ghost", onclick: async () => {
+    const next = p.status === "paused" ? "active" : "paused";
+    await write(() => S.db.doc("projects/" + p.id).update({status: next, updated_at: nowIso()}), next === "paused" ? "Paused" : "Resumed");
+  }}, p.status === "paused" ? "Resume project" : "Pause project");
+  const dupBtn = h("button", {class: "btn ghost", onclick: async () => {
+    const id = "p-" + uid(); const {id: _old, ...rest} = p;
+    if (await write(() => S.db.doc("projects/" + id).set({...rest, name: (p.name || "Project") + " (copy)", created_at: nowIso(), updated_at: nowIso()}), "Duplicated")) go("project", id, "brief");
+  }}, "Duplicate");
+  let armed = false;
+  const archBtn = h("button", {class: "btn ghost danger", onclick: async () => {
+    if (!armed) { armed = true; archBtn.textContent = "Tap again to archive"; setTimeout(() => { armed = false; archBtn.textContent = "Archive"; }, 4000); return; }
+    S.dirty = false;
+    if (await write(() => S.db.doc("projects/" + p.id).update({status: "archived", updated_at: nowIso()}), "Archived")) go("home");
+  }}, "Archive");
+  col.append(h("div", {class: "row"}, statusBtn, dupBtn, archBtn));
+
+  const saveBar = h("div", {class: "card row", style: "position:sticky;bottom:calc(70px + env(safe-area-inset-bottom,0px));justify-content:space-between;box-shadow:0 6px 18px rgba(0,0,0,.08)"},
+    h("span", {class: "small"}, "Unsaved changes"),
+    h("div", {class: "row"}, h("button", {class: "btn ghost", onclick: () => { S.dirty = false; S.draft = null; S.changedKeys.clear(); render(); }}, "Discard"),
+      h("button", {class: "btn primary", onclick: saveBrief}, "Save"),
+      h("button", {class: "btn", onclick: async () => { if (await saveBrief()) requestRun(project()); }}, "Save and run")));
+  saveBar.hidden = !S.dirty;
+  col.append(saveBar);
+}
+
+async function saveBrief() {
+  const D = S.draft; if (!D) return false;
+  const {id, ...body} = D;
+  body.name = (body.name || "").trim() || "Untitled";
+  body.updated_at = nowIso();
+  const ok = await write(() => S.db.doc("projects/" + id).set(body), "Saved");
+  if (ok) { S.dirty = false; S.draft = null; S.changedKeys.clear(); render(); }
+  return ok;
+}
+
+async function fillFromWords(btn) {
+  const D = S.draft; const msg = $("#fillMsg");
+  if (!D.brief.trim()) { msg.textContent = "Write a sentence or two about the job first."; return; }
+  btn.disabled = true; msg.textContent = "Reading your brief…";
+  const prompt = `You turn a job seeker's description into search filters.
+Reply with ONLY a JSON object with any of these keys you can confidently infer (omit keys you can't):
+{"name": short project name (max 4 words), "locations": [strings], "radius_miles": number, "remote": "any"|"remote"|"hybrid"|"onsite",
+ "max_office_days": number, "pay_min": number (annual GBP base), "leave_min_days": number,
+ "benefits": subset of ${JSON.stringify(BENEFITS)}, "industries": [strings, prefer ${JSON.stringify(INDUSTRIES)}],
+ "exclude_industries": [strings], "company_sizes": subset of ${JSON.stringify(SIZES)}, "seniority": subset of ${JSON.stringify(SENIORITY)},
+ "contract": subset of ${JSON.stringify(CONTRACT)}, "posted_within_days": one of ${JSON.stringify(POSTED)},
+ "must_words": [strings], "never_words": [strings], "watch_companies": [strings], "block_companies": [strings]}
+Only include what the text states or clearly implies. Do not invent preferences.
+
+Description:
+"""${D.brief.slice(0, 6000)}"""`;
+  try {
+    const out = await S.sample.json(prompt, {modelTier: "quick"});
+    if (!out || typeof out !== "object") throw {code: "invalid_json"};
+    S.changedKeys.clear();
+    const F = D.filters;
+    for (const [k, v] of Object.entries(out)) {
+      if (k === "name") { if (typeof v === "string" && (!D.name || D.name === "New project")) { D.name = v.slice(0, 60); S.changedKeys.add("name"); } continue; }
+      if (!(k in F)) continue;
+      if (Array.isArray(F[k])) { if (Array.isArray(v)) { F[k] = [...new Set(v.map(String).filter(Boolean))]; S.changedKeys.add(k); } }
+      else if (k === "remote") { if (REMOTE.some(r => r[0] === v)) { F[k] = v; S.changedKeys.add(k); } }
+      else if (typeof v === "number" && isFinite(v)) { F[k] = v; S.changedKeys.add(k); }
+    }
+    S.dirty = true;
+    $("#main").dataset.view = ""; render();
+    const m = $("#fillMsg"); if (m) m.textContent = S.changedKeys.size ? `Set ${S.changedKeys.size} filter${S.changedKeys.size > 1 ? "s" : ""} from your words (highlighted). Check them, then Save.` : "Nothing specific enough to set. Add details like place, pay or industry.";
+  } catch (e) {
+    msg.textContent = e?.code === "not_granted" || e?.code === "sampling_disabled" ? "Claude isn't allowed for this page, so set the filters by hand." :
+      e?.code === "rate_limited" ? "Too many requests just now. Try again in a minute." : "Couldn't read that. Try again, or set the filters by hand.";
+    if (["not_granted", "sampling_disabled"].includes(e?.code)) btn.hidden = true;
+  } finally { btn.disabled = false; }
+}
+
+/* ------------------------------------------------------------------ applications */
+function viewApps(col) {
+  col.append(h("div", {class: "head"}, h("div", {}, h("h1", {}, "Applications"), h("p", {class: "sub"}, "Everything you've shortlisted, with its stage, next step and follow-up date."))));
+  if (!S.apps.length) { col.append(h("div", {class: "card empty"}, h("h2", {}, "No applications yet"), h("p", {}, "Shortlist a job from a project's Interested tab and it appears here."))); return; }
+  const today = new Date().toISOString().slice(0, 10);
+  const closed = ["Rejected", "Withdrawn", "Offer"];
+  const sorted = [...S.apps].sort((a, b) => (closed.includes(a.status) - closed.includes(b.status)) || ((a.follow_up || "9999") .localeCompare(b.follow_up || "9999")));
+  const due = sorted.filter(a => a.follow_up && a.follow_up <= today && !closed.includes(a.status));
+  if (due.length) col.append(h("div", {class: "banner warn"}, `${due.length} follow-up${due.length > 1 ? "s" : ""} due: ` + due.map(a => a.company).join(", ")));
+  for (const a of sorted) {
+    const ref = S.db.doc("applications/" + a.id);
+    const url = safeUrl(a.url);
+    const save = (field, value) => write(() => ref.update({[field]: value, updated_at: nowIso()}));
+    const status = h("select", {id: "st-" + a.id, onchange: e => save("status", e.target.value)}, APP_STATUSES.map(s => h("option", {value: s, selected: a.status === s}, s)));
+    const fu = h("input", {type: "date", id: "fu-" + a.id, value: a.follow_up || "", onchange: e => save("follow_up", e.target.value)});
+    const next = h("input", {type: "text", id: "nx-" + a.id, value: a.next_step || "", placeholder: "Next step", onchange: e => save("next_step", e.target.value)});
+    const notes = h("textarea", {id: "nt-" + a.id, placeholder: "Notes", style: "min-height:60px", onchange: e => save("notes", e.target.value)}, a.notes || "");
+    let armed = false;
+    const rm = h("button", {class: "btn ghost danger", onclick: async () => {
+      if (!armed) { armed = true; rm.textContent = "Tap again to remove"; setTimeout(() => { armed = false; rm.textContent = "Remove"; }, 4000); return; }
+      await write(() => ref.delete(), "Removed");
+    }}, "Remove");
+    const isDue = a.follow_up && a.follow_up <= today && !closed.includes(a.status);
+    col.append(h("div", {class: "card", style: "display:grid;gap:10px"},
+      h("div", {class: "app-row"},
+        h("div", {style: "min-width:0"}, h("div", {style: "font-weight:600"}, url ? h("a", {href: url, target: "_blank", rel: "noopener noreferrer", style: "color:inherit"}, a.title || "Role") : (a.title || "Role")),
+          h("div", {class: "mute small"}, [a.company, a.location].filter(Boolean).join(" · ")), isDue ? h("span", {class: "chip warn", style: "margin-top:4px;display:inline-block"}, "Follow-up due") : null),
+        h("div", {class: "field"}, h("label", {class: "label", for: "st-" + a.id}, "Stage"), status),
+        h("div", {class: "field"}, h("label", {class: "label", for: "fu-" + a.id}, "Follow up on"), fu)),
+      h("div", {class: "field"}, h("label", {class: "label", for: "nx-" + a.id}, "Next step"), next),
+      h("details", {}, h("summary", {}, "Notes"), h("div", {style: "margin-top:6px"}, notes)),
+      h("div", {class: "row", style: "justify-content:flex-end"}, rm)));
+  }
+}
+
+/* ------------------------------------------------------------------ insights: why I said no */
+function viewInsights(col) {
+  col.append(h("div", {class: "head"}, h("div", {}, h("h1", {}, "Why I said no"), h("p", {class: "sub"}, "Every reason you gave for passing, at both stages. Claude reviews this weekly to tune your searches.")),
+    h("div", {class: "row"}, [["7", "Last 7 days"], ["all", "All time"]].map(([k, l]) => h("button", {class: "toggle", "aria-pressed": String(S.period === k), onclick: () => { S.period = k; render(); }}, l)))));
+  const cutoff = S.period === "7" ? Date.now() - 7 * 864e5 : 0;
+  const passed = Object.values(S.decisions).filter(d => d.status === "passed" && new Date(d.at || 0).getTime() >= cutoff);
+  const all = Object.values(S.decisions).filter(d => new Date(d.at || 0).getTime() >= cutoff);
+  if (!passed.length) {
+    col.append(h("div", {class: "card empty"}, h("h2", {}, "No reasons recorded yet"), h("p", {}, "When you mark a job “Not for me”, pick the reasons. They collect here.")));
+  } else {
+    const stats = h("div", {class: "chips"}, h("span", {class: "chip"}, `${all.length} decided`), h("span", {class: "chip ok"}, `${all.length - passed.length} interested`), h("span", {class: "chip bad"}, `${passed.length} not for me`));
+    col.append(stats);
+    const block = (title, list) => {
+      const counts = Object.fromEntries(PASS_REASONS.map(r => [r, 0]));
+      list.forEach(d => (d.reasons || []).forEach(r => counts[r] = (counts[r] || 0) + 1));
+      const max = Math.max(1, ...Object.values(counts));
+      const bars = h("div", {class: "bars"});
+      Object.entries(counts).sort((a, b) => b[1] - a[1]).forEach(([r, n]) => bars.append(h("div", {class: "bar"}, h("span", {}, r), h("div", {class: "track"}, h("div", {class: "fill", style: `width:${(n / max) * 100}%`})), h("span", {class: "v"}, n))));
+      return h("div", {class: "card", style: "display:grid;gap:10px"}, h("h2", {}, title), h("p", {class: "mute small"}, `${list.length} passed`), bars);
+    };
+    col.append(h("div", {class: "two"}, block("Stage 1: first look", passed.filter(d => (d.stage || 1) === 1)), block("Stage 2: after a closer look", passed.filter(d => d.stage === 2))));
+    const notes = passed.filter(d => d.note).sort((a, b) => (b.at || "").localeCompare(a.at || "")).slice(0, 30);
+    if (notes.length) col.append(h("div", {class: "card", style: "display:grid;gap:8px"}, h("h2", {}, "In your words"),
+      ...notes.map(d => h("div", {class: "small"}, h("b", {}, `${d.job?.company || ""}`), ` · ${d.job?.title || ""} · `, h("span", {class: "mute"}, `“${d.note}”`)))));
+  }
+  col.append(h("h2", {style: "margin-top:8px"}, "Weekly reviews"));
+  if (!S.insights.length) col.append(h("p", {class: "mute small"}, "Claude's weekly review appears here: what's working, patterns in your “no” reasons, and suggested changes for you to approve."));
+  for (const w of S.insights) col.append(h("div", {class: "card", style: "display:grid;gap:6px"}, h("div", {class: "label"}, "Week of " + (w.week || "")), h("p", {style: "white-space:pre-wrap"}, w.summary || "")));
+}
+
+/* ------------------------------------------------------------------ profile */
+function viewProfile(col) {
+  col.append(h("div", {class: "head"}, h("div", {}, h("h1", {}, "Profile"), h("p", {class: "sub"}, "Everything that tells Claude who you are: CVs, cover letters, annual reviews, profile reports. The more real detail, the better the ranking and the writing."))));
+  if (!S.assets) {
+    col.append(h("div", {class: "banner warn"}, "Uploads are only available to the page's owner and editors."));
+  } else {
+    const kind = h("select", {id: "upKind"}, DOC_KINDS.map(k => h("option", {value: k}, k)));
+    const note = h("input", {type: "text", id: "upNote", placeholder: "Note, e.g. “2025 version, most up to date”"});
+    const file = h("input", {type: "file", id: "upFile", multiple: true, accept: ".pdf,.docx,.txt,.md,application/pdf,text/plain,text/markdown"});
+    const status = h("span", {class: "small mute", id: "upStatus"});
+    const upBtn = h("button", {class: "btn primary", onclick: () => uploadFiles(file.files, kind.value, note.value, status, upBtn)}, "Upload");
+    col.append(h("div", {class: "card fgroup"}, h("h2", {}, "Add documents"),
+      h("div", {class: "fgrid"}, h("div", {class: "field"}, h("label", {class: "label", for: "upKind"}, "Type"), kind), h("div", {class: "field"}, h("label", {class: "label", for: "upNote"}, "Note"), note)),
+      h("div", {class: "field"}, h("label", {class: "label", for: "upFile"}, "Files: PDF, Word, text or Markdown"), file),
+      h("div", {class: "row"}, upBtn, status),
+      h("p", {class: "mute small"}, "Word files are converted to text in your browser before upload, so check the converted copy looks right.")));
+
+    const ptTitle = h("input", {type: "text", id: "ptTitle", placeholder: "Title, e.g. “About me in my own words”"});
+    const ptKind = h("select", {id: "ptKind"}, DOC_KINDS.map(k => h("option", {value: k, selected: k === "Other"}, k)));
+    const ptText = h("textarea", {id: "ptText", placeholder: "Paste or write anything: a Claude profile report, what you're proud of, what you want next."});
+    const ptStatus = h("span", {class: "small mute"});
+    const ptBtn = h("button", {class: "btn", onclick: async () => {
+      if (!ptText.value.trim()) { ptStatus.textContent = "Nothing to save yet."; return; }
+      const name = (ptTitle.value.trim() || "Pasted note") + ".md";
+      const ok = await storeBlob(new Blob([ptText.value], {type: "text/markdown"}), name, ptKind.value, "", ptStatus, "text/markdown");
+      if (ok) { ptText.value = ""; ptTitle.value = ""; }
+    }}, "Save text");
+    col.append(h("details", {class: "card"}, h("summary", {style: "font-weight:600;color:var(--ink)"}, "Or paste text"),
+      h("div", {class: "fgroup", style: "margin-top:12px"}, h("div", {class: "fgrid"}, h("div", {class: "field"}, h("label", {class: "label", for: "ptTitle"}, "Title"), ptTitle), h("div", {class: "field"}, h("label", {class: "label", for: "ptKind"}, "Type"), ptKind)),
+        ptText, h("div", {class: "row"}, ptBtn, ptStatus))));
+  }
+  if (!S.docs.length) { col.append(h("div", {class: "card empty"}, h("h2", {}, "Nothing uploaded yet"), h("p", {}, "Start with your latest CV and two or three cover letters you're happy with. Cover letters teach Claude your voice."))); return; }
+  for (const kind of DOC_KINDS) {
+    const list = S.docs.filter(d => (d.kind || "Other") === kind);
+    if (!list.length) continue;
+    const card = h("div", {class: "card", style: "display:grid;gap:8px"}, h("h2", {}, kind + (list.length > 1 ? `s · ${list.length}` : "")));
+    for (const d of list) {
+      let armed = false;
+      const del = h("button", {class: "btn ghost danger", style: "padding:4px 10px", onclick: async () => {
+        if (!armed) { armed = true; del.textContent = "Tap again to delete"; setTimeout(() => { armed = false; del.textContent = "Delete"; }, 4000); return; }
+        try { if (S.assets && d.asset_id) await S.assets.delete(d.asset_id); } catch {}
+        await write(() => S.db.doc("profile_docs/" + d.id).delete(), "Deleted");
+      }}, "Delete");
+      card.append(h("div", {class: "row", style: "justify-content:space-between;border-top:1px solid var(--line);padding-top:8px"},
+        h("div", {style: "min-width:0"}, h("a", {href: "/_blob/" + d.asset_id, target: "_blank", rel: "noopener noreferrer", style: "font-weight:600;color:var(--ink);word-break:break-word"}, d.name || "Document"),
+          h("div", {class: "mute small"}, [d.converted_from ? `Converted from ${d.converted_from}` : null, d.note, d.uploaded_at ? "Added " + agoText(d.uploaded_at) : null].filter(Boolean).join(" · "))),
+        S.assets ? del : null));
+    }
+    col.append(card);
+  }
+}
+
+function loadMammoth() {
+  if (window.mammoth) return Promise.resolve(window.mammoth);
+  return loadMammoth.p ||= new Promise((res, rej) => {
+    const s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js";
+    s.onload = () => window.mammoth ? res(window.mammoth) : rej(new Error("converter missing"));
+    s.onerror = () => { loadMammoth.p = null; rej(new Error("converter failed to load")); };
+    document.head.append(s);
+  });
+}
+
+async function uploadFiles(files, kind, note, status, btn) {
+  if (!files?.length) { status.textContent = "Choose at least one file."; return; }
+  btn.disabled = true;
+  let done = 0;
+  for (const f of files) {
+    status.textContent = `Uploading ${f.name}…`;
+    const ext = f.name.split(".").pop().toLowerCase();
+    try {
+      if (ext === "docx") {
+        const m = await loadMammoth();
+        const {value} = await m.extractRawText({arrayBuffer: await f.arrayBuffer()});
+        if (!value.trim()) throw new Error("no text found in the Word file");
+        if (await storeBlob(new Blob([value], {type: "text/plain"}), f.name.replace(/\.docx$/i, ".txt"), kind, note, status, "text/plain", "Word")) done++;
+      } else {
+        const type = ext === "pdf" ? "application/pdf" : ext === "md" ? "text/markdown" : ext === "txt" ? "text/plain" : f.type;
+        if (await storeBlob(f, f.name, kind, note, status, type)) done++;
+      }
+    } catch (e) { status.textContent = `${f.name}: ${e.message || "couldn't convert"}.`; }
+  }
+  btn.disabled = false;
+  if (done) { status.textContent = `Uploaded ${done} of ${files.length}.`; document.getElementById("upFile").value = ""; }
+}
+
+async function storeBlob(blob, name, kind, note, status, type, convertedFrom) {
+  try {
+    const r = await S.assets.upload(blob, {type});
+    const id = "d-" + uid();
+    const body = {name, kind, note: note || "", asset_id: r.id, content_type: r.contentType, size: r.sizeBytes, uploaded_at: nowIso()};
+    if (convertedFrom) body.converted_from = convertedFrom;
+    await S.db.doc("profile_docs/" + id).set(body);
+    toast("Saved " + name);
+    return true;
+  } catch (e) {
+    const msg = {too_large: "too large (20 MB max)", unsupported_type: "that file type isn't supported. Use PDF, Word, text or Markdown", quota_or_state: "storage is full", rate_limited: "too many uploads at once. Try again shortly"}[e?.code] || "upload failed. Try again";
+    status.textContent = `${name}: ${msg}.`;
+    return false;
+  }
+}
+
+boot();
+</script>

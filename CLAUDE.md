@@ -11,5 +11,6 @@ Purpose: long-term career management — CVs, cover letters, job applications, a
 ## Notes for future sessions
 
 - The job-hunt engine is Python 3.11+ stdlib only (no install). Tests: `python3 -m unittest automations.jobhunt.tests.test_engine`. Run commands from the repo root.
-- The engine and skill are generic and contain no personal data; personal context lives in `cv/` and `profile/`.
+- The engine and skill are generic and contain no personal data.
+- The Job Hunt app (`app/job-hunt-app.html`, published at https://claude.ai/artifact/FxPHKGLJFPqBe4FMdTjgRK) is the main interface. Its database holds live data (projects, jobs, decisions, applications, profile uploads); `app/SCHEMA.md` is the contract. Read and write it with the ArtifactData tool. Republish the app from the repo file so the URL stays the same.
 - When adding automations (job search, CV updates, application drafting), document how to run them in `automations/README.md`.

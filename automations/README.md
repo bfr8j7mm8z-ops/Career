@@ -1,5 +1,9 @@
 # Automations
 
+> **Main interface: the Job Hunt app** (`app/job-hunt-app.html`, published privately on claude.ai).
+> Live data lives in the app's database; see `app/SCHEMA.md`. The repo holds the backend logic below.
+> The older `app/index.html` page and `data/` files are the v1 desktop fallback.
+
 The job-hunt system: a generic engine plus a morning review page. It contains no personal data;
 your CV and context go in `cv/` and `profile/` (templates in `templates/`).
 

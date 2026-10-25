@@ -15,7 +15,13 @@ Find roles from what the user *says* (natural language), score them against who 
 (profile + CV), put a shortlist in front of them, and only draft tailored materials for roles they
 pick. The user never submits through you: they apply themselves.
 
-The repo is the source of truth. The engine (`automations/jobhunt/`) does the deterministic
+**Where data lives:** the Job Hunt app's database (see `app/SCHEMA.md`) holds projects, jobs,
+decisions, applications and profile uploads; read and write it with the ArtifactData tool. Each
+project's brief + filters + sources replace the single search-focus file. Process `runs` with
+status "requested" when asked to. Stage 1 (rank and triage, up to `daily_cap` jobs) is cheap; deep
+review, company intel and drafting only happen for jobs the user marks Interested.
+
+The repo holds the logic. The engine (`automations/jobhunt/`) does the deterministic
 plumbing; you do the judgement. The morning page (`app/index.html`) is how the user reviews the
 queue without opening a chat. Read `automations/README.md` for commands and `config/jobhunt.toml`
 for which sources are on.
