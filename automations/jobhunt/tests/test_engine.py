@@ -19,6 +19,9 @@ class ModelTests(unittest.TestCase):
     def test_parse_date(self):
         self.assertEqual(model.parse_date("2026-10-20T10:00:00Z"), "2026-10-20")
         self.assertIsNone(model.parse_date("soonish"))
+        self.assertEqual(model.parse_date("October 14, 2026"), "2026-10-14")
+        self.assertEqual(model.parse_date("Mar 03, 2026"), "2026-03-03")
+        self.assertEqual(model.parse_date("24/10/2026"), "2026-10-24")
         self.assertEqual(model.parse_date("today"), date.today().isoformat())
 
     def test_same_job_same_id_across_boards(self):

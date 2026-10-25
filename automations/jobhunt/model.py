@@ -51,6 +51,11 @@ def parse_date(value):
         return date.today().isoformat()
     if text == "yesterday":
         return (date.today() - timedelta(days=1)).isoformat()
+    for fmt in ("%B %d, %Y", "%b %d, %Y", "%d %B %Y", "%d %b %Y", "%d/%m/%Y"):  # Indeed, UK styles
+        try:
+            return datetime.strptime(text.title(), fmt).date().isoformat()
+        except ValueError:
+            pass
     try:
         return datetime.fromisoformat(text.replace("z", "+00:00")).date().isoformat()
     except ValueError:

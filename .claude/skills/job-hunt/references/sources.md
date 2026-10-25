@@ -28,3 +28,20 @@ If it has an API: add `automations/jobhunt/sources/<name>.py` with `search(spec,
 returning loose job dicts (raise `SourceUnavailable` when it can't run), register it in
 `pipeline.API_SOURCES`, add a `[sources.<name>]` block to the config, and add a test using a
 stubbed `fetch_json`. If it doesn't, add a row here and let Claude drive it.
+
+## Indeed connector: tested notes
+
+- `search_jobs` needs `search`, `location` and `country_code` (e.g. `GB`); `job_type` optional. It
+  returns about 10 jobs as markdown: title, job id (`JOBSEARCH_...`), company, location, posted date,
+  type, compensation (usually N/A), and a `to.indeed.com` short link. **No description.**
+- Call `get_job_details(job_id)` for the full text, but only for jobs worth scoring (relevant title,
+  recent), not all of them. Pay often appears only in the description ("Pay: £35,000.00 per year"),
+  so copy it into `salary_text` when found.
+- The short link from details differs from the one in search for the same job. That's fine: jobs
+  dedupe on company + title + location, not URL.
+- Titles are loose: "account manager" also returned Account Executive (sales) roles. Run several
+  specific queries rather than one broad one, and let fit scoring sort them.
+- Dates come as "October 14, 2026" (the engine parses this). Old listings (months old) do appear
+  and are dropped by `max_age_days`.
+- `to.indeed.com` can't be reached from the cloud sandbox, so links show "unverified", not "live".
+  That's expected, not a failure.
