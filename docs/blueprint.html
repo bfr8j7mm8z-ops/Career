@@ -1,0 +1,481 @@
+<title>Job Hunt Blueprint</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one long reference sheet. A five-stage flow strip up top links to a section per stage;
+   every section pairs "what it is" with "where you can change it". Status colour is the only loud thing. */
+:root{
+  --bg:#f1f4f6; --surface:#ffffff; --ink:#16212b; --mute:#566370; --line:#d8dee4; --soft:#e8edf1;
+  --accent:#2457d6; --ok:#17784f; --warn:#9c5a00; --todo:#6b7783; --you:#a8321f;
+  --ok-bg:#e1f3ea; --warn-bg:#fbefd6; --info-bg:#e3ebfc; --todo-bg:#e9edf0; --you-bg:#fbe3de;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1419; --surface:#171e26; --ink:#e7ecf1; --mute:#92a0ad; --line:#2a3440; --soft:#1f2832;
+  --accent:#7fa3ff; --ok:#4cc38a; --warn:#e3a640; --todo:#8d99a5; --you:#ef8a78;
+  --ok-bg:#163226; --warn-bg:#35280f; --info-bg:#1b2842; --todo-bg:#222b34; --you-bg:#3a1f1a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1419; --surface:#171e26; --ink:#e7ecf1; --mute:#92a0ad; --line:#2a3440; --soft:#1f2832;
+  --accent:#7fa3ff; --ok:#4cc38a; --warn:#e3a640; --todo:#8d99a5; --you:#ef8a78;
+  --ok-bg:#163226; --warn-bg:#35280f; --info-bg:#1b2842; --todo-bg:#222b34; --you-bg:#3a1f1a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--body);padding-block:28px 64px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1040px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,6vw,52px);line-height:1.04;letter-spacing:-.02em}
+h2{font-size:26px;letter-spacing:-.01em;margin-bottom:6px}
+h3{font-size:17px;margin-bottom:4px}
+p{margin:0 0 10px}
+code,.mono{font-family:var(--mono);font-size:12.5px}
+code{background:var(--soft);padding:1px 6px;border-radius:4px}
+a{color:var(--accent)}
+.lede{max-width:62ch;color:var(--mute);font-size:17px;margin-top:14px}
+.eyebrow{font:500 11.5px var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--mute)}
+
+/* legend */
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:20px;font-size:13px;color:var(--mute)}
+.pill{display:inline-block;font:500 11.5px var(--mono);padding:2px 9px;border-radius:99px;white-space:nowrap}
+.p-ok{background:var(--ok-bg);color:var(--ok)}.p-info{background:var(--info-bg);color:var(--accent)}
+.p-warn{background:var(--warn-bg);color:var(--warn)}.p-todo{background:var(--todo-bg);color:var(--todo)}
+.p-you{background:var(--you-bg);color:var(--you)}
+
+/* flow strip */
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:34px 0 8px;border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden}
+.flow a{display:block;padding:14px 14px 16px;text-decoration:none;color:inherit;border-right:1px solid var(--line);position:relative;min-width:0}
+.flow a:last-child{border-right:0}
+.flow a:hover{background:var(--soft)}
+.flow .n{font:500 11px var(--mono);color:var(--accent)}
+.flow b{display:block;font:700 18px var(--display);margin:2px 0 4px}
+.flow span.d{font-size:13px;color:var(--mute);display:block}
+.flow .who{margin-top:8px;font:500 11px var(--mono);color:var(--mute)}
+@media(max-width:820px){.flow{grid-template-columns:1fr}.flow a{border-right:0;border-bottom:1px solid var(--line)}.flow a:last-child{border-bottom:0}}
+.tip{font-size:13px;color:var(--mute);margin:6px 0 0}
+
+section{margin-top:56px}
+.sec-head{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;margin-bottom:14px}
+.sec-head .sub{color:var(--mute);max-width:60ch}
+
+/* rows */
+.rows{display:grid;gap:8px}
+.row{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,2fr) minmax(0,1.35fr) auto;gap:6px 18px;align-items:start;
+  background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.row .name{font-weight:600}
+.row .name small{display:block;font-weight:400;color:var(--mute);font-size:12.5px}
+.row .what{min-width:0}
+.row .where{min-width:0;font-size:13px;color:var(--mute)}
+.row .where b{display:block;font:500 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-bottom:2px}
+.row .st{justify-self:end}
+.row.head{background:transparent;border:0;padding:0 14px;font:500 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+@media(max-width:760px){
+  .row{grid-template-columns:1fr auto}
+  .row .what,.row .where{grid-column:1 / -1}
+  .row.head{display:none}
+}
+.group{margin-top:22px}
+.group>h3{margin-bottom:8px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.group>h3 span{font:400 13px var(--body);color:var(--mute)}
+
+/* steps (process) */
+.steps{display:grid;gap:8px;counter-reset:s}
+.step{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:6px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;align-items:start}
+.step .no{font:500 13px var(--mono);color:var(--accent);padding-top:2px}
+.step p{margin:2px 0 0;color:var(--mute);font-size:14px}
+.step .tags{display:flex;gap:6px;flex-wrap:wrap;justify-self:end}
+@media(max-width:640px){.step{grid-template-columns:30px 1fr}.step .tags{grid-column:2;justify-self:start}}
+
+/* split lists */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;min-width:0}
+.box h3{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.box ul{margin:8px 0 0;padding-left:18px}
+.box li{margin:4px 0;font-size:14px}
+.box li small{color:var(--mute)}
+
+.callout{background:var(--info-bg);border-radius:10px;padding:14px 16px;margin-top:14px;font-size:14px}
+.callout.warn{background:var(--warn-bg)}
+.callout b{font-family:var(--display)}
+
+pre{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;overflow-x:auto;font:12.5px/1.6 var(--mono);margin:0}
+.scroll{overflow-x:auto}
+.nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px}
+.nav a{font:500 12px var(--mono);text-decoration:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:5px 10px;border-radius:99px}
+.nav a:hover{border-color:var(--accent);color:var(--accent)}
+footer{margin-top:60px;color:var(--mute);font-size:13px;border-top:1px solid var(--line);padding-top:14px}
+</style>
+<style>
+/* v2 additions: architecture map, phone mock, gauntlet loop, comment log */
+.arch{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:6px}
+.arch .lane{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;min-width:0}
+.arch .lane h3{font-size:16px}
+.arch .lane .eyebrow{margin-bottom:4px}
+.arch ul{margin:8px 0 0;padding-left:18px;font-size:14px}
+.arch li{margin:3px 0}
+.arrows{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.arrow{font:500 12px var(--mono);background:var(--soft);border-radius:8px;padding:6px 10px;color:var(--ink)}
+.arrow b{color:var(--accent);font-weight:500}
+@media(max-width:820px){.arch{grid-template-columns:1fr}}
+
+.mockwrap{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:22px;align-items:start}
+@media(max-width:820px){.mockwrap{grid-template-columns:1fr}}
+.phone{border:1px solid var(--line);border-radius:28px;background:var(--surface);padding:14px;max-width:380px;width:100%;box-shadow:0 1px 0 var(--line)}
+.ph-top{display:flex;justify-content:space-between;align-items:center;font:600 14px var(--body);padding:2px 4px 10px;border-bottom:1px solid var(--line)}
+.ph-top .mono{color:var(--mute)}
+.ph-proj{display:flex;gap:6px;overflow-x:auto;padding:10px 0 8px}
+.ph-proj span{flex:none;font-size:12.5px;border:1px solid var(--line);border-radius:99px;padding:4px 10px;background:var(--bg)}
+.ph-proj span.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.ph-text{border:1px solid var(--line);border-radius:12px;padding:10px;font-size:13.5px;background:var(--bg);color:var(--ink);min-height:74px}
+.ph-label{font:500 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:12px 0 6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12.5px;border:1px solid var(--line);border-radius:8px;padding:4px 9px;background:var(--bg)}
+.chip.on{border-color:var(--accent);color:var(--accent);background:var(--info-bg)}
+.chip.off{color:var(--mute);text-decoration:line-through}
+.ph-run{margin-top:14px;display:flex;gap:8px}
+.ph-run div{flex:1;text-align:center;border-radius:10px;padding:9px;font-weight:600;font-size:14px;border:1px solid var(--line)}
+.ph-run .go{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.ph-tabs{display:flex;justify-content:space-around;border-top:1px solid var(--line);margin-top:14px;padding-top:10px;font-size:11.5px;color:var(--mute)}
+.ph-tabs b{color:var(--ink)}
+.screens{display:grid;gap:8px}
+
+.loop{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;counter-reset:g}
+.loop .box{position:relative}
+.loop .box .k{font:500 11px var(--mono);color:var(--accent)}
+.critics{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px;margin-top:10px}
+.critic{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13.5px}
+.critic b{display:block;font-family:var(--display);font-size:15px;margin-bottom:2px}
+.critic .q{color:var(--mute)}
+
+.ftable{display:grid;gap:6px}
+.frow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr) 120px 110px;gap:4px 14px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:14px}
+.frow .n{font-weight:600}
+.frow .m{color:var(--mute);font-size:13px}
+.frow.head{background:transparent;border:0;padding:0 14px;font:500 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+@media(max-width:760px){.frow{grid-template-columns:1fr auto}.frow .m{grid-column:1/-1}.frow.head{display:none}}
+
+.clog{display:grid;gap:8px}
+.cl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:6px 18px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:14px}
+.cl .said{color:var(--mute);font-style:italic}
+.cl .did b{font-family:var(--display)}
+@media(max-width:700px){.cl{grid-template-columns:1fr}}
+.changed{display:inline-block;font:500 10.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--you);margin-left:6px}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Career repo · system blueprint · version 2.2 · 25 Oct 2026</div>
+  <h1 style="margin-top:8px">Job Hunt Blueprint</h1>
+  <p class="lede">A phone-friendly app where each job hunt is its own <b>project</b>. You describe a project in plain English, set the filters, and press Run. Claude searches, cleans and scores the results, and new matches arrive as notifications. You swipe through them, and for the ones you like Claude researches the company and writes a CV and cover letter that go through a tough review loop. It then helps you apply and tracks every application. A weekly review keeps improving the whole thing.</p>
+  <p class="lede" style="margin-top:6px"><b>The app is live:</b> <a href="https://claude.ai/artifact/FxPHKGLJFPqBe4FMdTjgRK" target="_blank" rel="noopener noreferrer">open Job Hunt</a>. Version 2 folds in your answers and your seven comments. Changes are marked <span class="changed" style="margin:0">new in v2</span>.</p>
+
+  <div class="legend" aria-label="Status key">
+    <span><span class="pill p-ok">live-tested</span> ran against the real service</span>
+    <span><span class="pill p-info">built</span> works on sample data</span>
+    <span><span class="pill p-todo">planned</span> designed, not built</span>
+    <span><span class="pill p-you">needs you</span> only you can supply it</span>
+  </div>
+
+  <nav class="nav" aria-label="Sections">
+    <a href="#how">How it fits</a><a href="#app">The app</a><a href="#inputs">Inputs</a><a href="#filters">Filters</a><a href="#process">Processes</a>
+    <a href="#gauntlet">CV gauntlet</a><a href="#studio">Review studio</a><a href="#review">Zoomed-out check</a><a href="#outputs">Outputs</a><a href="#status">Build plan</a><a href="#decisions">Decisions</a><a href="#comments">Your comments</a>
+  </nav>
+</header>
+
+<div class="flow" role="list">
+  <a href="#app" role="listitem"><span class="n">1</span><b>Brief</b><span class="d">A project: your words plus filter toggles</span><div class="who">YOU, IN THE APP</div></a>
+  <a href="#process" role="listitem"><span class="n">2</span><b>Find</b><span class="d">Search, clean, score. Nightly at 8pm or on Run</span><div class="who">CLAUDE + ENGINE</div></a>
+  <a href="#app" role="listitem"><span class="n">3</span><b>Choose</b><span class="d">Notification, then swipe Interested, Maybe or Pass</span><div class="who">YOU, ON YOUR PHONE</div></a>
+  <a href="#gauntlet" role="listitem"><span class="n">4</span><b>Prepare</b><span class="d">Company intel, then CV and letter through the gauntlet</span><div class="who">CLAUDE</div></a>
+  <a href="#process" role="listitem"><span class="n">5</span><b>Apply + track</b><span class="d">Assisted apply, follow-ups, weekly learning</span><div class="who">YOU + CLAUDE</div></a>
+</div>
+<p class="tip">Tap a stage to jump to its detail.</p>
+
+<!-- HOW IT FITS -->
+<section id="how">
+  <div class="sec-head"><h2>How it fits together <span class="changed">new in v2</span></h2><span class="sub">Three parts. You only ever touch the first.</span></div>
+  <div class="arch">
+    <div class="lane"><div class="eyebrow">What you use</div><h3>The app</h3>
+      <p style="font-size:14px;color:var(--mute)">A private page on claude.ai. It opens on your phone in the Claude app or a browser, with no install or hosting.</p>
+      <ul><li>Projects in a sidebar</li><li>Filters as toggles</li><li>Jobs feed, Applications, Profile, Insights</li><li>Uploads for CVs and cover letters</li></ul></div>
+    <div class="lane"><div class="eyebrow">Where it's stored</div><h3>The app's database</h3>
+      <p style="font-size:14px;color:var(--mute)">Built into the page. Only you can open it, and Claude can read and write it.</p>
+      <ul><li>Projects and their filters</li><li>Jobs, scores, decisions</li><li>Applications and next steps</li><li>Your uploads and profile</li></ul></div>
+    <div class="lane"><div class="eyebrow">What does the work</div><h3>Claude runs</h3>
+      <p style="font-size:14px;color:var(--mute)">A Claude session in the cloud with this repo: the skill, the tested engine, your Reed key and your connectors.</p>
+      <ul><li>Started by Run, or nightly at 8pm</li><li>One run per project, in parallel</li><li>Writes results back to the app</li><li>Sends a push notification when done</li></ul></div>
+  </div>
+  <div class="arrows">
+    <span class="arrow">Run button <b>→</b> starts a cloud run for that project</span>
+    <span class="arrow">8pm schedule <b>→</b> one run per active project</span>
+    <span class="arrow">Run <b>→</b> Indeed · Reed · career pages · Gmail alerts <b>→</b> app database</span>
+    <span class="arrow">Run finished <b>→</b> push to your phone</span>
+  </div>
+  <div class="callout"><b>Where things live.</b> Your instinct was right: the <b>repo is the backend</b>. It holds the engine code, Claude's instructions, default settings and the data contract (<code>app/SCHEMA.md</code>). The <b>app is the interface</b>, plus a small built-in database for live records such as projects, jobs, decisions and uploads. That database exists because a claude.ai page can't read a private GitHub repo directly, and it lets the app update instantly on your phone. Nothing is lost if the page changes: it is republished from the repo file and keeps its data.</div>
+</section>
+
+<!-- THE APP -->
+<section id="app">
+  <div class="sec-head"><h2>The app <span class="changed">new in v2</span></h2><span class="sub">A sketch of the new-project screen, then what each part of the app does.</span></div>
+  <div class="mockwrap">
+    <div class="phone" aria-label="Sketch of the new project screen">
+      <div class="ph-top"><span>New project</span><span class="mono">≡ Projects</span></div>
+      <div class="ph-proj"><span>Partnerships · London</span><span>Investment roles</span><span class="on">+ New</span></div>
+      <div class="ph-text">Partnerships roles in London at fintech or payments scale-ups. Lead on strategic partners, not pure sales. Minimum £75k base. Based on my partnerships and account management experience.</div>
+      <div class="ph-label">Place and pattern</div>
+      <div class="chips"><span class="chip on">London</span><span class="chip on">Hybrid ≤ 3 days office</span><span class="chip">+ place</span></div>
+      <div class="ph-label">Pay and perks</div>
+      <div class="chips"><span class="chip on">£75k+ base</span><span class="chip on">25+ days leave</span><span class="chip">Work abroad</span></div>
+      <div class="ph-label">Company</div>
+      <div class="chips"><span class="chip on">Fintech</span><span class="chip on">Scale-up</span><span class="chip on">Mid-size</span><span class="chip">Corporate</span></div>
+      <div class="ph-label">Sources</div>
+      <div class="chips"><span class="chip on">Indeed</span><span class="chip on">Reed</span><span class="chip on">Career pages</span><span class="chip on">Job alert emails</span><span class="chip off">Chrome</span></div>
+      <div class="ph-run"><div>Save</div><div class="go">Run now</div></div>
+      <div class="ph-tabs"><b>Jobs</b><span>Applications</span><span>Profile</span><span>Insights</span></div>
+    </div>
+    <div class="screens">
+      <div class="row"><div class="name">Projects<small>sidebar</small></div><div class="what">One per job hunt, all running side by side: "Partnerships, London", "Investment, buy-side". Pause, duplicate or archive. Each keeps its own brief, filters and results.</div><div class="where"><b>Pivot by</b>editing the brief, or duplicating and changing it</div><div class="st"><span class="pill p-todo">planned</span></div></div>
+      <div class="row"><div class="name">Brief + filters<small>per project</small></div><div class="what">Type what you want, and Claude fills the filter toggles from your words. You adjust them, then Save, or Run now for an instant search.</div><div class="where"><b>Pivot by</b>any toggle, any time</div><div class="st"><span class="pill p-todo">planned</span></div></div>
+      <div class="row"><div class="name">Jobs<small>per project</small></div><div class="what">New matches first, each card showing fit %, the reason, gaps, pay and perks found, and a company snapshot. Interested, Maybe or Pass. Interested starts research and drafting.</div><div class="where"><b>Pivot by</b>min-fit slider, sorting</div><div class="st"><span class="pill p-info">built (v1 page)</span></div></div>
+      <div class="row"><div class="name">Applications<small>all projects</small></div><div class="what">Every application with its stage, the next step suggested by Claude, follow-up due dates and reply emails it has spotted. Opens the CV and letter for each.</div><div class="where"><b>Pivot by</b>status edits, notes</div><div class="st"><span class="pill p-todo">planned</span></div></div>
+      <div class="row"><div class="name">Profile<small>uploads</small></div><div class="what">Your CVs, cover letters and other material. Claude builds your profile and writing-voice notes from them.</div><div class="where"><b>Pivot by</b>uploading more or editing the notes</div><div class="st"><span class="pill p-todo">planned</span></div></div>
+      <div class="row"><div class="name">Insights<small>weekly</small></div><div class="what">The weekly review: what's working, gaps found, and proposed changes to filters or CV approach. You approve or reject each one.</div><div class="where"><b>Pivot by</b>approving suggestions</div><div class="st"><span class="pill p-todo">planned</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- INPUTS -->
+<section id="inputs">
+  <div class="sec-head"><h2>Inputs</h2><span class="sub">What goes in: your words, your material, the toggles you set, and where jobs and company intel come from.</span></div>
+
+  <div class="group">
+    <h3>Who you are <span class="changed">expanded in v2</span> <span>upload anything that shows your experience and voice</span></h3>
+    <div class="rows">
+      <div class="row head"><div>Item</div><div>Why it matters</div><div>Where</div><div>Status</div></div>
+      <div class="row"><div class="name">CVs<small>master plus older versions</small></div><div class="what">The source of every claim. Older versions show how you've described things before.</div><div class="where">Profile uploads, kept as <code>cv/master-cv.md</code></div><div class="st"><span class="pill p-you">needs you</span></div></div>
+      <div class="row"><div class="name">Cover letters<small>as many as you have</small></div><div class="what">Very important: your best guide to tone and voice. The gauntlet's voice check compares new letters against these.</div><div class="where">Profile uploads, kept in <code>cover-letters/</code></div><div class="st"><span class="pill p-you">needs you</span></div></div>
+      <div class="row"><div class="name">Other evidence<small>optional</small></div><div class="what">Performance reviews, LinkedIn export, project write-ups, award or deal summaries. More true detail means stronger tailoring without inventing anything.</div><div class="where">Profile uploads</div><div class="st"><span class="pill p-you">needs you</span></div></div>
+      <div class="row"><div class="name">Role context and voice notes</div><div class="what">Claude drafts these from your uploads and what you tell it, and you correct them. Nothing is pulled from work systems.</div><div class="where"><code>profile/</code></div><div class="st"><span class="pill p-todo">planned</span></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3>Common toggles <span class="changed">new in v2</span> <span>set on every project brief; full list under Filters</span></h3>
+    <div class="chips" style="margin-top:4px">
+      <span class="chip">Industry</span><span class="chip">Location</span><span class="chip">Remote / days in office</span><span class="chip">Annual leave</span><span class="chip">Pay</span><span class="chip">Company size</span><span class="chip">Benefits</span><span class="chip">Seniority</span><span class="chip">Contract type</span><span class="chip">Sources</span>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3>Where jobs come from <span>each is a toggle in the app, per project</span></h3>
+    <div class="rows">
+      <div class="row head"><div>Source</div><div>How it works</div><div>Default</div><div>Status</div></div>
+      <div class="row"><div class="name">Indeed<small>connector</small></div><div class="what">Keyword, place and country search with full job details on demand. Pay is often only in the description text.</div><div class="where"><b>Default</b>on</div><div class="st"><span class="pill p-ok">live-tested</span></div></div>
+      <div class="row"><div class="name">Reed<small>API, UK only</small></div><div class="what">Up to 100 results per search with structured filters, then full descriptions. Your key is held as a secret.</div><div class="where"><b>Default</b>on</div><div class="st"><span class="pill p-ok">live-tested</span></div></div>
+      <div class="row"><div class="name">Company career pages<small>web search</small></div><div class="what">Greenhouse, Lever, Ashby and Workable, plus your watchlist companies directly.</div><div class="where"><b>Default</b>on</div><div class="st"><span class="pill p-todo">planned</span></div></div>
+      <div class="row"><div class="name">Job alert emails<small>Gmail</small></div><div class="what">Reads LinkedIn, Glassdoor and Indeed alert emails from your personal inbox. This covers LinkedIn and Glassdoor without touching those sites.</div><div class="where"><b>Default</b>on</div><div class="st"><span class="pill p-todo">planned</span></div></div>
+      <div class="row"><div class="name">Chrome extension<small>LinkedIn, Glassdoor</small></div><div class="what">A toggle in the app, off to start. Only works when you're at your computer, never in phone or overnight runs.</div><div class="where"><b>Default</b>off</div><div class="st"><span class="pill p-todo">planned</span></div></div>
+      <div class="row"><div class="name">Adzuna</div><div class="what">Dropped. We have enough sources for now.</div><div class="where"><b>Default</b>off</div><div class="st"><span class="pill p-todo">removed</span></div></div>
+    </div>
+  </div>
+
+  <div class="group">
+    <h3>Company intel <span class="changed">new in v2</span> <span>runs for jobs you mark Interested, or any job above a fit you choose</span></h3>
+    <div class="rows">
+      <div class="row"><div class="name">Ratings and pay<small>Indeed company data</small></div><div class="what">Employee ratings (culture, work-life balance, management), salaries for this job title, and company size. This is the official alternative to scraping Glassdoor.</div><div class="where"><b>Toggle</b>per project</div><div class="st"><span class="pill p-todo">planned</span></div></div>
+      <div class="row"><div class="name">News and signals<small>web search</small></div><div class="what">Recent news, funding, layoffs, leadership changes, product launches and anything in the last 6 to 12 months worth knowing before you apply.</div><div class="where"><b>Toggle</b>per project</div><div class="st"><span class="pill p-todo">planned</span></div></div>
+      <div class="row"><div class="name">Forums and blogs<small>web search</small></div><div class="what">What people say on Reddit, blogs and review sites, summarised with links, and labelled as opinion.</div><div class="where"><b>Toggle</b>per project</div><div class="st"><span class="pill p-todo">planned</span></div></div>
+      <div class="row"><div class="name">Glassdoor in Chrome<small>optional</small></div><div class="what">With Chrome turned on and you at your desk, Claude can read the Glassdoor reviews and salary pages directly. Read-only.</div><div class="where"><b>Toggle</b>Chrome</div><div class="st"><span class="pill p-todo">planned</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FILTERS -->
+<section id="filters">
+  <div class="sec-head"><h2>Filters <span class="changed">expanded in v2</span></h2><span class="sub">Every filter is a toggle on the project brief. "Hard" filters are applied by the job sources. "Judged" ones are read from the job text by Claude, because few postings list them in a structured way.</span></div>
+  <div class="ftable">
+    <div class="frow head"><div>Filter</div><div>Options</div><div>How applied</div><div>Status</div></div>
+    <div class="frow"><div class="n">Location</div><div class="m">One or more places, radius in miles, or anywhere in the UK</div><div><span class="pill p-ok">hard</span></div><div><span class="pill p-info">engine ready</span></div></div>
+    <div class="frow"><div class="n">Remote and office days</div><div class="m">Fully remote, hybrid with up to N office days, or on-site</div><div><span class="pill p-warn">judged</span></div><div><span class="pill p-todo">planned</span></div></div>
+    <div class="frow"><div class="n">Pay</div><div class="m">Base floor, OTE floor, and whether to show jobs with no salary listed</div><div><span class="pill p-ok">hard</span> where listed</div><div><span class="pill p-info">engine ready</span></div></div>
+    <div class="frow"><div class="n">Annual leave</div><div class="m">Minimum days</div><div><span class="pill p-warn">judged</span></div><div><span class="pill p-todo">planned</span></div></div>
+    <div class="frow"><div class="n">Benefits</div><div class="m">Work abroad, equity, bonus, pension match, private health, learning budget, parental leave</div><div><span class="pill p-warn">judged</span></div><div><span class="pill p-todo">planned</span></div></div>
+    <div class="frow"><div class="n">Industry</div><div class="m">Pick several, or exclude some</div><div><span class="pill p-warn">judged</span></div><div><span class="pill p-todo">planned</span></div></div>
+    <div class="frow"><div class="n">Company size and stage</div><div class="m">Startup, scale-up, mid-size, corporate, enterprise</div><div><span class="pill p-warn">judged</span> with company data</div><div><span class="pill p-todo">planned</span></div></div>
+    <div class="frow"><div class="n">Seniority</div><div class="m">Manager, senior, lead, head of, director</div><div><span class="pill p-warn">judged</span></div><div><span class="pill p-todo">planned</span></div></div>
+    <div class="frow"><div class="n">Contract type</div><div class="m">Permanent, contract, full or part time</div><div><span class="pill p-ok">hard</span> on Reed</div><div><span class="pill p-info">engine ready</span></div></div>
+    <div class="frow"><div class="n">Posted within</div><div class="m">1, 3, 7, 14 or 30 days</div><div><span class="pill p-ok">hard</span></div><div><span class="pill p-info">engine ready</span></div></div>
+    <div class="frow"><div class="n">Companies</div><div class="m">Watchlist to always check, block list to never show</div><div><span class="pill p-ok">hard</span></div><div><span class="pill p-todo">planned</span></div></div>
+    <div class="frow"><div class="n">Must and never words</div><div class="m">For example must mention "partnerships", never "commission only"</div><div><span class="pill p-ok">hard</span></div><div><span class="pill p-todo">planned</span></div></div>
+    <div class="frow"><div class="n">Sources</div><div class="m">Indeed, Reed, career pages, alert emails, Chrome</div><div><span class="pill p-ok">hard</span></div><div><span class="pill p-info">engine ready</span></div></div>
+    <div class="frow"><div class="n">Minimum fit</div><div class="m">Hide below N% from the feed and notifications, with a "show hidden" option</div><div><span class="pill p-ok">hard</span></div><div><span class="pill p-info">slider built</span></div></div>
+    <div class="frow"><div class="n">Company intel depth</div><div class="m">Off, ratings only, or full (ratings, news, forums)</div><div>setting</div><div><span class="pill p-todo">planned</span></div></div>
+  </div>
+  <div class="callout">Clean-up rules from v1 still apply to every run: duplicate removal across sources, dead links dropped, old postings dropped, and jobs you've seen or decided on never shown twice.</div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="sec-head"><h2>Processes</h2><span class="sub">What happens, in order. "Engine" is plain tested code; "Claude" is judgement.</span></div>
+  <div class="steps">
+    <div class="step"><div class="no">1</div><div><h3>Brief to search plan</h3><p>Your project text plus toggles become several searches, including adjacent job titles. When you edit the text, the toggles update to match.</p></div><div class="tags"><span class="pill p-todo">Claude</span></div></div>
+    <div class="step"><div class="no">2</div><div><h3>Gather</h3><p>Queries every source switched on for the project. A source that fails or returns nothing is reported on the project, never hidden.</p></div><div class="tags"><span class="pill p-info">Claude</span><span class="pill p-ok">engine</span></div></div>
+    <div class="step"><div class="no">3</div><div><h3>Clean</h3><p>Merges the same job from several sources, checks links, drops stale and already-seen jobs, and fetches full descriptions.</p></div><div class="tags"><span class="pill p-ok">engine</span></div></div>
+    <div class="step"><div class="no">4</div><div><h3>Rank, then stop <span class="changed">changed</span></h3><p>A light "match" score from your profile and brief, plus known, unknown or failed checks for leave, office days and benefits. Only the top jobs, up to the daily cap (default 50), reach your review list, best first. No deep work happens yet.</p></div><div class="tags"><span class="pill p-todo">Claude</span></div></div>
+    <div class="step"><div class="no">5</div><div><h3>Notify</h3><p>When a run finishes, a push notification tells you how many new matches there are and names the top three.</p></div><div class="tags"><span class="pill p-todo">schedule</span></div></div>
+    <div class="step"><div class="no">6</div><div><h3>Stage 1 triage <span class="changed">changed</span></h3><p>Interested or Not for me. "Not for me" asks why: tick any of Pay, Industry, Role, Location, Company type, Seniority, Office days, Benefits, Company or Other, and optionally add a note. Every answer goes into the "Why I said no" bank.</p></div><div class="tags"><span class="pill p-ok">built</span><span class="pill p-you">you</span></div></div>
+    <div class="step"><div class="no">6b</div><div><h3>Stage 2: closer look <span class="changed">new</span></h3><p>Only Interested jobs get a deep suitability check and company intel. You then shortlist them to apply, or say Not for me with reasons again, recorded as stage 2.</p></div><div class="tags"><span class="pill p-info">UI built</span><span class="pill p-todo">Claude</span></div></div>
+    <div class="step"><div class="no">7</div><div><h3>Company intel <span class="changed">new</span></h3><p>Ratings, pay benchmarks, news, forums. Saved to the job and used by the cover letter.</p></div><div class="tags"><span class="pill p-todo">Claude</span></div></div>
+    <div class="step"><div class="no">8</div><div><h3>CV and cover letter gauntlet <span class="changed">new</span></h3><p>A multi-stage writing and review loop, described in full below.</p></div><div class="tags"><span class="pill p-todo">Claude</span></div></div>
+    <div class="step"><div class="no">9</div><div><h3>Assisted apply <span class="changed">new</span></h3><p>At your computer with Chrome on, Claude opens the application, fills it from your approved CV, letter and profile, then stops for you to check and press Submit. It asks you rather than guessing any question it can't answer truthfully. It never creates accounts or gets past CAPTCHAs. Without Chrome, you get a ready-to-paste pack.</p></div><div class="tags"><span class="pill p-todo">Claude</span><span class="pill p-you">you submit</span></div></div>
+    <div class="step"><div class="no">10</div><div><h3>Track</h3><p>Stage, reply emails, follow-ups due at 7 to 10 days, likely ghosting at 21+, and a suggested next step for each application.</p></div><div class="tags"><span class="pill p-todo">Claude</span></div></div>
+    <div class="step"><div class="no">11</div><div><h3>Weekly improvement loop <span class="changed">new</span></h3><p>Every Sunday: what this week's "Why I said no" bank says, which projects, sources and filters produce jobs you like, which CVs got replies, and gaps in your profile or evidence. Proposes concrete changes in Insights for you to approve. It never makes silent strategy changes, and says "no clear pattern yet" when there isn't one.</p></div><div class="tags"><span class="pill p-todo">schedule</span></div></div>
+  </div>
+  <div class="callout warn"><b>Still never automated:</b> pressing Submit, creating accounts on job sites, messaging recruiters, solving CAPTCHAs, or running Chrome when you aren't there.</div>
+</section>
+
+<!-- GAUNTLET -->
+<section id="gauntlet">
+  <div class="sec-head"><h2>CV and cover letter gauntlet <span class="changed">new in v2</span></h2><span class="sub">Every draft must survive a panel of critics before you see it. Up to three rounds, then whatever is unresolved is flagged for you.</span></div>
+  <div class="loop">
+    <div class="box"><div class="k">STAGE 1</div><h3>Decode the job</h3><ul><li>Must-haves vs nice-to-haves</li><li>The real problem the hire solves</li><li>Language the posting uses</li><li>Company intel worth using</li></ul></div>
+    <div class="box"><div class="k">STAGE 2</div><h3>Evidence map</h3><ul><li>Each requirement matched to proof from your uploads</li><li>Gaps listed honestly</li><li>The strongest 3 stories picked</li></ul></div>
+    <div class="box"><div class="k">STAGE 3</div><h3>Draft</h3><ul><li>CV trimmed and reordered from the master</li><li>Letter in your voice, from your letters</li><li>One concrete company hook</li></ul></div>
+    <div class="box"><div class="k">STAGE 4</div><h3>The gauntlet</h3><ul><li>Six critics review it (below)</li><li>Any fail sends it back for a rewrite</li><li>Round limit: 3</li></ul></div>
+    <div class="box"><div class="k">STAGE 5</div><h3>Your review</h3><ul><li>Scorecard per critic</li><li>What changed and why</li><li>Your edits feed your voice notes</li></ul></div>
+  </div>
+  <div class="critics">
+    <div class="critic"><b>Truth checker</b><span class="q">Can every claim, number and title be traced to your uploads? Anything that can't is removed. This one cannot be overruled.</span></div>
+    <div class="critic"><b>6-second recruiter</b><span class="q">In a skim, is it obvious you match the top three must-haves?</span></div>
+    <div class="critic"><b>Hiring manager</b><span class="q">Would this person solve my problem? Are the stories specific to the role?</span></div>
+    <div class="critic"><b>ATS reader</b><span class="q">Does the CV cover the posting's key terms where true, and does it parse cleanly with a single column and standard headings?</span></div>
+    <div class="critic"><b>Voice and humaniser</b><span class="q">Does it sound like your past cover letters, not AI? No stock phrases or uniform bullet rhythm.</span></div>
+    <div class="critic"><b>Red team</b><span class="q">What is the strongest reason to reject this application, and has the draft dealt with it?</span></div>
+  </div>
+  <div class="callout">Your existing skills for job ads, CV writing, CV review, cover letters and humanising each slot into a stage, so we reuse them rather than starting from scratch.</div>
+</section>
+
+<!-- REVIEW STUDIO -->
+<section id="studio">
+  <div class="sec-head"><h2>Review studio <span class="changed">new in v2.1</span></h2><span class="sub">The most important screen. You see, edit and talk to every CV and cover letter here, and every edit teaches the system how you write.</span></div>
+  <div class="mockwrap">
+    <div class="phone" aria-label="Sketch of the review studio">
+      <div class="ph-top"><span>Acme Pay · Partnerships Lead</span><span class="mono">v3 · draft</span></div>
+      <div class="ph-proj"><span class="on">CV</span><span>Cover letter</span><span>Job ad</span><span>Scorecard</span></div>
+      <div class="ph-label">Experience · Current role</div>
+      <div class="ph-text" style="min-height:0">
+        <div style="padding:4px 0;border-bottom:1px dashed var(--line)">Built and ran the partner programme for 14 payment providers, growing partner-sourced revenue to 30% of new business. <span class="mono" style="color:var(--accent)">ⓘ source</span></div>
+        <div style="padding:4px 0;border-bottom:1px dashed var(--line);background:var(--info-bg)">Ran quarterly business reviews with C-level stakeholders at 8 enterprise accounts. <span class="mono" style="color:var(--accent)">✎ editing</span></div>
+        <div style="padding:4px 0">Negotiated renewal terms… <span class="mono" style="color:var(--mute)">🔒 locked</span></div>
+      </div>
+      <div class="ph-label">Ask Claude about the selected line</div>
+      <div class="chips"><span class="chip">Shorter</span><span class="chip">More partnerships</span><span class="chip">Show 3 options</span><span class="chip">Sounds like me?</span></div>
+      <div class="ph-text" style="min-height:0;margin-top:8px;color:var(--mute)">"Lead with the C-level part, and drop 'quarterly'."</div>
+      <div class="ph-run"><div>Undo</div><div class="go">Approve pack</div></div>
+    </div>
+    <div class="screens">
+      <div class="row"><div class="name">Edit directly</div><div class="what">Every section, bullet and paragraph is editable in place, like a document. Drag to reorder, and lock a line so Claude never touches it.</div><div class="where"><b>Speed</b>instant</div><div class="st"><span class="pill p-todo">planned</span></div></div>
+      <div class="row"><div class="name">Ask Claude about a line</div><div class="what">Select a line or paragraph and use a quick action (shorter, stronger, more about X, three options) or type an instruction. Claude answers inside the page in seconds, and you pick a version or keep yours.</div><div class="where"><b>Speed</b>seconds</div><div class="st"><span class="pill p-todo">planned</span></div></div>
+      <div class="row"><div class="name">Comment on any line <span class="changed">new</span></div><div class="what">Highlight a line and leave a comment, as in a document ("too salesy", "use the Stripe deal instead"). Collect several, then press <b>Apply comments</b> and Claude works through them all at once, showing each change for you to accept or reject.</div><div class="where"><b>Speed</b>seconds</div><div class="st"><span class="pill p-todo">planned</span></div></div>
+      <div class="row"><div class="name">Chat about the whole pack</div><div class="what">"Make the letter warmer" or "tone down the sales angle throughout". Claude edits and shows the changes highlighted, so you accept or reject each one.</div><div class="where"><b>Speed</b>seconds</div><div class="st"><span class="pill p-todo">planned</span></div></div>
+      <div class="row"><div class="name">Source on every claim</div><div class="what">Tap ⓘ to see which upload a line came from. Any edit that adds a new fact is checked against your evidence, and anything unsupported is flagged rather than kept silently.</div><div class="where"><b>Guards</b>truth</div><div class="st"><span class="pill p-todo">planned</span></div></div>
+      <div class="row"><div class="name">Versions and diff</div><div class="what">Each gauntlet round and each of your edit sessions is a version. Compare any two side by side and roll back.</div><div class="where"><b>Guards</b>safety</div><div class="st"><span class="pill p-todo">planned</span></div></div>
+      <div class="row"><div class="name">Approve, then export</div><div class="what">Draft, then In review, then Approved. Only approved packs move to Apply. Export to Word or PDF to attach.</div><div class="where"><b>Gate</b>you</div><div class="st"><span class="pill p-todo">planned</span></div></div>
+    </div>
+  </div>
+  <div class="group">
+    <h3>How it learns who you are <span>this is what makes CVs sound like you over time</span></h3>
+    <div class="cols">
+      <div class="box"><h3>Bullet library</h3><p style="font-size:14px;color:var(--mute)">Every line you approve is saved to your library, with the role, the skill it proves and the evidence behind it. New CVs start from your approved wording, not from scratch. When you edit a tailored CV, you're asked whether to update the library too.</p></div>
+      <div class="box"><h3>Style rules</h3><p style="font-size:14px;color:var(--mute)">Claude turns your edits into plain rules you can read and change in Profile, for example "Says 'I led', never 'spearheaded'", "Keeps numbers exact", "Letters open with the company, not me". Every draft and the voice critic follow them.</p></div>
+      <div class="box"><h3>Story bank</h3><p style="font-size:14px;color:var(--mute)">Your best achievements written up once as short stories: situation, what you did, result, and proof. They feed CV bullets, cover letters and interview prep.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ZOOMED OUT -->
+<section id="review">
+  <div class="sec-head"><h2>Zoomed-out check <span class="changed">new in v2.1</span></h2><span class="sub">Where the plan is weak, missing something, or aimed at the wrong thing, with the fix for each.</span></div>
+  <div class="rows">
+    <div class="row head"><div>Issue</div><div>Why it matters</div><div>Fix</div><div>Type</div></div>
+    <div class="row"><div class="name">The profile is the real engine, and it's thin</div><div class="what">Scoring, drafting and the truth checker all depend on your evidence. A CV alone leaves the system guessing, and tailoring hits a ceiling fast.</div><div class="where">Phase 1 has a simple <b>profile builder</b>: upload CVs, cover letters, annual reviews and Claude profile reports, or paste text. The guided interview waits until we see how the uploads look.</div><div class="st"><span class="pill p-ok">built</span></div></div>
+    <div class="row"><div class="name">Too focused on finding jobs</div><div class="what">Finding listings is the easy part. Replies come from strong, specific applications and from people. The plan spends most effort on search volume.</div><div class="where">Decided: cap of 50 a day per project, ranked best first, with deep work only on Interested.</div><div class="st"><span class="pill p-ok">built</span></div></div>
+    <div class="row"><div class="name">No people or referrals</div><div class="what">For partnerships and senior commercial roles, a referral or a note to the hiring manager often beats a cold application.</div><div class="where">Add an <b>outreach</b> step for Interested jobs: suggest who to approach and draft a short message for you to send yourself. Claude never sends it.</div><div class="st"><span class="pill p-you">missing</span></div></div>
+    <div class="row"><div class="name">Process stops at "applied"</div><div class="what">The point is offers. Nothing yet helps once a company replies.</div><div class="where">Decided: <b>not needed</b>. Tracking stops at follow-ups and outcomes.</div><div class="st"><span class="pill p-todo">dropped</span></div></div>
+    <div class="row"><div class="name">Two homes for your data</div><div class="what">Personal material in both the repo and the app means two versions drifting apart.</div><div class="where">Decided: repo = backend logic, app database = live data. Contract in <code>app/SCHEMA.md</code>.</div><div class="st"><span class="pill p-ok">built</span></div></div>
+    <div class="row"><div class="name">"Judged" filters will often be unknown</div><div class="what">Most job ads don't state annual leave, office days or benefits. Excluding unknowns would hide good jobs.</div><div class="where">Show them as known, unknown or failed on each card. Only an explicit failure lowers the fit, and unknowns can be checked during intel.</div><div class="st"><span class="pill p-warn">design</span></div></div>
+    <div class="row"><div class="name">Same job in two projects</div><div class="what">A partnerships role at a fintech fund could match both projects and appear twice.</div><div class="where">Show it once and tag it with both projects. A decision in one applies to both.</div><div class="st"><span class="pill p-warn">design</span></div></div>
+    <div class="row"><div class="name">Usage cost at scale</div><div class="what">Several projects every night, plus intel and the gauntlet per job, adds up.</div><div class="where">Cheap search every night. Expensive steps (intel, gauntlet) only on Interested. Each project has a cap, and run costs are shown in Insights.</div><div class="st"><span class="pill p-warn">design</span></div></div>
+    <div class="row"><div class="name">The learning loop needs signal</div><div class="what">The weekly review can only learn from what's recorded.</div><div class="where">The "Why I said no" bank records reasons at both stages. The sent version and outcomes come with the review studio.</div><div class="st"><span class="pill p-ok">built</span></div></div>
+    <div class="row"><div class="name">"Run now" isn't instant</div><div class="what">A full run takes a few minutes in a cloud session.</div><div class="where">Show progress on the project, and let results arrive as they're found.</div><div class="st"><span class="pill p-warn">expectation</span></div></div>
+  </div>
+</section>
+
+<!-- OUTPUTS -->
+<section id="outputs">
+  <div class="sec-head"><h2>Outputs</h2><span class="sub">What you get, and where it lives.</span></div>
+  <div class="cols">
+    <div class="box"><h3>Notifications</h3><ul><li>"Partnerships · London: 6 new, top: …"</li><li>Follow-ups due</li><li>Replies detected</li></ul></div>
+    <div class="box"><h3>Jobs feed</h3><ul><li>Per project, newest first</li><li>Fit, reason, gaps, perks, intel</li><li>Your decisions and notes</li></ul></div>
+    <div class="box"><h3>Application pack</h3><ul><li>Tailored CV and cover letter</li><li>Gauntlet scorecard</li><li>Company intel brief</li><li>Interview prep notes</li></ul></div>
+    <div class="box"><h3>Applications board</h3><ul><li>Stage, next step, due dates</li><li>Linked emails</li><li>Mirrored to <code>job-search-log.md</code></li></ul></div>
+    <div class="box"><h3>Weekly insights</h3><ul><li>What worked, what didn't</li><li>Proposed changes, each for you to approve or reject</li></ul></div>
+    <div class="box"><h3>Repo record</h3><ul><li>Code, instructions and config in git</li><li>Application folders in <code>applications/</code></li></ul></div>
+  </div>
+</section>
+
+<!-- STATUS / BUILD PLAN -->
+<section id="status">
+  <div class="sec-head"><h2>Build plan <span class="changed">revised in v2.1</span></h2><span class="sub">Reordered so the foundation (your profile) comes first and quality gets most of the effort. Each phase is usable on its own.</span></div>
+  <div class="cols">
+    <div class="box"><h3>Done <span class="pill p-ok">now</span></h3><ul>
+      <li>Reed and Indeed, live-tested</li><li>Clean-up engine with 17 passing tests</li><li>v1 review page</li><li>Skill instructions</li><li>Adzuna and Chrome switched off</li></ul></div>
+    <div class="box"><h3>Phase 1 <span class="pill p-ok">done</span></h3><ul>
+      <li>App live: projects, brief and filter toggles</li><li>Claude turns your words into filters</li><li>Two-stage triage with reasons</li><li>Why I said no bank</li><li>Applications tracker</li><li>Profile uploads, including Word files</li></ul></div>
+    <div class="box"><h3>Phase 2 <span class="pill p-todo">runs</span></h3><ul>
+      <li>Run now, which starts a cloud run</li><li>Nightly 8pm schedule</li><li>Push notifications</li><li>Results written to the app</li></ul></div>
+    <div class="box"><h3>Phase 3 <span class="pill p-todo">quality</span></h3><ul>
+      <li>Company intel on Interested</li><li>The gauntlet</li><li>Review studio with line comments, bullet library and style rules</li><li>Career pages and alert emails as sources</li></ul></div>
+    <div class="box"><h3>Phase 4 <span class="pill p-todo">beyond the application</span></h3><ul>
+      <li>Assisted apply in Chrome</li><li>Outreach drafts (still to confirm)</li><li>Reply tracking</li><li>Weekly improvement loop</li></ul></div>
+    <div class="box"><h3>Needs you <span class="pill p-you">anytime</span></h3><ul>
+      <li>CVs, cover letters and other evidence</li><li>About 20 minutes for the profile interview</li><li>Your first two project briefs</li></ul></div>
+  </div>
+</section>
+
+<!-- DECISIONS -->
+<section id="decisions">
+  <div class="sec-head"><h2>Decisions</h2><span class="sub">What we've agreed, and what's still open.</span></div>
+  <div class="rows">
+    <div class="row"><div class="name">Multiple projects in parallel</div><div class="what">Yes. Each has its own brief, filters, schedule and feed.</div><div class="where"></div><div class="st"><span class="pill p-ok">agreed</span></div></div>
+    <div class="row"><div class="name">Phone first, nice UI</div><div class="what">Yes. A private claude.ai app, with all of Claude's tools doing the work behind it.</div><div class="where"></div><div class="st"><span class="pill p-ok">agreed</span></div></div>
+    <div class="row"><div class="name">Nightly search time</div><div class="what">8pm UK. Scheduled a few minutes before the hour, when the scheduler is less busy.</div><div class="where"></div><div class="st"><span class="pill p-ok">agreed</span></div></div>
+    <div class="row"><div class="name">Adzuna</div><div class="what">Out. Turned off in the config.</div><div class="where"></div><div class="st"><span class="pill p-ok">agreed</span></div></div>
+    <div class="row"><div class="name">Chrome extension</div><div class="what">Off to start. A toggle in the app, used only at your desk.</div><div class="where"></div><div class="st"><span class="pill p-ok">agreed</span></div></div>
+    <div class="row"><div class="name">Pay, place and perks</div><div class="what">Filters in the app, set per project, not fixed values.</div><div class="where"></div><div class="st"><span class="pill p-ok">agreed</span></div></div>
+    <div class="row"><div class="name">Assisted apply</div><div class="what">Claude fills the form and you press Submit.</div><div class="where"></div><div class="st"><span class="pill p-ok">agreed</span></div></div>
+    <div class="row"><div class="name">Company intel trigger</div><div class="what">Only on jobs you mark Interested.</div><div class="where"></div><div class="st"><span class="pill p-ok">agreed</span></div></div>
+    <div class="row"><div class="name">Gmail</div><div class="what">Connected, used for alert emails and reply tracking.</div><div class="where"></div><div class="st"><span class="pill p-ok">agreed</span></div></div>
+    <div class="row"><div class="name">Review studio</div><div class="what">Agreed, plus comments on any line that Claude applies in one go.</div><div class="where"></div><div class="st"><span class="pill p-ok">agreed</span></div></div>
+    <div class="row"><div class="name">Outreach and interview prep</div><div class="what">No interview prep. Outreach is still open: do you want it?</div><div class="where"></div><div class="st"><span class="pill p-warn">decide</span></div></div>
+    <div class="row"><div class="name">Where data lives</div><div class="what">Repo = backend logic, app database = live data.</div><div class="where"></div><div class="st"><span class="pill p-ok">agreed</span></div></div>
+    <div class="row"><div class="name">Old v1 page</div><div class="what">Keep it as a desktop fallback, or retire it once the app works?</div><div class="where"></div><div class="st"><span class="pill p-warn">decide</span></div></div>
+  </div>
+</section>
+
+<!-- COMMENTS -->
+<section id="comments">
+  <div class="sec-head"><h2>Your comments, actioned <span class="changed">new in v2</span></h2><span class="sub">Each comment from v1 and where it landed in this version.</span></div>
+  <div class="clog">
+    <div class="cl"><div class="said">"Include other full uploads, not just the CV. Cover letter is very important."</div><div class="did"><b>Inputs → Who you are.</b> Profile uploads for CVs, cover letters and other evidence. Your past letters drive the voice check in the gauntlet.</div></div>
+    <div class="cl"><div class="said">"Career pages should include company reviews from forums and blogs (Glassdoor), and company news."</div><div class="did"><b>Inputs → Company intel</b>, a new step 7. Indeed company data for ratings and pay, web search for news and forums, Glassdoor via Chrome when on.</div></div>
+    <div class="cl"><div class="said">"I like that this is a dial. It should be a toggle throughout the interface."</div><div class="did"><b>The app + Filters.</b> Every source and filter is a toggle on each project brief.</div></div>
+    <div class="cl"><div class="said">"Common toggles: industry, location, remote/WFH days, annual leave, pay, company size, benefits. Think about them during inputs."</div><div class="did"><b>Inputs → Common toggles</b> and the expanded <b>Filters</b> table, with which ones are hard and which are judged.</div></div>
+    <div class="cl"><div class="said">"Build a world-class process for CVs and cover letters, with a gauntlet loop."</div><div class="did"><b>CV and cover letter gauntlet:</b> five stages, six critics, up to three rounds, with a truth checker that cannot be overruled.</div></div>
+    <div class="cl"><div class="said">"Missing a final step: a weekly loop that evaluates gaps and how to improve."</div><div class="did"><b>Process step 11</b>, the weekly improvement loop, with an Insights tab where you approve changes.</div></div>
+    <div class="cl"><div class="said">"After drafting, I want a next step to apply, through the Chrome extension or other means."</div><div class="did"><b>Process step 9</b>, assisted apply: Claude fills the form and you submit. Open question under Decisions.</div></div>
+  </div>
+</section>
+
+<footer>Version 2.2 · 25 Oct 2026 · branch claude/zen-shannon-sf0ved.</footer>
+</div>
