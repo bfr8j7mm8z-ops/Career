@@ -19,6 +19,7 @@ venv/
 # Env/secrets
 .env
 .env.*
+!.env.example
 *.key
 
 # Local scratch
