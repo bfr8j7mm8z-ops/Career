@@ -72,7 +72,8 @@ class SourceTests(unittest.TestCase):
 
     def test_run_api_sources_reports_not_raises(self):
         cfg = {"sources": {"adzuna": {"enabled": True}, "reed": {"enabled": True}}}
-        with mock.patch.dict(os.environ, {}, clear=True):
+        with mock.patch.dict(os.environ, {}, clear=True), \
+                mock.patch.object(reed, "search", side_effect=SourceUnavailable("no valid API key configured")):
             jobs, notes = pipeline.run_api_sources({"queries": []}, cfg)
         self.assertEqual(jobs, [])
         self.assertEqual(len(notes), 2)
