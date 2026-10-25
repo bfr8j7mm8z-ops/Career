@@ -10,10 +10,10 @@ results_per_source = 50
 [sources.indeed_mcp]    # claude: official Indeed connector
 enabled = true
 
-[sources.adzuna]        # api: aggregates many boards in one call; needs a free key
+[sources.adzuna]        # api: aggregates many boards in one call; needs a key; may be paid (check developer.adzuna.com), optional
 enabled = true
 
-[sources.reed]          # api: UK only; needs a free key
+[sources.reed]          # api: UK only; needs a key; may be paid (check developer.adzuna.com), optional
 enabled = true
 
 [sources.ats_search]    # claude: site: web searches over company career pages

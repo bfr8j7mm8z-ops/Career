@@ -72,7 +72,7 @@ Data files: `data/queue/YYYY-MM-DD.json` + `latest.json` (the queue), `data/deci
 each interactive run and only uses it on a yes (`"off"` to never, `"on"` to skip asking). It is
 never used in scheduled runs. Details in `.claude/skills/job-hunt/references/`.
 
-API keys (Adzuna, Reed): see `references/sources.md` for how to get them, then copy
+API keys (Reed is free; Adzuna may cost ~£8/month and is optional): see `references/sources.md` for how to get them, then copy
 `.env.example` to `.env`. Sources without keys are skipped with a note on the page, not an error.
 
 ## Not set up yet
