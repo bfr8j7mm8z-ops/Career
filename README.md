@@ -4,6 +4,7 @@ Personal workspace for managing my long-term career: CV, cover letters, job appl
 
 ## Structure
 
+- `profile/master-profile.md` — comprehensive career evidence base (summaries, numbers, client portfolio, tagged bullets, STAR story bank)
 - `cv/` — source CV and exported versions
 - `cover-letters/` — cover letter drafts and tailored versions
 - `applications/` — one folder per job application (posting, tailored docs, notes, status)
