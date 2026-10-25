@@ -13,7 +13,8 @@ enabled = true
 [sources.adzuna]        # api: aggregates many boards in one call; needs a key; may be paid (check developer.adzuna.com), optional
 enabled = true
 
-[sources.reed]          # api: UK only; needs a key; may be paid (check developer.adzuna.com), optional
+[sources.reed]          # api: UK only; free key from reed.co.uk
+fetch_details = true    # fetch the full description for each Reed job that makes the queue (1 call each, max 40)
 enabled = true
 
 [sources.ats_search]    # claude: site: web searches over company career pages

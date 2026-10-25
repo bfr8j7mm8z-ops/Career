@@ -106,7 +106,7 @@ def sort_key(job):
 
 
 def build_queue(candidates, spec=None, notes=None, config=None, check_links=True,
-                include_seen=False, checker=linkcheck.check, today=None):
+                include_seen=False, checker=linkcheck.check, today=None, enrich=True):
     """candidates: loose job dicts from any source. Returns the queue document."""
     config = config or {}
     today = today or date.today()
@@ -117,11 +117,16 @@ def build_queue(candidates, spec=None, notes=None, config=None, check_links=True
     seen = {} if include_seen else load_json(SEEN, {})
     max_age = (spec or {}).get("max_age_days") or config.get("search_defaults", {}).get("max_age_days")
     kept, dropped = filter_jobs(jobs, max_age, decisions, seen, today)
+    notes = list(notes or [])
+    if enrich and config.get("sources", {}).get("reed", {}).get("fetch_details", True):
+        note = reed.enrich(kept)
+        if note:
+            notes.append(note)
     kept.sort(key=sort_key)
     return {
         "generated": datetime.now().isoformat(timespec="seconds"),
         "spec": spec or {},
-        "notes": list(notes or []),
+        "notes": notes,
         "dropped": dropped,
         "jobs": kept,
     }

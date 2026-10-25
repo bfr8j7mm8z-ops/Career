@@ -60,6 +60,28 @@ class SourceTests(unittest.TestCase):
             with self.assertRaises(SourceUnavailable):
                 reed.search({"queries": [{"keywords": "x"}]}, fetch_json=denied)
 
+    def test_reed_params_cap_url_fallback_and_enrich(self):
+        seen = []
+        def fetch(url, headers=None):
+            seen.append(url)
+            if "/jobs/55" in url:
+                return {"jobDescription": "<p>Full &amp; real</p><ul><li>One</li></ul>", "yearlyMinimumSalary": 60000,
+                        "yearlyMaximumSalary": 70000, "currencyCode": "GBP", "externalUrl": "https://x.com/apply"}
+            return {"results": [{"jobId": 55, "jobTitle": "AM", "employerName": "Acme", "locationName": "Leeds",
+                                 "jobDescription": "snippet"}]}
+        spec = {"results_per_source": 500, "queries": [{"keywords": "am", "fullTime": True, "distanceFromLocation": 20}]}
+        jobs = reed.search(spec, fetch_json=fetch)
+        self.assertIn("resultsToTake=100", seen[0])
+        self.assertIn("fullTime=true", seen[0])
+        self.assertIn("distanceFromLocation=20", seen[0])
+        self.assertEqual(jobs[0]["url"], "https://www.reed.co.uk/jobs/55")
+        merged = pipeline.merge([dict(j, source="reed") for j in jobs])
+        note = reed.enrich(merged, fetch_json=fetch)
+        self.assertEqual(merged[0]["description"], "Full & real One")
+        self.assertEqual((merged[0]["salary_min"], merged[0]["currency"]), (60000, "GBP"))
+        self.assertIn("external-apply", merged[0]["tags"])
+        self.assertIn("1 of 1", note)
+
     def test_reed_uk_only_and_date(self):
         with mock.patch.dict(os.environ, {"REED_API_KEY": "k"}):
             with self.assertRaises(SourceUnavailable):
