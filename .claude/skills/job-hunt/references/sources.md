@@ -7,7 +7,7 @@ sources done well beats many done thinly: aggregators first, then targeted, then
 |---|---|---|---|
 | Indeed connector | Claude (MCP) | Connector enabled | `search_jobs` with natural-language query + location; `get_job_details` for the full description; `get_company_data` for company context. Don't call `get_resume` unless the user asks. |
 | Adzuna | API (code) | Key; may cost ~£8/month, optional | Aggregates many boards. Set `ADZUNA_APP_ID`, `ADZUNA_APP_KEY`. `country` in config/spec. |
-| Reed | API (code) | Free key | UK only. Set `REED_API_KEY`. |
+| Reed | API (code) | Free key | UK only. Set `REED_API_KEY`, or store it as a Basic network secret for www.reed.co.uk (cloud). |
 | ATS career pages | Claude (web search) | None | Queries like `site:boards.greenhouse.io "partnerships manager" London`, `site:jobs.lever.co ...`, `site:jobs.ashbyhq.com ...`, `site:apply.workable.com ...`. Good for startups/scale-ups. Also search the user's watchlist: `"<company>" careers "<role>"`. |
 | Gmail alerts | Claude (MCP) | Personal Gmail | Read job-alert emails (LinkedIn/Indeed/Glassdoor alerts) from the last few days. Extract title, company, link. Nothing else in the inbox. |
 | Chrome | Claude (browser) | Claude in Chrome | See `chrome.md`. Optional, off by default unless config says otherwise. |

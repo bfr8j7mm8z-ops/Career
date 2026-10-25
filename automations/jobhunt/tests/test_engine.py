@@ -46,6 +46,20 @@ class SourceTests(unittest.TestCase):
         self.assertEqual(jobs[0]["company"], "Acme")
         self.assertEqual(jobs[0]["posted"], "2026-10-24")
 
+    def test_reed_without_key_sends_no_auth_and_maps_401(self):
+        import urllib.error
+        seen = {}
+        def ok(url, headers=None):
+            seen["h"] = headers
+            return {"results": []}
+        def denied(url, headers=None):
+            raise urllib.error.HTTPError(url, 401, "no", {}, None)
+        with mock.patch.dict(os.environ, {}, clear=True):
+            reed.search({"queries": [{"keywords": "x"}]}, fetch_json=ok)
+            self.assertEqual(seen["h"], {})
+            with self.assertRaises(SourceUnavailable):
+                reed.search({"queries": [{"keywords": "x"}]}, fetch_json=denied)
+
     def test_reed_uk_only_and_date(self):
         with mock.patch.dict(os.environ, {"REED_API_KEY": "k"}):
             with self.assertRaises(SourceUnavailable):
