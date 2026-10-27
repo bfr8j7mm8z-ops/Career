@@ -1,7 +1,17 @@
 # Drafting tailored CVs and cover letters
 
-Inputs: `cv/master-cv.md`, `profile/current-role.md`, `cover-letters/template.md` (structure),
-the job posting (`applications/<folder>/job-posting.md`), the queue record's `fit_reason`/`gaps`.
+Inputs: the app's `profile_docs` (see `app/SCHEMA.md`), the job posting, and the job's rank/deep-review
+reasons and gaps.
+
+**Source-of-truth rule.**
+- The **Master profile** doc is the evidence base. Every fact, number, title and credit level comes
+  from it. Respect its markers: ✅ verified, ⚠️ verify before using, "Led / Pod-led / Supported" credit
+  labels, and its list of old CV numbers to retire (e.g. "46 accounts / £2M ARR", "93% retention",
+  "~40% reporting time saved"). Never reintroduce a retired number.
+- The **master CVs and cover letters** (`is_master: true`) set structure, length, tone and voice. Start
+  from the closest one (CS/AM track or partnerships track). Where their numbers disagree with the
+  master profile, the master profile wins.
+- Pick a summary variant, bullets and stories from the master profile by matching its tags to the job.
 
 ## CV
 

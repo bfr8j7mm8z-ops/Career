@@ -71,9 +71,13 @@ requested_at, started_at, finished_at, counts: {found, kept, added}, notes[] (on
 Written by the app. The file itself is an uploaded asset: read it with the Artifact tool
 (`action: "read"`, `path: <asset_id>`).
 ```
-name, kind: CV | Cover letter | Annual review | Claude profile report | LinkedIn export | Other,
-note, asset_id, content_type, size, uploaded_at, converted_from ("Word" when a .docx was converted to text)
+name, kind: Master profile | CV | Cover letter | Annual review | Claude profile report | LinkedIn export | Other,
+note, asset_id, content_type, size, uploaded_at, converted_from ("Word" when a .docx was converted to text),
+is_master: bool   (true = the current master version of its kind; tailoring starts from these)
 ```
+Source-of-truth rule: facts and numbers come from the "Master profile" doc (it marks which are verified
+and which old CV numbers to retire). Master CVs and cover letters set structure, tone and voice; where
+their numbers disagree with the master profile, the master profile wins.
 
 ## insights/{week_id}
 Written by the weekly review (Phase 4). `week` = Monday's date.

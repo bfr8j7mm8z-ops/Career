@@ -28,8 +28,9 @@ for which sources are on.
 
 ## 0. Check readiness (every run, silently)
 
-Look for: `cv/master-cv.md`, `profile/current-role.md`, `profile/current-search-focus.md`,
-`profile/target-companies.md` (optional), `config/jobhunt.toml`.
+Look in the app's `profile_docs` for a `Master profile` doc and master CVs/cover letters
+(`is_master: true`); read them with the Artifact tool (`path` = asset id). Older repo files
+(`cv/`, `profile/`) are a fallback only. Also read `config/jobhunt.toml`.
 
 - Missing master CV or role context: say so in one line and offer to create them from
   `templates/` by asking the user (or by them pasting a CV). Don't invent content. You can still

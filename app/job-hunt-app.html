@@ -163,7 +163,7 @@ const REMOTE = [["any", "Any"], ["remote", "Fully remote"], ["hybrid", "Hybrid"]
 const POSTED = [1, 3, 7, 14, 30];
 const SOURCES = [["indeed", "Indeed"], ["reed", "Reed"], ["career_pages", "Career pages"], ["alert_emails", "Job alert emails"], ["chrome", "Chrome (desk only)"]];
 const APP_STATUSES = ["Preparing", "Ready to apply", "Applied", "Interviewing", "Offer", "Rejected", "Withdrawn", "Ghosted"];
-const DOC_KINDS = ["CV", "Cover letter", "Annual review", "Claude profile report", "LinkedIn export", "Other"];
+const DOC_KINDS = ["Master profile", "CV", "Cover letter", "Annual review", "Claude profile report", "LinkedIn export", "Other"];
 
 const blankProject = () => ({
   name: "", brief: "", status: "active", nightly: true, daily_cap: 50,
@@ -721,7 +721,8 @@ function viewProfile(col) {
       }}, "Delete");
       card.append(h("div", {class: "row", style: "justify-content:space-between;border-top:1px solid var(--line);padding-top:8px"},
         h("div", {style: "min-width:0"}, h("a", {href: "/_blob/" + d.asset_id, target: "_blank", rel: "noopener noreferrer", style: "font-weight:600;color:var(--ink);word-break:break-word"}, d.name || "Document"),
-          h("div", {class: "mute small"}, [d.converted_from ? `Converted from ${d.converted_from}` : null, d.note, d.uploaded_at ? "Added " + agoText(d.uploaded_at) : null].filter(Boolean).join(" · "))),
+          h("div", {class: "mute small"}, [d.converted_from ? `Converted from ${d.converted_from}` : null, d.note, d.uploaded_at ? "Added " + agoText(d.uploaded_at) : null].filter(Boolean).join(" · ")),
+          d.is_master ? h("span", {class: "chip ok", style: "margin-top:4px;display:inline-block"}, "Master") : null),
         S.assets ? del : null));
     }
     col.append(card);
