@@ -15,13 +15,13 @@ All figures come from the master profile (v2) and are marked ✅ there. Retired 
 93% retention, ~40% reporting time) are not used. Per-client revenue figures (e.g. Dyson's MRR) are left out of
 external documents; relative figures (4–5×, +79%, +40%) and Harry's own book size are used instead.
 
-## To confirm with Harry
-1. Contact details: the phone and email from past CVs are used (master profile §13 lists this as open).
-2. Dyson DACH: CV says "a new-market deal out for signature". Update to signed if it has closed.
-3. Naming clients (Dyson, Huel, Samsonite Group, TJX, GANT, Footasylum, FitFlop) on an external CV: past CVs
-   named some; confirm you're comfortable naming all of these.
-4. Ask PPRO's recruiter for base salary and OTE split (not in the posting).
+## Decided with Harry (27 Oct 2026)
+1. Contact details: phone and email as on past CVs. ✅
+2. Dyson DACH: not signed yet, so the CV keeps "a new-market deal out for signature". Update when it signs.
+3. Client names: OK to name all seven on external CVs. ✅
+4. Pay: don't ask the recruiter about salary or OTE.
 
 ## Status
-- 27 Oct 2026: shortlisted; drafts v1 written (cv.md, cover-letter.md). Next: Harry reviews, then finals go to
-  Drive `Career / Applications` and Harry applies via the posting link.
+- 27 Oct 2026: shortlisted; drafts v1 written (cv.md, cover-letter.md). Harry confirmed details; finals created in Drive
+  `Career / Applications / 2026-10-27 PPRO Senior New Business Manager`. Docs: CV 1nlrUZsIFgE1tApfoAOgPABPg-KgQCuSkmOHQc9jwulA, letter
+  1zfp6IEY3ImhmF2YkjRGBl3gxDBnA6w64ZUD9F6zgSFk (folder 1c-npwgrN7nqAOqp_RbClhBrFw0IIWpxO). Next: Harry applies via the posting link.

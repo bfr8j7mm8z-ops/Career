@@ -43,6 +43,7 @@ AI-powered marketing measurement platform for e-commerce brands. Promoted three 
 ## EDUCATION
 
 **BEng Mechanical Engineering with Management, First Class Honours** | University of Bath | 2019 – 2023
+
 Thesis: carbon-reduction roadmap for SMEs (49% emissions cut, 10-year payback). A-levels: Further Maths A\*, Physics A\*, Maths A.
 
 ## CORE SKILLS
@@ -50,4 +51,5 @@ Thesis: carbon-reduction roadmap for SMEs (49% emissions cut, 10-year payback). 
 Enterprise account growth · New business and expansion · Partner-funded programmes · Commercial negotiation and pricing · Senior and C-level stakeholders · Multi-market Europe (UK, France, Italy, Spain, Portugal, Germany, Sweden) · Data-driven business cases · AI automation (Claude, API integrations)
 
 **Languages:** English (native), Portuguese (B1), Spanish (A2), Swahili (A2)
+
 **Interests:** Kenya and African fintech (M-Pesa); university hockey captain; tennis and squash; fly fishing
