@@ -107,3 +107,20 @@ account bans (LinkedIn especially enforces this aggressively). Plan instead:
 6. Register free API keys for Adzuna and Reed when ready to wire up sourcing.
 7. Check availability of the official Indeed MCP connector on the personal
    account.
+
+## Updates since this handover (27 Oct 2026)
+
+The data-handling decisions above are unchanged. These later decisions supersede parts of the plan:
+
+- **Interface:** the Job Hunt app (private claude.ai page, see `app/`) replaces the morning review queue.
+  It runs several **projects** in parallel, each with its own plain-English brief and filters; these
+  replace the single `profile/current-search-focus.md`. Review is two-stage (rank and triage up to 50 a
+  day, then a deep look at "Interested" jobs), with reasons recorded for every "no".
+- **Sources:** Indeed connector and Reed API are live-tested (Reed key stored as an environment network
+  secret, never in the repo). Adzuna dropped. Claude in Chrome is an optional, off-by-default toggle
+  (user-present, read-only); LinkedIn/Glassdoor otherwise via alert emails as planned.
+- **Submission:** assisted apply. Claude can fill an application in Chrome; Harry always presses Submit.
+- **Profile:** a living master profile (app + Drive) is the single source of truth, grown through
+  approved profile updates. The repo evidence bank is archived in `cv/archive/`. Most recent figure wins;
+  ask if in doubt.
+- **Nightly run:** 8pm UK, planned (Phase 2). Blueprint: `docs/blueprint.html`.

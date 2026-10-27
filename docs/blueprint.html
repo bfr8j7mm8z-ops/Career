@@ -164,7 +164,7 @@ footer{margin-top:60px;color:var(--mute);font-size:13px;border-top:1px solid var
 
 <div class="wrap">
 <header>
-  <div class="eyebrow">Career repo · system blueprint · version 2.2 · 25 Oct 2026</div>
+  <div class="eyebrow">Career repo · system blueprint · version 2.3 · 27 Oct 2026</div>
   <h1 style="margin-top:8px">Job Hunt Blueprint</h1>
   <p class="lede">A phone-friendly app where each job hunt is its own <b>project</b>. You describe a project in plain English, set the filters, and press Run. Claude searches, cleans and scores the results, and new matches arrive as notifications. You swipe through them, and for the ones you like Claude researches the company and writes a CV and cover letter that go through a tough review loop. It then helps you apply and tracks every application. A weekly review keeps improving the whole thing.</p>
   <p class="lede" style="margin-top:6px"><b>The app is live:</b> <a href="https://claude.ai/artifact/FxPHKGLJFPqBe4FMdTjgRK" target="_blank" rel="noopener noreferrer">open Job Hunt</a>. Version 2 folds in your answers and your seven comments. Changes are marked <span class="changed" style="margin:0">new in v2</span>.</p>
@@ -255,6 +255,7 @@ footer{margin-top:60px;color:var(--mute);font-size:13px;border-top:1px solid var
       <div class="row"><div class="name">CVs<small>master plus older versions</small></div><div class="what">The source of every claim. Older versions show how you've described things before.</div><div class="where">Profile uploads, kept as <code>cv/master-cv.md</code></div><div class="st"><span class="pill p-you">needs you</span></div></div>
       <div class="row"><div class="name">Cover letters<small>as many as you have</small></div><div class="what">Very important: your best guide to tone and voice. The gauntlet's voice check compares new letters against these.</div><div class="where">Profile uploads, kept in <code>cover-letters/</code></div><div class="st"><span class="pill p-you">needs you</span></div></div>
       <div class="row"><div class="name">Other evidence<small>optional</small></div><div class="what">Performance reviews, LinkedIn export, project write-ups, award or deal summaries. More true detail means stronger tailoring without inventing anything.</div><div class="where">Profile uploads</div><div class="st"><span class="pill p-you">needs you</span></div></div>
+      <div class="row"><div class="name">Living master profile <span class="changed">new in v2.3</span><small>one profile, always growing</small></div><div class="what">The single source of truth for facts, figures, stories and style. When a session learns something new, Claude suggests an update; you approve it in Profile and it's added and logged. The most recent figure wins, and Claude asks if unsure. The old repo evidence bank is archived.</div><div class="where">App Profile, original in Drive</div><div class="st"><span class="pill p-ok">built</span></div></div>
       <div class="row"><div class="name">Role context and voice notes</div><div class="what">Claude drafts these from your uploads and what you tell it, and you correct them. Nothing is pulled from work systems.</div><div class="where"><code>profile/</code></div><div class="st"><span class="pill p-todo">planned</span></div></div>
     </div>
   </div>
@@ -330,6 +331,7 @@ footer{margin-top:60px;color:var(--mute);font-size:13px;border-top:1px solid var
     <div class="step"><div class="no">9</div><div><h3>Assisted apply <span class="changed">new</span></h3><p>At your computer with Chrome on, Claude opens the application, fills it from your approved CV, letter and profile, then stops for you to check and press Submit. It asks you rather than guessing any question it can't answer truthfully. It never creates accounts or gets past CAPTCHAs. Without Chrome, you get a ready-to-paste pack.</p></div><div class="tags"><span class="pill p-todo">Claude</span><span class="pill p-you">you submit</span></div></div>
     <div class="step"><div class="no">10</div><div><h3>Track</h3><p>Stage, reply emails, follow-ups due at 7 to 10 days, likely ghosting at 21+, and a suggested next step for each application.</p></div><div class="tags"><span class="pill p-todo">Claude</span></div></div>
     <div class="step"><div class="no">11</div><div><h3>Weekly improvement loop <span class="changed">new</span></h3><p>Every Sunday: what this week's "Why I said no" bank says, which projects, sources and filters produce jobs you like, which CVs got replies, and gaps in your profile or evidence. Proposes concrete changes in Insights for you to approve. It never makes silent strategy changes, and says "no clear pattern yet" when there isn't one.</p></div><div class="tags"><span class="pill p-todo">schedule</span></div></div>
+    <div class="step"><div class="no">12</div><div><h3>Profile updates <span class="changed">new in v2.3</span></h3><p>At the end of a session Claude suggests what it learned about you ("Dyson DACH signed, +£5K/m"). You approve or reject each one in Profile. Approved ones go into the master profile at the start of the next session, with a line in its update log. Nothing changes silently.</p></div><div class="tags"><span class="pill p-info">UI built</span><span class="pill p-you">you approve</span></div></div>
   </div>
   <div class="callout warn"><b>Still never automated:</b> pressing Submit, creating accounts on job sites, messaging recruiters, solving CAPTCHAs, or running Chrome when you aren't there.</div>
 </section>
@@ -460,6 +462,7 @@ footer{margin-top:60px;color:var(--mute);font-size:13px;border-top:1px solid var
     <div class="row"><div class="name">Outreach and interview prep</div><div class="what">No interview prep. Outreach: yes, Phase 4. Claude suggests who to contact and drafts a note you send yourself.</div><div class="where"></div><div class="st"><span class="pill p-ok">agreed</span></div></div>
     <div class="row"><div class="name">Where data lives</div><div class="what">Repo = backend logic, app database = live data.</div><div class="where"></div><div class="st"><span class="pill p-ok">agreed</span></div></div>
     <div class="row"><div class="name">Master documents</div><div class="what">Master profile = facts and numbers. Your two latest GoCardless applications (CSAM CV and letter, Jun 2026; Partnerships CV and letter, Apr 2026) = structure and voice. Loaded into the app's Profile.</div><div class="where"></div><div class="st"><span class="pill p-ok">agreed</span></div></div>
+    <div class="row"><div class="name">Living profile and old evidence bank</div><div class="what">The master profile is the single living profile, grown through approved updates. The other session's evidence bank is merged and archived; its style notes, layouts by role and extra evidence were folded into the profile (section 14). Most recent figure wins; ask if in doubt.</div><div class="where"></div><div class="st"><span class="pill p-ok">agreed</span></div></div>
     <div class="row"><div class="name">Old v1 page</div><div class="what">Keep it as a desktop fallback, or retire it once the app works?</div><div class="where"></div><div class="st"><span class="pill p-warn">decide</span></div></div>
   </div>
 </section>
@@ -478,5 +481,5 @@ footer{margin-top:60px;color:var(--mute);font-size:13px;border-top:1px solid var
   </div>
 </section>
 
-<footer>Version 2.2 · 25 Oct 2026 · branch claude/zen-shannon-sf0ved.</footer>
+<footer>Version 2.3 · 27 Oct 2026 · branch claude/zen-shannon-sf0ved.</footer>
 </div>

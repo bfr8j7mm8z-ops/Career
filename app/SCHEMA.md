@@ -79,6 +79,19 @@ Source-of-truth rule: facts and numbers come from the "Master profile" doc (it m
 and which old CV numbers to retire). Master CVs and cover letters set structure, tone and voice; where
 their numbers disagree with the master profile, the master profile wins.
 
+The master profile row (`d-master-profile`) also carries `profile_version` (int), `updated_at` and
+`previous_asset_ids[]` (older versions, kept for history). To change the profile: read the current
+asset, apply approved updates, upload the new file as an asset, then update this row.
+
+## profile_updates/{update_id}
+The living-profile loop. Claude proposes; Harry decides in the app (Profile → Suggested profile updates);
+Claude applies approved ones to the master profile and logs them in its update log.
+```
+text (the change, in one or two plain sentences), section (which master-profile section), reason
+(where it came from, e.g. "you mentioned it in chat"), status: "proposed" | "approved" | "rejected" | "applied",
+proposed_at, decided_at, applied_at, profile_version (the version it was applied in)
+```
+
 ## insights/{week_id}
 Written by the weekly review (Phase 4). `week` = Monday's date.
 ```

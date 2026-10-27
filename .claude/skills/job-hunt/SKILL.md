@@ -127,6 +127,20 @@ Chrome (not available in the cloud and not to be run unattended), run steps 1-4,
 decision and skipped source into the queue notes. Do not draft in unattended runs unless
 `pending` already lists interested jobs.
 
+## Living profile (every session)
+
+The master profile grows over time. Nothing changes silently.
+- **Start of a session:** check `profile_updates` for `status: "approved"`. Apply each one to the master
+  profile (read the current asset, edit, upload the new version, update `d-master-profile`: new
+  `asset_id`, `profile_version` + 1, old id appended to `previous_asset_ids`), add a line to its update
+  log, and set the update to `applied` with `applied_at` and `profile_version`.
+- **During or at the end of a session:** when you learn something new about Harry (a new number, a
+  closed deal, a preference, a correction), write a `profile_updates` row with `status: "proposed"`,
+  a plain one-or-two-sentence `text`, the `section` it belongs in and a `reason`. Tell Harry it's waiting
+  in Profile. Don't edit the profile directly unless he has just agreed the change in chat (then record
+  it as `applied`).
+- If a new fact conflicts with the profile, the most recent wins; flag the conflict in the update text.
+
 ## Ground rules
 
 - No auto-submitting, no creating accounts, no messaging employers or recruiters, no CAPTCHA work.

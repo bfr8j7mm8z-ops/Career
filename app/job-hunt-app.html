@@ -179,7 +179,7 @@ const blankProject = () => ({
 /* ------------------------------------------------------------------ state */
 const S = {
   db: null, assets: null, sample: null, status: "loading",
-  projects: [], jobs: [], decisions: {}, deep: {}, apps: [], docs: [], runs: [], insights: [],
+  projects: [], jobs: [], decisions: {}, deep: {}, apps: [], docs: [], runs: [], insights: [], updates: [],
   view: "home", pid: null, ptab: "review", draft: null, dirty: false, changedKeys: new Set(),
   period: "all", confirm: null,
 };
@@ -233,6 +233,7 @@ async function boot() {
   sub(db.collection("profile_docs").limit(300), r => S.docs = r.sort((a, b) => (b.uploaded_at || "").localeCompare(a.uploaded_at || "")));
   sub(db.collection("runs").orderBy("requested_at", "desc").limit(40), r => S.runs = r);
   sub(db.collection("insights").orderBy("week", "desc").limit(12), r => S.insights = r);
+  sub(db.collection("profile_updates").orderBy("proposed_at", "desc").limit(200), r => S.updates = r);
 }
 
 /* ------------------------------------------------------------------ navigation */
@@ -260,7 +261,7 @@ function renderRail() {
   rail.append(list);
   const g = h("div", {class: "navlist"});
   const pending = S.apps.filter(a => a.follow_up && a.follow_up <= new Date().toISOString().slice(0, 10) && !["Rejected", "Withdrawn", "Offer"].includes(a.status)).length;
-  for (const [v, label, n] of [["applications", "Applications", pending || null], ["insights", "Why I said no", null], ["profile", "Profile", S.docs.length || null]]) {
+  for (const [v, label, n] of [["applications", "Applications", pending || null], ["insights", "Why I said no", null], ["profile", "Profile", S.updates.filter(u => u.status === "proposed").length || null]]) {
     g.append(h("button", {class: "navbtn", "aria-current": String(S.view === v), onclick: () => go(v)}, label, n ? h("span", {class: "count"}, n) : null));
   }
   rail.append(g);
@@ -678,7 +679,8 @@ function viewInsights(col) {
 
 /* ------------------------------------------------------------------ profile */
 function viewProfile(col) {
-  col.append(h("div", {class: "head"}, h("div", {}, h("h1", {}, "Profile"), h("p", {class: "sub"}, "Everything that tells Claude who you are: CVs, cover letters, annual reviews, profile reports. The more real detail, the better the ranking and the writing."))));
+  col.append(h("div", {class: "head"}, h("div", {}, h("h1", {}, "Profile"), h("p", {class: "sub"}, "Everything that tells Claude who you are. Your master profile is the single source of truth; it grows as you approve the updates Claude suggests."))));
+  profileUpdates(col);
   if (!S.assets) {
     col.append(h("div", {class: "banner warn"}, "Uploads are only available to the page's owner and editors."));
   } else {
@@ -727,6 +729,31 @@ function viewProfile(col) {
     }
     col.append(card);
   }
+}
+
+function profileUpdates(col) {
+  const pending = S.updates.filter(u => u.status === "proposed");
+  const done = S.updates.filter(u => u.status !== "proposed");
+  if (!S.updates.length) return;
+  const card = h("div", {class: "card", style: "display:grid;gap:10px"},
+    h("div", {class: "section-title"}, h("h2", {}, "Suggested profile updates"), h("span", {class: "mute small"}, pending.length ? `${pending.length} waiting for you` : "All reviewed")),
+    h("p", {class: "mute small"}, "Claude suggests these when a session learns something new about you. Approved ones are added to your master profile and recorded in its update log."));
+  for (const u of pending) {
+    card.append(h("div", {style: "border-top:1px solid var(--line);padding-top:10px;display:grid;gap:6px"},
+      h("p", {}, u.text || ""),
+      h("p", {class: "mute small"}, [u.section ? "Section: " + u.section : null, u.reason, u.proposed_at ? "Suggested " + agoText(u.proposed_at) : null].filter(Boolean).join(" · ")),
+      h("div", {class: "acts"},
+        h("button", {class: "btn yes", onclick: () => write(() => S.db.doc("profile_updates/" + u.id).update({status: "approved", decided_at: nowIso()}), "Approved. Claude adds it to your profile")}, "Approve"),
+        h("button", {class: "btn no", onclick: () => write(() => S.db.doc("profile_updates/" + u.id).update({status: "rejected", decided_at: nowIso()}), "Rejected")}, "Reject"))));
+  }
+  if (done.length) {
+    const label = {approved: ["ok", "Approved, not yet added"], applied: ["ok", "Added"], rejected: ["bad", "Rejected"]};
+    card.append(h("details", {}, h("summary", {}, `History (${done.length})`),
+      h("div", {style: "display:grid;gap:8px;margin-top:8px"}, done.map(u => h("div", {class: "small"},
+        h("span", {class: "chip " + (label[u.status]?.[0] || "")}, label[u.status]?.[1] || u.status), " ", u.text || "",
+        h("span", {class: "mute"}, (u.applied_at || u.decided_at) ? " · " + agoText(u.applied_at || u.decided_at) : ""))))));
+  }
+  col.append(card);
 }
 
 function loadMammoth() {

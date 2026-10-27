@@ -12,6 +12,11 @@ reasons and gaps.
   from the closest one (CS/AM track or partnerships track). Where their numbers disagree with the
   master profile, the master profile wins.
 - Pick a summary variant, bullets and stories from the master profile by matching its tags to the job.
+- **Conflicting figures: the most recent wins.** If two figures differ and it matters, ask Harry which
+  to use before drafting further. Don't guess, and never fall back to an archived number.
+- Follow the master profile's section 14: style rules (British English, builder voice, banned bullet),
+  layout by target role, and when to use extra evidence from past CVs. The old repo evidence bank in
+  `cv/archive/` is superseded: don't draft from it.
 
 ## CV
 
