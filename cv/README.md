@@ -4,7 +4,10 @@
 - **Living master profile** (single source of truth for facts, figures, stories and style):
   - Live copy: the Job Hunt app's Profile, doc `d-master-profile` (`kind: "Master profile"`), read and
     written with the ArtifactData / Artifact tools. See `app/SCHEMA.md`.
-  - Original: Google Drive `Career / Master CV` folder ("Harry Stichbury master career profile").
+  - Drive copy: Google Drive `Career / Master CV`, "Harry Stichbury master career profile (living, vN)"
+    (v2 doc id `1CTWqSsF6O7rl8jIHyxpUh_7s5Ivek5fQQIeR23Wp49g`; the app row stores the current id in
+    `drive_doc_id`). The app copy is the live one; the Drive copy is replaced after every update. Older
+    Drive versions are renamed "SUPERSEDED …" and kept.
   - It is **not** stored in this repo: it was compiled partly from work systems, and `HANDOVER.md` keeps
     work-connector data out of the repo.
 - **Master CVs and cover letters** (structure and voice): the two most recent GoCardless applications

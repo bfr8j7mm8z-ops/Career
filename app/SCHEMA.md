@@ -80,7 +80,8 @@ and which old CV numbers to retire). Master CVs and cover letters set structure,
 their numbers disagree with the master profile, the master profile wins.
 
 The master profile row (`d-master-profile`) also carries `profile_version` (int), `updated_at` and
-`previous_asset_ids[]` (older versions, kept for history). To change the profile: read the current
+`previous_asset_ids[]` (older versions, kept for history) and `drive_doc_id` (the matching Google Doc in
+Drive `Career / Master CV`). To change the profile: read the current
 asset, apply approved updates, upload the new file as an asset, then update this row.
 
 ## profile_updates/{update_id}

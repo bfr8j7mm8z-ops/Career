@@ -134,6 +134,11 @@ The master profile grows over time. Nothing changes silently.
   profile (read the current asset, edit, upload the new version, update `d-master-profile`: new
   `asset_id`, `profile_version` + 1, old id appended to `previous_asset_ids`), add a line to its update
   log, and set the update to `applied` with `applied_at` and `profile_version`.
+- **Then sync Drive:** the Drive tools can't edit a Doc's contents, so create the new version as a Google
+  Doc in `Career / Master CV` (folder `1uhGoJTSvja2Raq3xewjICfN-gIABIk8u`) titled "Harry Stichbury master
+  career profile (living, vN) DD-MM-YYYY", read it back and check it matches, rename the previous doc
+  (`drive_doc_id`) to start with "SUPERSEDED", and store the new id in `drive_doc_id`. Don't delete
+  old versions.
 - **During or at the end of a session:** when you learn something new about Harry (a new number, a
   closed deal, a preference, a correction), write a `profile_updates` row with `status: "proposed"`,
   a plain one-or-two-sentence `text`, the `section` it belongs in and a `reason`. Tell Harry it's waiting

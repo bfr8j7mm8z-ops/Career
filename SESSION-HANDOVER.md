@@ -8,7 +8,8 @@
   `app/SCHEMA.md`. Phase 1 is live (projects, filters, two-stage triage, "Why I said no", applications,
   profile uploads, suggested profile updates).
 - **Blueprint** (the plan): https://claude.ai/artifact/6WjCRPKJ3FGmgZgVNwjLAK, source `docs/blueprint.html`.
-- **Profile:** living master profile v2 in the app's Profile (and the original in Drive `Career / Master CV`).
+- **Profile:** living master profile v2, identical in the app's Profile and in Drive `Career / Master CV`
+  ("… (living, v2) 27-10-2026"; the v1 doc there is renamed SUPERSEDED). The app copy is the live one.
   Single source of truth; not in the repo. Master CVs/cover letters: the two latest GoCardless applications.
 - **Engine:** `automations/jobhunt/` (Python stdlib; `python3 -m unittest automations.jobhunt.tests.test_engine`).
 - Drive: `Career` (`1yRg0lQ2JkNlWP7dCTTIi9nUEUip6dYwW`) → `Applications` (`1nF5mc-hDJ-f8cLd5qiQ6WA23L3F_6ZZu`)
