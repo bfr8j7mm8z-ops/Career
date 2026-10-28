@@ -79,6 +79,12 @@ never used in scheduled runs. Details in `.claude/skills/job-hunt/references/`.
 API keys (Reed is free; Adzuna may cost ~£8/month and is optional): see `references/sources.md` for how to get them, then copy
 `.env.example` to `.env`. Sources without keys are skipped with a note on the page, not an error.
 
+### Styled CV and cover letter files
+
+`python3 -m automations.docs.render cv|letter <markdown> <out.docx> [--pdf]` turns an application's
+`cv-vN.md` / `cover-letter-vN.md` into Word and PDF in the GoCardless CSAM style. Needs
+`python-docx` and, for PDF, LibreOffice. See `.claude/skills/job-hunt/references/drafting.md`.
+
 ## Not set up yet
 
 - Nightly scheduled run (a scheduled Claude task that runs the skill unattended and commits

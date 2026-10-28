@@ -18,6 +18,44 @@ reasons and gaps.
   layout by target role, and when to use extra evidence from past CVs. The old repo evidence bank in
   `cv/archive/` is superseded: don't draft from it.
 
+## Working doc (one per application)
+
+Draft in a Claude Doc, not Google Docs, so Harry can comment and edit inside Claude.
+
+1. Create the doc "<Company> · <Role> · application" with three tabs, in order: **How this was
+   made** (Inputs, Gauntlet scorecard, What changed from the last version), **CV**, **Cover letter**.
+2. Write `workspace` on the application row (`app/SCHEMA.md`): doc link, version, steps done, and
+   `open_question`.
+3. Ask at most **one** question, as a doc comment anchored on the words it concerns.
+4. Keep the markdown copies in the application folder in step (`cv-vN.md`, `cover-letter-vN.md`).
+
+## Gauntlet (required before Harry sees a draft)
+
+Decode the posting into requirements and keywords, map each to master-profile evidence, draft, then
+run six critics: **truth checker** (every figure traced to a ✅ line; credit levels respected),
+**6-second recruiter**, **hiring manager** for this role, **ATS reader**, **voice/humaniser**, and
+**red team** (what an interviewer could catch out). Fix and re-run, up to three rounds. Record each
+critic's finding, the fix and the final result in the "Gauntlet scorecard" table.
+
+## Comments, edits and the learning journal
+
+When Harry says "process my comments on <company>" (or at session start, for any workspace with
+`open_question` set or new comments): list the doc's comments, act on each (answer questions in the
+thread; make requested changes), reply in each thread, then write one `edit_journal` row per change
+(said, change, lesson, scope). Before drafting any application, read the journal. When the same
+lesson appears on two or more applications, propose it as a style rule via `profile_updates`
+and set those rows to `status: "proposed"`.
+
+## Styled files
+
+`python3 -m automations.docs.render cv <folder>/cv-vN.md <out>.docx --pdf` (and `letter` for the
+cover letter) builds Word and PDF in the GoCardless CSAM style: Calibri, one A4 page, name 16pt
+bold blue (#1A5276), section headings 11pt bold capitals with a blue rule, body 10pt (#2C3E50),
+grey details and right-aligned dates. The PDF renders with Carlito (metric-identical to Calibri)
+when Calibri isn't installed, so line breaks match Word. Check it is one page. Upload the PDFs to
+the app's file store (Artifact asset upload) and store the ids on `workspace`; send the files to
+Harry for the Drive folder.
+
 ## CV
 
 - Start from the master CV. Trim and reorder so the most relevant experience leads. Adjust

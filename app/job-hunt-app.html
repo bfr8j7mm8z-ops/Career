@@ -122,6 +122,19 @@ textarea{resize:vertical;min-height:110px;line-height:1.5}
 .app-row{display:grid;grid-template-columns:minmax(0,1.4fr) 170px 150px;gap:10px 14px;align-items:start}
 @media(max-width:700px){.app-row{grid-template-columns:1fr}}
 
+/* process */
+.steps{display:grid;gap:8px;counter-reset:step}
+.step{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.step .n{width:26px;height:26px;border-radius:99px;display:grid;place-items:center;font-size:12.5px;font-weight:600;background:var(--soft);color:var(--mute)}
+.step.live{border-color:var(--accent)}
+.step.live .n{background:var(--accent);color:var(--bg)}
+.step.planned{opacity:.7}
+.phase{margin:10px 0 2px}
+.ws{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:10px}
+.ws .links{display:flex;flex-wrap:wrap;gap:6px}
+.ws a.btn{text-decoration:none;color:inherit}
+.ws a.btn.primary{color:var(--on-accent)}
+
 /* sheet */
 dialog{border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);width:min(480px,calc(100% - 32px));padding:18px}
 dialog::backdrop{background:rgba(10,15,20,.45)}
@@ -179,7 +192,7 @@ const blankProject = () => ({
 /* ------------------------------------------------------------------ state */
 const S = {
   db: null, assets: null, sample: null, status: "loading",
-  projects: [], jobs: [], decisions: {}, deep: {}, apps: [], docs: [], runs: [], insights: [], updates: [],
+  projects: [], jobs: [], decisions: {}, deep: {}, apps: [], docs: [], runs: [], insights: [], updates: [], journal: [],
   view: "home", pid: null, ptab: "review", draft: null, dirty: false, changedKeys: new Set(),
   period: "all", confirm: null,
 };
@@ -234,6 +247,7 @@ async function boot() {
   sub(db.collection("runs").orderBy("requested_at", "desc").limit(40), r => S.runs = r);
   sub(db.collection("insights").orderBy("week", "desc").limit(12), r => S.insights = r);
   sub(db.collection("profile_updates").orderBy("proposed_at", "desc").limit(200), r => S.updates = r);
+  sub(db.collection("edit_journal").orderBy("at", "desc").limit(300), r => S.journal = r);
 }
 
 /* ------------------------------------------------------------------ navigation */
@@ -249,6 +263,7 @@ function go(view, pid = null, ptab = null) {
 function renderRail() {
   const rail = $("#rail"); rail.innerHTML = "";
   rail.append(h("div", {class: "brand"}, h("b", {}, "Job Hunt"), h("span", {class: "mono mute"}, "beta")));
+  rail.append(h("button", {class: "navbtn", "aria-current": String(S.view === "process"), onclick: () => go("process")}, "Process: how applications are made"));
   const list = h("div", {class: "navlist"});
   list.append(h("div", {class: "label", style: "margin:0 0 6px 10px"}, "Projects"));
   for (const p of S.projects.filter(p => p.status !== "archived")) {
@@ -267,7 +282,7 @@ function renderRail() {
   rail.append(g);
 
   const b = $("#bottom"); b.innerHTML = "";
-  for (const [v, label] of [["home", "Projects"], ["applications", "Applications"], ["insights", "Why no"], ["profile", "Profile"]]) {
+  for (const [v, label] of [["home", "Projects"], ["applications", "Applications"], ["process", "Process"], ["insights", "Why no"], ["profile", "Profile"]]) {
     const cur = v === "home" ? (S.view === "home" || S.view === "project") : S.view === v;
     b.append(h("button", {"aria-current": String(cur), onclick: () => go(v)}, label));
   }
@@ -290,7 +305,7 @@ function render() {
   }
   if (S.status === "error") col.append(h("div", {class: "banner bad"}, "Lost connection to your saved data. Reload the page to reconnect."));
   if (S.view === "project" && !project()) S.view = "home";
-  ({home: viewHome, project: viewProject, applications: viewApps, insights: viewInsights, profile: viewProfile}[S.view] || viewHome)(col);
+  ({home: viewHome, project: viewProject, applications: viewApps, process: viewProcess, insights: viewInsights, profile: viewProfile}[S.view] || viewHome)(col);
 }
 
 /* ------------------------------------------------------------------ home */
@@ -642,8 +657,81 @@ function viewApps(col) {
         h("div", {class: "field"}, h("label", {class: "label", for: "st-" + a.id}, "Stage"), status),
         h("div", {class: "field"}, h("label", {class: "label", for: "fu-" + a.id}, "Follow up on"), fu)),
       h("div", {class: "field"}, h("label", {class: "label", for: "nx-" + a.id}, "Next step"), next),
+      workspacePanel(a),
       h("details", {}, h("summary", {}, "Notes"), h("div", {style: "margin-top:6px"}, notes)),
       h("div", {class: "row", style: "justify-content:flex-end"}, rm)));
+  }
+}
+
+/* One place per application: the working doc, the files and how far through the process it is. */
+function workspacePanel(a) {
+  const w = a.workspace;
+  if (!w) return h("p", {class: "mute small"}, "No workspace yet. Ask Claude to “draft the application for " + (a.company || "this job") + "” and a working doc appears here.");
+  const link = (href, label, primary) => { const u = safeUrl(href); return u ? h("a", {class: "btn" + (primary ? " primary" : ""), href: u, target: "_blank", rel: "noopener noreferrer"}, label) : null; };
+  const asset = (id, label) => id && /^[0-9a-f]{32}$/.test(id) ? h("a", {class: "btn", href: "/_blob/" + id, target: "_blank", rel: "noopener"}, label) : null;
+  const g = w.gauntlet || {};
+  const steps = new Set(w.steps_done || []);
+  const done = PROCESS.filter(st => st.app && steps.has(st.id)).length, total = PROCESS.filter(st => st.app).length;
+  const lessons = S.journal.filter(j => j.app_id === a.id).length;
+  return h("div", {class: "ws"},
+    h("div", {class: "row", style: "justify-content:space-between"}, h("b", {}, "Workspace"),
+      h("span", {class: "chips"}, w.version ? h("span", {class: "chip"}, "v" + w.version) : null,
+        g.result ? h("span", {class: "chip " + (g.result === "Pass" ? "ok" : "warn")}, `Gauntlet: ${g.result}${g.rounds ? ` · ${g.rounds} rounds` : ""}`) : null,
+        h("span", {class: "chip"}, `${done}/${total} steps`), lessons ? h("span", {class: "chip"}, `${lessons} lesson${lessons > 1 ? "s" : ""}`) : null)),
+    w.open_question ? h("div", {class: "banner warn small"}, "Waiting on you: " + w.open_question) : null,
+    h("div", {class: "links"}, link(w.doc_url, "Open working doc", true), asset(w.cv_pdf_asset, "CV (PDF)"), asset(w.letter_pdf_asset, "Letter (PDF)"),
+      link(w.drive_folder_url, "Drive folder"), link(a.url, "Job posting")),
+    h("p", {class: "mute small"}, "Comment or edit in the doc, then tell Claude “process my comments on " + (a.company || "this application") + "”. What changes is logged in the journal on the Process page."));
+}
+
+/* ------------------------------------------------------------------ process */
+// app: true = a step each application goes through (counted on the workspace panel).
+const PROCESS = [
+  {id: "search", phase: "Find", title: "Search", body: "Claude searches Reed and Indeed against each project's brief and filters.", state: "live", note: "On request for now; nightly at 8pm in Phase 2"},
+  {id: "rank", phase: "Find", title: "Rank", body: "Up to 50 new jobs a day, scored against the brief, best first.", state: "live"},
+  {id: "triage", phase: "Find", title: "You triage", body: "Interested, or Not for me with reasons. Reasons feed “Why I said no”.", state: "live"},
+  {id: "deep", phase: "Find", title: "Closer look", body: "Company intel and a fit score for jobs marked Interested; you shortlist or pass.", state: "live"},
+  {id: "decode", phase: "Make", app: true, title: "Decode the job", body: "Requirements and keywords from the posting, mapped to evidence in your master profile.", state: "live"},
+  {id: "draft", phase: "Make", app: true, title: "Draft in a working doc", body: "One Claude Doc per application: “How this was made”, CV and Cover letter tabs. Facts only from the master profile.", state: "live"},
+  {id: "gauntlet", phase: "Make", app: true, title: "Gauntlet", body: "Six critics (truth, 6-second recruiter, hiring manager, ATS, voice, red team), up to three rounds, scorecard in the doc.", state: "live"},
+  {id: "review", phase: "Make", app: true, title: "You review", body: "Comment or edit in the doc. Claude asks at most one question at a time, as a comment.", state: "live"},
+  {id: "learn", phase: "Make", app: true, title: "Learn", body: "Claude processes your comments and edits and logs each lesson in the journal; repeat lessons become style rules you approve.", state: "live", note: "Runs when you ask, or at session start"},
+  {id: "export", phase: "Make", app: true, title: "Export", body: "Styled PDF and Word from your GoCardless template (Calibri, one page), saved to this app and Google Drive.", state: "live", note: "Drive copy uploaded by you for now"},
+  {id: "apply", phase: "Apply", app: true, title: "Assisted apply", body: "Claude fills the application form in Chrome; you check it and press Submit.", state: "planned", note: "Chrome is off; turn it on in config when ready"},
+  {id: "track", phase: "Apply", app: true, title: "Track and follow up", body: "Stage, next step and follow-up dates in Applications.", state: "live"},
+  {id: "outreach", phase: "Apply", title: "Outreach drafts", body: "Short notes to the hiring team, drafted for you to send.", state: "planned", note: "Phase 4"},
+  {id: "improve", phase: "Improve", title: "Weekly review", body: "Claude reads your “no” reasons and the journal, then suggests changes to briefs and style rules.", state: "planned", note: "Phase 2"},
+];
+
+function viewProcess(col) {
+  col.append(h("div", {class: "head"}, h("div", {}, h("h1", {}, "Process"), h("p", {class: "sub"}, "How a job becomes an application. Highlighted steps are running now; faded ones are planned."))));
+  const active = S.apps.filter(a => a.workspace);
+  const used = id => active.filter(a => (a.workspace.steps_done || []).includes(id)).length;
+  let phase = "";
+  const list = h("div", {class: "steps"});
+  PROCESS.forEach((st, i) => {
+    if (st.phase !== phase) { phase = st.phase; list.append(h("div", {class: "label phase"}, phase)); }
+    const n = st.app ? used(st.id) : 0;
+    list.append(h("div", {class: "step " + st.state},
+      h("span", {class: "n", "aria-hidden": "true"}, String(i + 1)),
+      h("div", {style: "display:grid;gap:3px;min-width:0"},
+        h("div", {class: "row", style: "justify-content:space-between"}, h("b", {}, st.title),
+          h("span", {class: "chips"}, st.state === "planned" ? h("span", {class: "chip"}, "Planned") : h("span", {class: "chip ok"}, "In use"),
+            n ? h("span", {class: "chip"}, `${n} application${n > 1 ? "s" : ""}`) : null)),
+        h("span", {class: "small"}, st.body), st.note ? h("span", {class: "small mute"}, st.note) : null)));
+  });
+  col.append(list);
+
+  col.append(h("div", {class: "section-title", style: "margin-top:14px"}, h("h2", {}, "What Claude has learned"), h("span", {class: "mute small"}, `${S.journal.length} entr${S.journal.length === 1 ? "y" : "ies"}`)));
+  col.append(h("p", {class: "mute small"}, "Every comment and edit you make on a draft, and what Claude changed because of it. Lessons that apply to every application become style rules once you approve them in Profile."));
+  if (!S.journal.length) { col.append(h("div", {class: "card empty"}, h("p", {}, "Nothing yet. Your first comments on a working doc will show here."))); return; }
+  for (const j of S.journal) {
+    const scopeChip = j.status === "rule" ? h("span", {class: "chip ok"}, "Style rule") : j.status === "proposed" ? h("span", {class: "chip warn"}, "Proposed rule") : h("span", {class: "chip"}, j.scope === "all" ? "All applications" : "This application");
+    col.append(h("div", {class: "card", style: "display:grid;gap:6px"},
+      h("div", {class: "row", style: "justify-content:space-between"}, h("span", {class: "label"}, [j.company, (j.at || "").slice(0, 10), j.source === "edit" ? "your edit" : j.source === "claude" ? "Claude's question" : "your comment"].filter(Boolean).join(" · ")), scopeChip),
+      j.said ? h("p", {class: "small"}, h("span", {class: "mute"}, "Said: "), "“" + j.said + "”") : null,
+      j.change ? h("p", {class: "small"}, h("span", {class: "mute"}, "Changed: "), j.change) : null,
+      j.lesson ? h("p", {class: "small"}, h("b", {}, "Lesson: "), j.lesson) : null));
   }
 }
 

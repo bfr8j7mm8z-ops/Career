@@ -57,7 +57,32 @@ Created by the app on "Shortlist to apply"; edited by the user; runs may update 
 ```
 job_id, project_id, title, company, url, location,
 status: Preparing | Ready to apply | Applied | Interviewing | Offer | Rejected | Withdrawn | Ghosted,
-next_step, follow_up, notes, created_at, updated_at
+next_step, follow_up, notes, created_at, updated_at,
+workspace: {                       # written by Claude when drafting starts; shown on the card
+  doc_url, doc_id,                 # the Claude Doc working doc (tabs: How this was made, CV, Cover letter)
+  version,                         # draft version (1, 2, ...)
+  cv_pdf_asset, letter_pdf_asset,  # asset ids of the styled PDFs in this app's file store
+  drive_folder_url,                # Google Drive folder holding the final files
+  gauntlet: {result: "Pass"|"Needs work", rounds, fixes},
+  steps_done[],                    # ids from the app's PROCESS list: decode, draft, gauntlet, review,
+                                   # learn, export, apply, track
+  open_question,                   # the one thing Claude is waiting on Harry for, or empty
+  updated_at
+}
+```
+
+## edit_journal/{entry_id}
+Written by Claude when it processes comments and edits on a working doc (and for its own gauntlet
+lessons). Shown under "What Claude has learned" on the Process page. Id: `j-YYYY-MM-DD-<company>-<n>`.
+```
+app_id, company, at,
+source: "comment" | "edit" | "claude",
+said,      # what Harry wrote, or what the critic found
+change,    # what Claude changed in response
+lesson,    # the general rule, in one sentence
+scope: "application" | "all",
+status: "noted" | "proposed" | "rule"   # "proposed" once raised as a profile_updates style rule;
+                                        # "rule" once Harry approves it
 ```
 
 ## runs/{run_id}
