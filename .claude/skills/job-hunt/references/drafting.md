@@ -82,7 +82,8 @@ Specific, a little informal is fine, nothing that could be sent to any company.
 
 ## Tone pass (required)
 
-Remove AI-isms: "spearheaded", "leveraged", "results-driven", "passionate about", "proven track
+No semicolons in CVs or letters: Harry finds they read as AI-written; use a full stop, a comma
+or "and". Remove AI-isms: "spearheaded", "leveraged", "results-driven", "passionate about", "proven track
 record", "synergy", "seamlessly", "cutting-edge", stacked adjectives. Vary bullet length and
 shape: not every bullet is verb + metric + impact. Use the `the-humanizer` and
 `cv-qa-humaniser` skills if available.

@@ -4,7 +4,7 @@ London, UK | +44 7860 883048 | harrystichbury@gmail.com | linkedin.com/in/harrys
 
 ## PROFESSIONAL SUMMARY
 
-Enterprise Account Manager who wins and grows revenue with C-level stakeholders at a fast-paced SaaS scale-up, owning a ≈$1.24M ARR book across multi-market European brands. Took a flagship customer's measurement budget from an incumbent, brings Google- and Pinterest-funded programmes into deals, and co-founded a B2B marketplace in Brazil with an automated split-payment flow, signing its first 8 retail partners from zero. Worked across South America, Europe and Africa; grew up in Kenya watching M-Pesa change how a country pays.
+Enterprise Account Manager who wins and grows revenue with C-level stakeholders at a fast-paced SaaS scale-up, owning a ≈$1.24M ARR book across multi-market European brands. Took a flagship customer's measurement budget from an incumbent, brings Google- and Pinterest-funded programmes into deals, and co-founded a B2B marketplace in Brazil with an automated split-payment flow, signing its first 8 retail partners from zero. Worked across South America, Europe and Africa, and grew up in Kenya watching M-Pesa change how a country pays.
 
 ## EXPERIENCE
 
@@ -14,15 +14,15 @@ Enterprise Account Manager who wins and grows revenue with C-level stakeholders 
 
 #### Enterprise Account Manager | Aug 2026 – Present
 
-- Won Huel's marketing mix modelling business from an incumbent charging about £90K a year: set the deal strategy with Fospha's CEO and CCO and structured a Google-funded start that converts into a 12-month contract. Fospha's largest MMM contract; account MRR up 79%.
+- Won Huel's marketing mix modelling business from an incumbent charging about £90K a year: set the deal strategy with Fospha's CEO and CCO and structured a Google-funded start that converts into a 12-month contract. It became Fospha's largest MMM contract, lifting account MRR by 79%.
 - Own a Tier 1–2 book of ≈$1.24M ARR (Dyson, Samsonite Group, TJX, Huel, GANT, Footasylum, FitFlop), grown 6% in two months, with ~$31K MRR of expansion pipeline and a new-market deal out for signature.
 - Closed ~$216K ARR of renewals within six weeks of moving into the role, and saved an account that had served notice by re-pricing it and agreeing a six-month plan to rebuild trust.
-- Led the relationship as Dyson grew 4–5× across four European markets into Fospha's largest single-brand customer, by managing a complex brand-and-agency relationship, consulting on how to act on the data and building product champions in each market. Recently presented to Dyson's senior leadership in Paris (marketing, e-commerce and growth directors); now building the plan to expand globally.
+- Led the relationship as Dyson grew 4–5× across four European markets into Fospha's largest single-brand customer, by managing a complex brand-and-agency relationship, consulting on how to act on the data and building product champions in each market. Recently presented to Dyson's senior leadership in Paris (marketing, e-commerce and growth directors), and now building the plan to expand globally.
 - Brokered a three-way legal negotiation between TJX, Fospha and Google, and ran the client side of 14 partner-funded programmes across 11 brands ($85K+ in Google and Pinterest funding) to win budget and keep at-risk clients.
 
 #### Senior Customer Success Executive, pod lead | Nov 2025 – Jul 2026
 
-- Led a pod of up to six CSMs and an intern across 45+ clients (about a fifth of company MRR); rated "over-performing" for stabilising it, and four team members progressed into new roles.
+- Led a pod of up to six CSMs and an intern across 45+ clients (about a fifth of company MRR). Rated "over-performing" for stabilising it, and four team members progressed into new roles.
 - Built 20+ Claude skills and API automations (pricing, QA, reporting) now used across the account management team.
 
 ### Co-Founder | SalesWolf Brazil (B2B Reseller Platform) | Apr 2024 – Jan 2026
@@ -35,11 +35,11 @@ Enterprise Account Manager who wins and grows revenue with C-level stakeholders 
 
 ### Investment Analyst Intern | Jeri Participações (VC Fund, Brazil) | Sep 2023 – Dec 2023
 
-- Built DCF and comps models and investor materials for US stakeholders; identified an embedded-finance opportunity in a portfolio company.
+- Built DCF and comps models and investor materials for US stakeholders, and identified an embedded-finance opportunity in a portfolio company.
 
 ### Junior Mechanical Engineer Consultant | DCA Design International | Jul 2021 – May 2022
 
-- Worked across 5 teams designing products for medical, tech and music clients; contributed to a patent.
+- Worked across 5 teams designing products for medical, tech and music clients, and contributed to a patent.
 
 ## EDUCATION
 
