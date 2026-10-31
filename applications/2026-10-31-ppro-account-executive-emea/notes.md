@@ -11,7 +11,11 @@ role (two tier 4 accounts, supporting senior AMs on PayPal, Stripe, McAfee, HiPa
 Pay is listed on the careers page. Harry will put £60K as expected salary on the form. New Business
 Manager is on hold.
 
-## How the drafts are angled
+## v1 rejected by Harry (31 Oct)
+v1 rebuilt the CV around the role's junior scope. Harry: "the new one undermines my ability". v2 = the New Business
+Manager CV and letter with ~10% changed from new-business to retention / current-business language.
+
+## How v1 was angled (superseded)
 - Started from the PPRO New Business Manager CV after Harry's 31 Oct review: Fospha sub-roles, his Dyson
   wording, the AI-tell rules, and the Core line pushed to the posting.
 - Led with insight and upsell: $31K pipeline, Huel pricing gap, TJX £4.2M vs £214K, Samsonite forecast and
@@ -24,4 +28,4 @@ Manager is on hold.
   letter 5a4ed40f3534184a3f6c2f847ecf5605).
 
 ## Status
-- 31 Oct 2026: drafted, gauntlet passed (2 rounds). Next: Harry reviews in the doc, then applies on the careers page.
+- 31 Oct 2026: v1 drafted, rejected. v2 from the NBM version with retention tweaks. Next: Harry reviews in the doc, then applies on the careers page.

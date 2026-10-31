@@ -68,6 +68,8 @@ Harry for the Drive folder.
 - Mirror the posting's wording only where it's true. Never add a skill, tool, title, scope or
   metric not in the master CV or role context. If the posting needs something they lack, leave
   it out and note it in `notes.md`.
+- **Never scale Harry down to a junior role.** Keep his strongest, most senior version and change only
+  the framing (about 5–10%) to match the role, e.g. new-business language to retention and growth.
 - **Skills line (Core):** rewrite it for every job from the posting's own terms, and push the limit:
   include any skill Harry can reasonably claim from his experience, even if it's a stretch. He'll
   say if it's too much (his rule, 31 Oct 2026). This applies to skill labels only, never to figures,

@@ -4,7 +4,7 @@ London, UK | +44 7860 883048 | harrystichbury@gmail.com | linkedin.com/in/harrys
 
 ## PROFESSIONAL SUMMARY
 
-Enterprise Account Manager at a fast-paced SaaS scale-up who turns account data into decisions senior stakeholders act on. Owns a $1.24M ARR book across multi-market European brands, finds the upsell in it, and builds the analysis and decks behind every business review. First-class engineering graduate who co-founded a B2B marketplace in Brazil with an automated split-payment flow. Grew up in Kenya watching M-Pesa change how a country pays, and now wants to build a career in payments.
+Enterprise Account Manager who keeps and grows revenue with C-level stakeholders at a fast-paced SaaS scale-up, owning a $1.24M ARR book across multi-market European brands. Grows existing accounts through upsell and renewals, brings Google- and Pinterest-funded programmes into client plans, and co-founded a B2B marketplace in Brazil with an automated split-payment flow, signing its first 8 retail partners from zero. Worked across South America, Europe and Africa, and grew up in Kenya watching M-Pesa change how a country pays.
 
 ## EXPERIENCE
 
@@ -14,28 +14,24 @@ Enterprise Account Manager at a fast-paced SaaS scale-up who turns account data 
 
 #### Enterprise Account Manager | Aug 2026 – Present
 
-- Own a Tier 1–2 book of $1.24M ARR (Dyson, Samsonite Group, TJX, Huel, GANT, Footasylum, FitFlop), grown 6% in two months.
-- Built $31K MRR of upsell pipeline in two months across GANT, FitFlop, Samsonite and a new Dyson market.
-- Spotted that Huel was paying $11.7K a month for a five-market setup listed at $15.7K, and took it to commercial review.
-- Won Huel's marketing mix modelling business from an incumbent charging about £90K a year. It became Fospha's largest MMM contract, lifting account MRR by 79%.
-- Led the relationship as Dyson grew 4–5× across four European markets into Fospha's largest single-brand customer, by managing a complex brand-and-agency relationship and building product champions in each market. Recently presented to Dyson's senior leadership in Paris.
+- Own a Tier 1–2 book of $1.24M ARR (Dyson, Samsonite Group, TJX, Huel, GANT, Footasylum, FitFlop), grown 6% in two months, with $31K MRR of upsell pipeline and a new-market deal out for signature.
+- Closed $216K ARR of renewals within six weeks of starting, and saved an account that had served notice.
+- Expanded Huel into marketing mix modelling, displacing an incumbent charging about £90K a year. Set the deal strategy with Fospha's CEO and CCO and structured a Google-funded start that converts into a 12-month contract. It became Fospha's largest MMM contract, lifting account MRR by 79%.
+- Led the relationship as Dyson grew 4–5× across four European markets into Fospha's largest single-brand customer, by managing a complex brand-and-agency relationship, consulting on how to act on the data and building product champions in each market. Recently presented to Dyson's senior leadership in Paris (marketing, e-commerce and growth directors), and now building the plan to expand globally.
+- Brokered a three-way legal negotiation between TJX, Fospha and Google, and ran the client side of 14 partner-funded programmes across 11 brands ($85K+ in Google and Pinterest funding) to win budget and keep at-risk clients.
 
 #### Senior Customer Success Executive, pod lead | Nov 2025 – Jul 2026
 
-- Surfaced £4.2M of upper-funnel revenue for TJX that last-click credited at £214K, changing how TJX valued brand activity.
-- Led a pod of up to six CSMs and an intern across 45+ clients (about a fifth of company MRR). Rated "over-performing" for stabilising it.
-- Designed an exec-sponsor update that the Head of AM called "a standout example" and adopted as the team template.
+- Led a pod of up to six CSMs and an intern across 45+ clients (about a fifth of company MRR). Rated "over-performing" for stabilising it, and four team members progressed into new roles.
 - Built 20+ Claude skills now used across the account management team.
-
-#### Customer Success Executive and Coordinator | Sep 2024 – Nov 2025
-
-- Built Samsonite's forecast on a $5.6M always-on budget and its 2026 scenario model, used in the client's leadership budgeting. Put forward by the client to present it to its VPs.
-- Unlocked +£183K revenue in three months for Craftd by showing the case for moving budget from PMax to Paid Shopping.
 
 ### Co-Founder | SalesWolf Brazil (B2B Reseller Platform) | Apr 2024 – Jan 2026
 
-- Founded a B2B marketplace for fashion, jewellery and electronics resellers. Signed the first 8 retail partners from zero, building a catalogue of 1,000+ products and 100+ sign-ups within the three-month MVP.
-- Designed the dual revenue model and an automated split-payment flow between the platform, suppliers and resellers.
+*Founded a B2B marketplace connecting fashion, jewellery and electronics suppliers with resellers across Brazil.*
+
+- Signed the first 8 retail partners from zero, building a catalogue of 1,000+ products and 100+ sign-ups within the three-month MVP.
+- Designed the dual revenue model (supplier commissions and reseller subscriptions) and an automated split-payment flow between the platform, suppliers and resellers.
+- Pitched investors and incubators, winning places on the USP Entrepreneurship Centre pre-acceleration programme and Sebrae Startups.
 
 ### Investment Analyst Intern | Jeri Participações (VC Fund, Brazil) | Sep 2023 – Dec 2023
 
@@ -57,9 +53,9 @@ A-Levels: Further Mathematics (A\*), Mathematics (A), Physics (A\*)
 
 ## SKILLS & TOOLS
 
-**Core:** Strategic Account Management, Upsell & Cross-sell Analysis, Business Reviews (QBRs), Data Analysis & Insight, Data Visualisation & Presentations, Senior Stakeholder Management, Market & Competitor Analysis, Sales Strategy Support, Cross-Team Collaboration (Sales, Legal, Product)
+**Core:** Account Growth & Retention, Upsell & Cross-sell, Renewals & Commercial Negotiation, Enterprise & C-Level Stakeholder Management, Business Reviews (QBRs), Data Analysis & Insight, Partner & Channel Deals, Payment Flow Design, Multi-Market Europe
 
-**Tools:** Excel (advanced), PowerPoint (advanced), HubSpot, Amplitude, Jira, Notion, Claude Code
+**Tools:** HubSpot, Amplitude, Jira, Notion, Claude Code, Excel & PowerPoint (advanced), Microsoft Suite
 
 **Languages:** English (Native), Portuguese (B1), Spanish (A2), Swahili (A2)
 
