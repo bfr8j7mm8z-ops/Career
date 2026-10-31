@@ -34,7 +34,10 @@ Draft in a Claude Doc, not Google Docs, so Harry can comment and edit inside Cla
 Decode the posting into requirements and keywords, map each to master-profile evidence, draft, then
 run six critics: **truth checker** (every figure traced to a ✅ line; credit levels respected),
 **6-second recruiter**, **hiring manager** for this role, **ATS reader**, **voice/humaniser**, and
-**red team** (what an interviewer could catch out). Fix and re-run, up to three rounds. Record each
+**red team** (what an interviewer could catch out). The voice critic checks Harry's AI-tell list:
+no semicolons; no ≈ or ~ before numbers (round, or write "about"); no colon joining two halves of a
+bullet; few lists of three; vary bullet shape and length, with some one-liners; no stacked
+"by doing X, Y and Z" clauses; no first person in the CV. Fix and re-run, up to three rounds. Record each
 critic's finding, the fix and the final result in the "Gauntlet scorecard" table.
 
 ## Comments, edits and the learning journal
