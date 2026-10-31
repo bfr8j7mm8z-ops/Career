@@ -47,7 +47,7 @@ A-Levels: Further Mathematics (A\*), Mathematics (A), Physics (A\*)
 
 ## SKILLS & TOOLS
 
-**Core:** New Business & Expansion, Enterprise Account Management, Commercial Negotiation & Pricing, Partner-Funded Deals, C-Level Stakeholder Management, Pipeline Management, Data-Driven Business Cases
+**Core:** New Business Development, Full-Cycle Deal Ownership, Prospecting & Pipeline Management, Enterprise & C-Level Selling, Commercial Negotiation & Pricing, Partner & Channel Deals, Payment Flow Design, Data-Driven Business Cases, Multi-Market Europe
 
 **Tools:** HubSpot, Amplitude, Jira, Notion, Claude Code, Excel (advanced), Microsoft Suite (advanced)
 
