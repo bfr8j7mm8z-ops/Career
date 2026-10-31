@@ -9,7 +9,7 @@ Usage, from the repo root:
     python3 -m automations.docs.render cv APPLICATION_DIR/cv-v2.md OUT_DIR/Name_CV.docx [--pdf]
     python3 -m automations.docs.render letter APPLICATION_DIR/cover-letter-v2.md OUT_DIR/Name_Letter.docx [--pdf]
 
-CV markdown: "# NAME", a contact line, "## SECTION", "### Title | Company | Dates",
+CV markdown: "# NAME", a contact line, "## SECTION", "### Title | Company | Dates" (or "### Company | Dates" then "#### Role | Dates"),
 "*context line*", "- bullet", "**Label:** text", "**Bold line**" and plain paragraphs.
 Letter markdown: the first two lines are name and contact; the last line is the signature.
 """
@@ -93,13 +93,22 @@ def render_cv(md, out):
             p = _para(doc, before=7, after=3)
             _inline(p, line[3:].upper(), 11, BLUE, bold=True)
             _rule(p)
+        elif line.startswith("#### "):
+            # A role within the employer above: "#### Title | Dates".
+            title, _, dates = (x.strip() for x in line[5:].rpartition("|"))
+            p = _para(doc, before=3, after=0)
+            p.paragraph_format.tab_stops.add_tab_stop(width, WD_TAB_ALIGNMENT.RIGHT)
+            _inline(p, title, 10, INK, bold=True)
+            _inline(p, "\t" + dates, 9.5, GREY, italic=True)
         elif line.startswith("### "):
+            # "### Title | Company | Dates", or "### Company | Dates" when roles follow as "####".
             parts = [x.strip() for x in line[4:].split("|")]
             title, company, dates = parts[0], " | ".join(parts[1:-1]), parts[-1]
             p = _para(doc, before=4, after=0)
             p.paragraph_format.tab_stops.add_tab_stop(width, WD_TAB_ALIGNMENT.RIGHT)
             _inline(p, title, 10.5, INK, bold=True)
-            _inline(p, " | " + company, 10.5, GREY)
+            if company:
+                _inline(p, " | " + company, 10.5, GREY)
             _inline(p, "\t" + dates, 10, GREY)
         elif line.startswith("- "):
             p = _para(doc, after=1)
