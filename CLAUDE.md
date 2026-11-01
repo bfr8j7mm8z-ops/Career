@@ -17,4 +17,5 @@ Purpose: long-term career management — CVs, cover letters, job applications, a
 - **Conflicting figures:** assume the most recent is right; if in doubt while drafting a CV, ask Harry which to use.
 - **Profile updates:** when a session learns something new about Harry, propose it as a `profile_updates` row in the app for him to approve; apply approved ones at the start of a session. Details in `.claude/skills/job-hunt/SKILL.md`.
 - **Finished documents** (.docx/PDF) go to Google Drive `Career / Applications` (folder id `1nF5mc-hDJ-f8cLd5qiQ6WA23L3F_6ZZu`, parent `Career` = `1yRg0lQ2JkNlWP7dCTTIi9nUEUip6dYwW`).
+- **Design:** `design/` is the app's design system (tokens, README, preview page). Change `design/tokens.css` first, then copy the semantic tokens into the app. Our own look: never add employer or client brand files.
 - When adding automations (job search, CV updates, application drafting), document how to run them in `automations/README.md`.

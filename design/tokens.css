@@ -1,0 +1,44 @@
+/* Job Hunt design system: tokens.
+   Source of truth for the app's look. The app (app/job-hunt-app.html) inlines a copy of the
+   semantic tokens at the bottom of this file. Change them here first, then copy them across.
+   Fonts (Google Fonts): Manrope (body), Bricolage Grotesque (display), JetBrains Mono (numbers, labels). */
+
+:root{
+  /* ---- primitives: ink (navy) scale ---- */
+  --ink-50:#F4F6FB; --ink-100:#E2E6F0; --ink-200:#C4CBDE; --ink-300:#939DBD; --ink-400:#66709A;
+  --ink-500:#4A5578; --ink-600:#2C3763; --ink-700:#1A2550; --ink-800:#101A3C; --ink-900:#070D24;
+  /* ---- primitives: cobalt (accent) scale ---- */
+  --cobalt-50:#EEF3FF; --cobalt-100:#E8F0FE; --cobalt-300:#8FB1FF; --cobalt-400:#6E9BFF;
+  --cobalt-500:#2F6FEB; --cobalt-600:#2459C4; --cobalt-700:#1B4396;
+  /* ---- primitives: status ---- */
+  --mint-500:#19B38A; --mint-700:#0E7C5E; --amber-500:#E5A93A; --amber-700:#8F6200;
+  --red-500:#E0504F; --red-700:#B03030;
+
+  /* ---- type ---- */
+  --font-display:"Bricolage Grotesque",system-ui,sans-serif;
+  --font-body:"Manrope",system-ui,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --fs-h1:28px; --fs-h2:20px; --fs-h3:16px; --fs-body:15px; --fs-small:13px; --fs-label:10.5px;
+  --lh-tight:1.15; --lh-base:1.55;
+
+  /* ---- shape, space, motion ---- */
+  --r-sm:8px; --r-md:12px; --r-lg:20px; --r-pill:999px;
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:32px;
+  --shadow-card:0 1px 2px rgba(16,26,60,.06),0 4px 16px rgba(16,26,60,.05);
+  --dur-fast:120ms; --dur-base:220ms; --ease-out:cubic-bezier(.22,1,.36,1);
+}
+
+/* ---- semantic tokens (what the app uses) ---- */
+:root{
+  --bg:#F4F6FB; --surface:#FFFFFF; --ink:#101A3C; --mute:#4A5578; --line:#E2E6F0; --soft:#EEF1F7;
+  --accent:#2F6FEB; --on-accent:#FFFFFF; --ok:#0E7C5E; --warn:#8F6200; --bad:#B03030;
+  --ok-bg:#E6F7F0; --warn-bg:#FEF3DC; --info-bg:#E8F0FE; --bad-bg:#FDECEC;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#070D24; --surface:#0F1836; --ink:#E8ECF7; --mute:#96A0C0; --line:#24305A; --soft:#18224A;
+  --accent:#6E9BFF; --on-accent:#070D24; --ok:#3FD3A8; --warn:#F2C066; --bad:#F28585;
+  --ok-bg:#0F3329; --warn-bg:#33270C; --info-bg:#172A5C; --bad-bg:#3A1A1C; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#070D24; --surface:#0F1836; --ink:#E8ECF7; --mute:#96A0C0; --line:#24305A; --soft:#18224A;
+  --accent:#6E9BFF; --on-accent:#070D24; --ok:#3FD3A8; --warn:#F2C066; --bad:#F28585;
+  --ok-bg:#0F3329; --warn-bg:#33270C; --info-bg:#172A5C; --bad-bg:#3A1A1C; color-scheme:dark}
