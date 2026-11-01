@@ -222,6 +222,9 @@ const uid = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(
 const safeUrl = u => { try { const x = new URL(u); return /^https?:$/.test(x.protocol) ? x.href : ""; } catch { return ""; } };
 const daysAgo = d => { if (!d) return null; const n = Math.floor((Date.now() - new Date(d)) / 864e5); return n; };
 const agoText = d => { const n = daysAgo(d); return n == null ? "" : n <= 0 ? "today" : n === 1 ? "yesterday" : `${n}d ago`; };
+const inStage = (status, d) => { const n = daysAgo(d); return n == null ? status : n <= 0 ? `${status} since today` : `${status} for ${n} day${n === 1 ? "" : "s"}`; };
+const runLine = r => !r ? "Not run yet" : ["requested", "running"].includes(r.status) ? `Run ${r.status === "running" ? "in progress" : "requested"} ${agoText(r.requested_at)}` :
+  `Last run ${agoText(r.finished_at || r.requested_at)}${r.status === "failed" ? " (failed)" : r.counts ? ` · ${r.counts.found ?? 0} found, ${r.counts.added ?? 0} new` : ""}`;
 const scoreClass = s => s == null ? "s-na" : s >= 75 ? "s-hi" : s >= 55 ? "s-mid" : "s-lo";
 const toList = s => String(s || "").split(",").map(x => x.trim()).filter(Boolean);
 function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove("show"), 2400); }
@@ -332,7 +335,7 @@ function viewHome(col) {
         h("span", {class: "chip " + (p.status === "paused" ? "" : "ok")}, p.status === "paused" ? "Paused" : (p.nightly ? "Active · 8pm" : "Active · manual"))),
       p.brief ? h("p", {class: "mute small", style: "display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden"}, p.brief) : null,
       h("div", {class: "chips"}, h("span", {class: "chip"}, `${toReview} to review`), h("span", {class: "chip"}, `${yes} interested`),
-        lastRun ? h("span", {class: "chip"}, `Last run: ${lastRun.status} ${agoText(lastRun.finished_at || lastRun.requested_at)}`) : h("span", {class: "chip"}, "Not run yet"))));
+        h("span", {class: "chip"}, runLine(lastRun)))));
   }
   profileNudge(col);
 }
@@ -363,7 +366,7 @@ function viewProject(col) {
   const lastRun = S.runs.find(r => r.project_id === p.id);
 
   col.append(h("div", {class: "head"},
-    h("div", {}, h("h1", {}, p.name || "Untitled"), h("p", {class: "sub"}, p.status === "paused" ? "Paused. Not searched at night." : p.nightly ? `Searched every night at 8pm · up to ${p.daily_cap || 50} jobs a day` : "Searched only when you press Run now")),
+    h("div", {}, h("h1", {}, p.name || "Untitled"), h("p", {class: "sub"}, p.status === "paused" ? "Paused. Not searched at night." : p.nightly ? `Searched every night at 8pm · up to ${p.daily_cap || 50} jobs a day` : "Searched only when you press Run now"), h("p", {class: "small mute mono", style: "margin-top:4px"}, runLine(lastRun))),
     h("div", {class: "row"}, h("button", {class: "btn", onclick: () => requestRun(p)}, "Run now"))));
 
   if (lastRun && ["requested", "running"].includes(lastRun.status)) {
@@ -413,7 +416,8 @@ function jobCard(j, p, stage) {
   const d = decisionOf(j.id), deep = S.deep[j.id];
   const url = safeUrl(j.url);
   const score = stage === 2 && deep?.fit != null ? deep.fit : j.rank;
-  const meta = [j.location, j.salary_text, j.posted ? "Posted " + agoText(j.posted) : null].filter(Boolean);
+  const meta = [j.location, j.salary_text, j.posted ? "Posted " + agoText(j.posted) : null, j.found_at ? "Added " + agoText(j.found_at) : null,
+    d?.at ? (d.status === "passed" ? "Passed " : d.status === "shortlisted" ? "Shortlisted " : "Interested ") + agoText(d.at) : null].filter(Boolean);
   const card = h("article", {class: "card job"},
     h("div", {class: "top"},
       h("div", {style: "min-width:0"}, h("div", {class: "t"}, url ? h("a", {href: url, target: "_blank", rel: "noopener noreferrer"}, j.title || "Untitled role") : (j.title || "Untitled role")), h("div", {class: "co"}, j.company || "")),
@@ -459,7 +463,7 @@ async function undoDecision(j) { await write(() => S.db.doc("decisions/" + j.id)
 async function shortlist(j, p) {
   const ok = await write(() => S.db.doc("decisions/" + j.id).update({status: "shortlisted", stage: 2, at: nowIso()}));
   if (!ok) return;
-  await write(() => S.db.doc("applications/" + j.id).set({job_id: j.id, project_id: p.id, ...snap(j), status: "Preparing",
+  await write(() => S.db.doc("applications/" + j.id).set({job_id: j.id, project_id: p.id, ...snap(j), status: "Preparing", stage_since: nowIso(),
     next_step: "Claude drafts your CV and cover letter (review studio, coming next)", follow_up: "", notes: "", created_at: nowIso(), updated_at: nowIso()}), "Added to Applications");
 }
 
@@ -644,7 +648,7 @@ function viewApps(col) {
     const ref = S.db.doc("applications/" + a.id);
     const url = safeUrl(a.url);
     const save = (field, value) => write(() => ref.update({[field]: value, updated_at: nowIso()}));
-    const status = h("select", {id: "st-" + a.id, onchange: e => save("status", e.target.value)}, APP_STATUSES.map(s => h("option", {value: s, selected: a.status === s}, s)));
+    const status = h("select", {id: "st-" + a.id, onchange: e => write(() => ref.update({status: e.target.value, stage_since: nowIso(), updated_at: nowIso()}))}, APP_STATUSES.map(s => h("option", {value: s, selected: a.status === s}, s)));
     const fu = h("input", {type: "date", id: "fu-" + a.id, value: a.follow_up || "", onchange: e => save("follow_up", e.target.value)});
     const next = h("input", {type: "text", id: "nx-" + a.id, value: a.next_step || "", placeholder: "Next step", onchange: e => save("next_step", e.target.value)});
     const notes = h("textarea", {id: "nt-" + a.id, placeholder: "Notes", style: "min-height:60px", onchange: e => save("notes", e.target.value)}, a.notes || "");
@@ -657,7 +661,10 @@ function viewApps(col) {
     col.append(h("div", {class: "card", style: "display:grid;gap:10px"},
       h("div", {class: "app-row"},
         h("div", {style: "min-width:0"}, h("div", {style: "font-weight:600"}, url ? h("a", {href: url, target: "_blank", rel: "noopener noreferrer", style: "color:inherit"}, a.title || "Role") : (a.title || "Role")),
-          h("div", {class: "mute small"}, [a.company, a.location].filter(Boolean).join(" · ")), isDue ? h("span", {class: "chip warn", style: "margin-top:4px;display:inline-block"}, "Follow-up due") : null),
+          h("div", {class: "mute small"}, [a.company, a.location].filter(Boolean).join(" · ")), h("div", {class: "chips", style: "margin-top:6px"},
+            h("span", {class: "chip" + (!closed.includes(a.status) && daysAgo(a.stage_since || a.created_at) >= 14 ? " warn" : "")}, inStage(a.status || "Preparing", a.stage_since || a.created_at)),
+            a.created_at ? h("span", {class: "chip"}, "Shortlisted " + agoText(a.created_at)) : null,
+            isDue ? h("span", {class: "chip warn"}, "Follow-up due") : null)),
         h("div", {class: "field"}, h("label", {class: "label", for: "st-" + a.id}, "Stage"), status),
         h("div", {class: "field"}, h("label", {class: "label", for: "fu-" + a.id}, "Follow up on"), fu)),
       h("div", {class: "field"}, h("label", {class: "label", for: "nx-" + a.id}, "Next step"), next),

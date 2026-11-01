@@ -5,6 +5,9 @@ own system: calm navy ink, one cobalt accent, soft rounded cards, generous space
 inspiration from modern SaaS dashboards but contains no third-party brand, logo or assets.
 Do not add employer or client brand files here (see `CLAUDE.md`).
 
+Published in Claude as a Design System artifact: https://claude.ai/artifact/7je5i12YABFLVtS8kNHERu
+(a mirror of this folder; update both when the look changes).
+
 ## Files
 - `tokens.css`: colours (light and dark), type, radius, spacing, motion. The source of truth.
 - `preview.html`: every component on one page. Open it locally to check a change.

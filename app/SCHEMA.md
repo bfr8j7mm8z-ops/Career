@@ -58,6 +58,7 @@ Created by the app on "Shortlist to apply"; edited by the user; runs may update 
 job_id, project_id, title, company, url, location,
 status: Preparing | Ready to apply | Applied | Interviewing | Offer | Rejected | Withdrawn | Ghosted,
 next_step, follow_up, notes, created_at, updated_at,
+stage_since,                       # when `status` last changed (the app sets it); "time in stage" on the card
 workspace: {                       # written by Claude when drafting starts; shown on the card
   doc_url, doc_id,                 # the Claude Doc working doc (tabs: How this was made, CV, Cover letter)
   version,                         # draft version (1, 2, ...)
