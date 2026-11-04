@@ -81,7 +81,8 @@ Harry for the Drive folder.
 
 1. Opening: a concrete, researched reason for *this* company (one real detail, found via web
    search). Not "I am writing to express my interest".
-2. Middle: two or three achievements mapped directly to the role's needs.
+2. Middle: two or three achievements mapped directly to the role's needs, plus a short **why this
+   role, why this company** paragraph tied to the posting's own words (Harry asked for it, Nov 2026).
 3. Close: availability and what they'd like to discuss.
 Specific, a little informal is fine, nothing that could be sent to any company.
 
