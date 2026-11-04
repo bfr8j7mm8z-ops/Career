@@ -15,8 +15,7 @@ Enterprise Account Manager at a fast-paced SaaS scale-up, owning a $1.24M ARR bo
 #### Enterprise Account Manager | Aug 2026 – Present
 
 - Own a Tier 1–2 book of $1.24M ARR (Dyson, Samsonite Group, TJX, Huel, GANT, Footasylum, FitFlop), grown 6% in two months, with $31K MRR of upsell pipeline and a new-market deal out for signature.
-- Closed $216K ARR of renewals within six weeks of starting, and saved an account that had served notice.
-- Expanded Huel into marketing mix modelling, displacing an incumbent charging about £90K a year. Set the deal strategy with Fospha's CEO and CCO and structured a Google-funded start that converts into a 12-month contract. It became Fospha's largest MMM contract, lifting account MRR by 79%.
+- Closed $216K ARR of renewals within six weeks of starting, and saved an account that had served notice. Grew Huel into Fospha's largest marketing mix modelling contract, lifting account MRR by 79%, after setting the strategy with Fospha's CEO and CCO and structuring a Google-funded start that converts into a 12-month contract.
 - Led the relationship as Dyson grew 4–5× across four European markets into Fospha's largest single-brand customer, by managing a complex brand-and-agency relationship, consulting on how to act on the data and building product champions in each market. Recently presented to Dyson's senior leadership in Paris (marketing, e-commerce and growth directors), and now building the plan to expand globally.
 - Brokered a three-way legal negotiation between TJX, Fospha and Google, and ran the client side of 14 partner-funded programmes across 11 brands ($85K+ in Google and Pinterest funding) to win budget and keep at-risk clients.
 
