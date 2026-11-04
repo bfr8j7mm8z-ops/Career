@@ -4,7 +4,7 @@ London, UK | +44 7860 883048 | harrystichbury@gmail.com | linkedin.com/in/harrys
 
 ## PROFESSIONAL SUMMARY
 
-Enterprise Account Manager who keeps and grows revenue with C-level stakeholders at a fast-paced SaaS scale-up, owning a $1.24M ARR book across multi-market European brands. Grows existing accounts through upsell and renewals, brings Google- and Pinterest-funded programmes into client plans, and co-founded a B2B marketplace in Brazil with an automated split-payment flow, signing its first 8 retail partners from zero. Worked across South America, Europe and Africa, and grew up in Kenya watching M-Pesa change how a country pays.
+Enterprise Account Manager at a fast-paced SaaS scale-up, owning a $1.24M ARR book across multi-market European brands. Experienced in building C-suite relationships across accounts and working with internal teams to find enterprise expansion opportunities. Delivers strong growth and retention across existing and new brands as a clear communicator and collaborator, using partnerships with Google and Pinterest and the product team to drive value for customers. Driven and proactive – co-founded a B2B marketplace in Brazil with an automated split-payment flow, signing its first 8 retail partners from zero. Worked across South America, Europe and Africa, and grew up in Kenya watching M-Pesa change how a country pays.
 
 ## EXPERIENCE
 
@@ -26,8 +26,6 @@ Enterprise Account Manager who keeps and grows revenue with C-level stakeholders
 - Built 20+ Claude skills now used across the account management team.
 
 ### Co-Founder | SalesWolf Brazil (B2B Reseller Platform) | Apr 2024 – Jan 2026
-
-*Founded a B2B marketplace connecting fashion, jewellery and electronics suppliers with resellers across Brazil.*
 
 - Signed the first 8 retail partners from zero, building a catalogue of 1,000+ products and 100+ sign-ups within the three-month MVP.
 - Designed the dual revenue model (supplier commissions and reseller subscriptions) and an automated split-payment flow between the platform, suppliers and resellers.
