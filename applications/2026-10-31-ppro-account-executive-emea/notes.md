@@ -29,3 +29,5 @@ Manager CV and letter with ~10% changed from new-business to retention / current
 
 ## Status
 - 31 Oct 2026: v1 drafted, rejected. v2 from the NBM version with retention tweaks. Next: Harry reviews in the doc, then applies on the careers page.
+- 5 Nov 2026: **Applied** on PPRO's careers page with the CV only (`cv.md`, final as in the working doc). No cover
+  letter sent. This CV is now the standard format (`cv/format-notes.md`).

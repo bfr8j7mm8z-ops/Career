@@ -61,6 +61,7 @@ Harry for the Drive folder.
 
 ## CV
 
+- Start from the current CV format in `cv/format-notes.md` (the CV Harry submitted to PPRO, Nov 2026).
 - Start from the master CV. Trim and reorder so the most relevant experience leads. Adjust
   the summary line to the role.
 - Reuse the user's own phrasing; rewrite only what the posting needs. Don't launder it into

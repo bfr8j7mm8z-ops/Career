@@ -32,3 +32,5 @@ external documents; relative figures (4–5×, +79%, +40%) and Harry's own book 
   stored in the app (CV asset cece71f4614c77870bae000bc246517e, letter b22ad58b0b57e5ca69c7f33d705f2119).
   The v1 Google Docs above are superseded. Open question for Harry (comment in the CV tab): keep the
   pod-lead bullet (45+ clients is self-reported) or swap in the Samsonite 11-market renewal.
+- 5 Nov 2026: `cv-v3.md` brings this CV into the submitted AE format (Harry's summary structure, Huel merged into the
+  renewals bullet, five won partner programmes, AI automation workflows, no SalesWolf context line). Still on hold.

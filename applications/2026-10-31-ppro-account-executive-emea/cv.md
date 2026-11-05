@@ -22,7 +22,7 @@ Enterprise Account Manager at a fast-paced SaaS scale-up, owning a $1.24M ARR bo
 #### Senior Customer Success Executive, pod lead | Nov 2025 – Jul 2026
 
 - Led a pod of up to six CSMs and an intern across 45+ clients (about a fifth of company MRR). Rated "over-performing" for stabilising it, and four team members progressed into new roles.
-- Built 20+ Claude skills now used across the account management team.
+- Built 20+ AI automation workflows now used across the account management team.
 
 ### Co-Founder | SalesWolf Brazil (B2B Reseller Platform) | Apr 2024 – Jan 2026
 

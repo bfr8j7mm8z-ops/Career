@@ -10,8 +10,10 @@
     Drive versions are renamed "SUPERSEDED …" and kept.
   - It is **not** stored in this repo: it was compiled partly from work systems, and `HANDOVER.md` keeps
     work-connector data out of the repo.
-- **Master CVs and cover letters** (structure and voice): the two most recent GoCardless applications
-  (CSAM Jun 2026; Global Partnerships Apr 2026), in the app's Profile with `is_master: true`.
+- **Master CV format:** the CV submitted to PPRO on 5 Nov 2026, described in `format-notes.md`. Start every
+  new CV from it. It is also in the app's Profile with `is_master: true`.
+- **Earlier master CVs and letters** (voice reference): the GoCardless applications (CSAM Jun 2026;
+  Global Partnerships Apr 2026), kept in the app's Profile.
 - **Finished documents** (.docx/PDF): Google Drive `Career / Applications`.
 - `archive/`: the older evidence bank and Jun 2026 CV, superseded. Don't draft from them.
 
