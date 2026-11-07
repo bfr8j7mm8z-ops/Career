@@ -6,13 +6,7 @@ Facts only from the master profile. Harry decides the three marked "Harry".
 Adyen for Platforms sits where payments, marketplaces and software meet, which is the part of payments I find most interesting. I grew up in Kenya watching M-Pesa put payments inside something people already used every day, and at SalesWolf I designed the split-payment flow for a B2B marketplace, so I've seen what a platform needs from its payments partner. I want to build my career in payments and fintech because I see the global opportunity, and Adyen is where I'd learn it from the inside, working with technical and sales teams across its offices. I also like that the role is about helping platforms activate new revenue, not just managing accounts.
 
 ## Why do you believe that you are a good fit for this role?
-This role is about helping platforms grow revenue through embedded payments, while sales and technical teams pull in the same direction. Here is how I match that.
-
-I led the Dyson relationship as it grew 4–5× across four markets, working across the brand and its agencies, and I brokered a three-way legal negotiation between TJX, Fospha and Google. So I'm practised at getting several parties to agree commercial terms and keep growing together.
-
-At SalesWolf I built the split-payment flow for a B2B marketplace and signed its first 8 partners, and at Jeri I spotted an embedded-finance opportunity in a portfolio company. So I understand how a platform earns from payments and where new revenue comes from.
-
-I'm an engineer by training and I've built 20+ AI automations using API integrations, so I can work with technical teams on integrations. When Fospha launched marketing mix modelling this year, I learned it, closed its largest contract so far and built the team's pricing tools. I haven't worked in payments yet, and I'd learn Adyen's products the same way.
+This role is about growing platform revenue through complex relationships, and that is what I do best. I led the relationship as Dyson grew 4–5× across four markets, and I brokered a three-way legal negotiation between TJX, Fospha and Google. At SalesWolf I built a marketplace's split-payment flow, so I know what a platform needs from its payments partner. I'm an engineer, comfortable with technical teams, and I learn fast: I closed our largest marketing mix modelling contract within weeks of the product's launch. I haven't worked in payments yet, and I'd bring the same drive to learning Adyen's.
 
 ## Do you live in or around London?
 Yes.
