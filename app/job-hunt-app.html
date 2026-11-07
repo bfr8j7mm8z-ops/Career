@@ -204,7 +204,7 @@ const S = {
   db: null, assets: null, sample: null, status: "loading",
   projects: [], jobs: [], decisions: {}, deep: {}, apps: [], docs: [], runs: [], insights: [], updates: [], journal: [],
   view: "home", pid: null, ptab: "review", draft: null, dirty: false, changedKeys: new Set(),
-  period: "all", confirm: null,
+  period: "all", confirm: null, appFilter: {company: "", stage: ""},
 };
 try { const saved = JSON.parse(localStorage.getItem("jh.nav") || "{}"); Object.assign(S, {view: saved.view || "home", pid: saved.pid || null, ptab: saved.ptab || "review"}); } catch {}
 const saveNav = () => { try { localStorage.setItem("jh.nav", JSON.stringify({view: S.view, pid: S.pid, ptab: S.ptab})); } catch {} };
@@ -674,7 +674,27 @@ function viewApps(col) {
   const sorted = [...S.apps].sort((a, b) => (closed.includes(a.status) - closed.includes(b.status)) || ((a.follow_up || "9999") .localeCompare(b.follow_up || "9999")));
   const due = sorted.filter(a => a.follow_up && a.follow_up <= today && !closed.includes(a.status));
   if (due.length) col.append(h("div", {class: "banner warn"}, `${due.length} follow-up${due.length > 1 ? "s" : ""} due: ` + due.map(a => a.company).join(", ")));
-  for (const a of sorted) {
+
+  // Filters: company and stage. Each dropdown's counts respect the other filter.
+  const F = S.appFilter;
+  const countBy = (key, otherField, otherKey) => { const m = {}; S.apps.filter(a => !F[otherField] || a[otherKey] === F[otherField]).forEach(a => { const v = a[key] || ""; m[v] = (m[v] || 0) + 1; }); return m; };
+  const companies = countBy("company", "stage", "status"), stages = countBy("status", "company", "company");
+  const selectOf = (id, label, all, counts, order, field) => {
+    const sel = h("select", {id, onchange: e => { S.appFilter[field] = e.target.value; render(); }},
+      h("option", {value: ""}, all), ...order.filter(v => counts[v]).map(v => h("option", {value: v}, `${v} (${counts[v]})`)));
+    sel.value = F[field]; if (sel.value !== F[field]) { F[field] = ""; sel.value = ""; }
+    return h("div", {class: "field"}, h("label", {class: "label", for: id}, label), sel);
+  };
+  const shown = sorted.filter(a => (!F.company || a.company === F.company) && (!F.stage || a.status === F.stage));
+  col.append(h("div", {class: "card", style: "display:grid;gap:10px"},
+    h("div", {class: "fgrid"},
+      selectOf("af-company", "Company", "All companies", companies, Object.keys(companies).sort((a, b) => a.localeCompare(b)), "company"),
+      selectOf("af-stage", "Stage", "All stages", stages, APP_STATUSES, "stage")),
+    h("div", {class: "row", style: "justify-content:space-between"},
+      h("span", {class: "mute small mono"}, `Showing ${shown.length} of ${S.apps.length}`),
+      (F.company || F.stage) ? h("button", {class: "btn ghost", onclick: () => { S.appFilter = {company: "", stage: ""}; render(); }}, "Clear filters") : null)));
+  if (!shown.length) { col.append(h("div", {class: "card empty"}, h("p", {}, "No applications match these filters."))); return; }
+  for (const a of shown) {
     const ref = S.db.doc("applications/" + a.id);
     const url = safeUrl(a.url);
     const save = (field, value) => write(() => ref.update({[field]: value, updated_at: nowIso()}));
