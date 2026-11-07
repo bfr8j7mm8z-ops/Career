@@ -78,7 +78,13 @@ Harry for the Drive folder.
 - ATS-safe: single column, no tables/graphics, standard headings. Keyword coverage is a soft
   check, not a target to stuff towards.
 
-## Cover letter (under 300 words)
+## Cover letter (optional)
+
+Harry has sent the CV only for PPRO and Adyen (Nov 2026). Draft a letter only if he asks, or when the application goes
+to a recruiter who expects a covering note. Always draft answers to the application form's written questions
+(short, one key message, each fact tied to why it matters for the role).
+
+## Cover letter (under 300 words, when one is wanted)
 
 1. Opening: a concrete, researched reason for *this* company (one real detail, found via web
    search). Not "I am writing to express my interest".

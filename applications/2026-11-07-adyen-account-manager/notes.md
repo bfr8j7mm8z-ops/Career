@@ -16,11 +16,11 @@ Copied from `../2026-11-07-adyen-enterprise-account-manager-platforms/` and re-a
 2. The role asks roughly 3-6 years. The profile counts about two years full-time at Fospha plus SalesWolf and Jeri.
    No year count is claimed anywhere.
 3. Expect a case study in the process.
-4. Open question for Harry: send the letter, or CV only as for PPRO?
+4. Decided 7 Nov: CV only, no cover letter (as for PPRO). The letter stays in `cover-letter.md` and the doc, unused.
 
 ## Working doc and files
 - Claude Doc: https://claude.ai/artifact/UF5nSqBNzKC5K6ZWYGoJL9 (How this was made, CV, Cover letter)
 - `cv.md`, `cover-letter.md`, `form-answers.md`. Styled PDFs in the Job Hunt app.
 
 ## Status
-- 7 Nov 2026: drafted, gauntlet passed (2 rounds). Next: Harry reviews, reads the live posting, applies.
+- 7 Nov 2026: drafted, gauntlet passed (2 rounds). CV only. Next: Harry reads the live posting, then applies with the CV and the form answers.
