@@ -85,10 +85,14 @@ API keys (Reed is free; Adzuna may cost ~£8/month and is optional): see `refere
 `cv-vN.md` / `cover-letter-vN.md` into Word and PDF in the GoCardless CSAM style. Needs
 `python-docx` and, for PDF, LibreOffice. See `.claude/skills/job-hunt/references/drafting.md`.
 
+## Weekly automatic run
+
+A scheduled task on Harry's account ("Weekly job search") starts a fresh cloud session every Friday at
+7:41pm London time. It searches every active project (Reed, careers pages, and Indeed when the connector is
+available), ranks new jobs into the app, closes any pending Run-now requests, and sends a push
+notification. It never drafts, applies or contacts anyone. Manage it from claude.ai (scheduled tasks).
+
 ## Not set up yet
 
-- Nightly scheduled run (a scheduled Claude task that runs the skill unattended and commits
-  `data/` so the page picks it up). Set up once profile + CV exist and keys are in the cloud
-  environment's secrets.
 - Gmail outcome tracking needs a personal inbox connected.
 - Personal profile, master CV and cover letter template (use `templates/`).

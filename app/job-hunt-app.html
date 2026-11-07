@@ -332,7 +332,7 @@ function viewHome(col) {
     const lastRun = S.runs.find(r => r.project_id === p.id);
     col.append(h("button", {class: "card", style: "text-align:left;display:grid;gap:6px;cursor:pointer", onclick: () => go("project", p.id, "review")},
       h("div", {class: "row", style: "justify-content:space-between"}, h("h2", {}, p.name || "Untitled"),
-        h("span", {class: "chip " + (p.status === "paused" ? "" : "ok")}, p.status === "paused" ? "Paused" : (p.nightly ? "Active · 8pm" : "Active · manual"))),
+        h("span", {class: "chip " + (p.status === "paused" ? "" : "ok")}, p.status === "paused" ? "Paused" : (p.nightly ? "Active · 8pm" : "Active · Fridays 8pm"))),
       p.brief ? h("p", {class: "mute small", style: "display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden"}, p.brief) : null,
       h("div", {class: "chips"}, h("span", {class: "chip"}, `${toReview} to review`), h("span", {class: "chip"}, `${yes} interested`),
         h("span", {class: "chip"}, runLine(lastRun)))));
@@ -366,7 +366,7 @@ function viewProject(col) {
   const lastRun = S.runs.find(r => r.project_id === p.id);
 
   col.append(h("div", {class: "head"},
-    h("div", {}, h("h1", {}, p.name || "Untitled"), h("p", {class: "sub"}, p.status === "paused" ? "Paused. Not searched at night." : p.nightly ? `Searched every night at 8pm · up to ${p.daily_cap || 50} jobs a day` : "Searched only when you press Run now"), h("p", {class: "small mute mono", style: "margin-top:4px"}, runLine(lastRun))),
+    h("div", {}, h("h1", {}, p.name || "Untitled"), h("p", {class: "sub"}, p.status === "paused" ? "Paused. Not searched automatically." : p.nightly ? `Searched every night at 8pm · up to ${p.daily_cap || 50} jobs a day` : `Searched every Friday at 8pm · up to ${p.daily_cap || 50} new jobs · Run now in between`), h("p", {class: "small mute mono", style: "margin-top:4px"}, runLine(lastRun))),
     h("div", {class: "row"}, h("button", {class: "btn", onclick: () => requestRun(p)}, "Run now"))));
 
   if (lastRun && ["requested", "running"].includes(lastRun.status)) {
@@ -698,7 +698,7 @@ function workspacePanel(a) {
 /* ------------------------------------------------------------------ process */
 // app: true = a step each application goes through (counted on the workspace panel).
 const PROCESS = [
-  {id: "search", phase: "Find", title: "Search", body: "Claude searches Reed and Indeed against each project's brief and filters.", state: "live", note: "On request for now; nightly at 8pm in Phase 2"},
+  {id: "search", phase: "Find", title: "Search", body: "Claude searches Reed and Indeed against each project's brief and filters.", state: "live", note: "Automatic every Friday at 8pm. Run now in between, then ask Claude to process it."},
   {id: "rank", phase: "Find", title: "Rank", body: "Up to 50 new jobs a day, scored against the brief, best first.", state: "live"},
   {id: "triage", phase: "Find", title: "You triage", body: "Interested, or Not for me with reasons. Reasons feed “Why I said no”.", state: "live"},
   {id: "deep", phase: "Find", title: "Closer look", body: "Company intel and a fit score for jobs marked Interested; you shortlist or pass.", state: "live"},
