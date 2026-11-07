@@ -32,7 +32,7 @@ project_ids[]   (append, never replace, when a job matches another project),
 rank: 0-100     (stage 1 "match": how well it suits the profile + this brief),
 rank_reason     (one honest line), gaps[],
 checks: { "<Label>": {state: "pass"|"fail"|"unknown", note} }   (judged filters: Leave, Office, Benefits, Pay...)
-found_at, run_id
+found_at (first pulled), last_seen_at (set to the run time every time a run finds the job again; the app shows it as "Last checked"), run_id
 ```
 Only jobs that clear hard filters are written. At most `daily_cap` new jobs per project per day,
 highest rank first.
