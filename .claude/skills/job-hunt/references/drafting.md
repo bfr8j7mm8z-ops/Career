@@ -83,7 +83,11 @@ combined sentence reads naturally aloud (Harry, 8 Nov 2026: "doesn't flow natura
 
 ## Framing the CV to a job description
 
-Pick the six or so requirements in the posting's "What you'll do" and "Who you are". Give each experience
+Rate the CV 0 to 3 against each point in the posting's "What you'll do" and "Who you are" and record the table
+in the working doc. Every point needs its own visible example in the posting's words (for an Account Manager:
+collaboration, commercial acumen, project management, client feedback into product, independent prioritisation).
+Each bullet makes one point. Drop bullets that answer nothing in the posting. Pick the six or so requirements in
+the posting's "What you'll do" and "Who you are". Give each experience
 bullet one of them, lead it with the posting's own verb while keeping every fact, and put the strongest match
 first. Score the match honestly (what the CV answers, what it can't) and record it in the working doc. Harry's
 own wording is kept. Give his CEO and CCO collaboration its own bullet rather than a clause, and don't use

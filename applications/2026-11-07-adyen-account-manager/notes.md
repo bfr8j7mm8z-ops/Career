@@ -27,3 +27,6 @@ Copied from `../2026-11-07-adyen-enterprise-account-manager-platforms/` and re-a
 - 8 Nov 2026: now the lead Adyen application (Platforms paused). Carried across the Platforms CV improvements: "internal SLT"
   wording, the simple marketplace-and-adaptability sentence, new-revenue pipeline in bullet 1, a separate CEO and CCO bullet, and
   the CEO and CCO in the letter's Huel sentence. CV one page, CV only.
+- 8 Nov 2026: rated against the job description (9/18 before, 16/18 after). Added project management (Dyson go-lives) and
+  product feedback (DV360) bullets, opened bullet 1 with the hand-picked high-autonomy brief, skills line in the posting's words,
+  TJX bullet removed. Harry's "Collaborated with" edit kept. Still one page.

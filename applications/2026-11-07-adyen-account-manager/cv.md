@@ -14,22 +14,23 @@ Enterprise Account Manager at a fast-paced SaaS scale-up, owning a $1.24M ARR bo
 
 #### Enterprise Account Manager | Aug 2026 – Present
 
-- Own a Tier 1–2 book of $1.24M ARR (Dyson, Samsonite Group, TJX, Huel, GANT, Footasylum, FitFlop), grown 6% in two months, with $31K MRR of new-revenue pipeline from MMM upsells and a new Dyson market out for signature.
+- Hand-picked to run Fospha's Tier 1–2 accounts with high autonomy, a $1.24M ARR book (Dyson, Samsonite Group, TJX, Huel, GANT, Footasylum, FitFlop) grown 6% in two months, with $31K MRR of new-revenue pipeline from MMM upsells and a new Dyson market out for signature.
 - Closed $216K ARR of renewals within six weeks of starting, and saved an account that had served notice.
-- Partner with Fospha's CEO and CCO on our biggest accounts, preparing their client briefings and decks, drafting follow-ups and shaping deal strategy. That strategy won Huel's marketing mix modelling business from an incumbent, and it became Fospha's largest MMM contract, lifting account MRR by 79%.
+- Collaborated with Fospha's CEO and CCO on our biggest accounts, preparing their client briefings and decks, drafting follow-ups and shaping deal strategy. That strategy won Huel's marketing mix modelling business from an incumbent, and it became Fospha's largest MMM contract, lifting account MRR by 79%.
 - Led the relationship as Dyson grew 4–5× across four European markets into Fospha's largest single-brand customer, by managing a complex brand-and-agency relationship, consulting on how to act on the data and building product champions in each market. Recently presented to Dyson's senior leadership in Paris (marketing, e-commerce and growth directors), and now building the plan to expand globally.
-- Surfaced £4.2M of upper-funnel revenue for TJX that last-click credited at £214K, changing how TJX valued brand activity, and brokered a three-way legal negotiation between TJX, Fospha and Google.
 
 #### Senior Customer Success Executive, pod lead | Nov 2025 – Jul 2026
 
-- Led a pod of up to six CSMs and an intern across 45+ clients (about a fifth of company MRR), plus the Dyson Italy and Spain/Portugal go-lives. Rated "over-performing" for stabilising it, and four team members progressed into new roles.
+- Led a pod of up to six CSMs and an intern across 45+ clients (about a fifth of company MRR). Rated "over-performing" for stabilising it, and four team members progressed into new roles.
+- Project-managed the Dyson Italy and Spain/Portugal go-lives with Dyson and its agency Omnicom, fixing a data issue that blocked the summer-sale analysis days before launch.
+- Fed client feedback into product, evidencing a DV360 measurement gap across four enterprise clients to get it prioritised and shipped after it had sat in the backlog since 2024.
 - Built 20+ AI automation workflows now used across the account management team.
 
 ### Co-Founder | SalesWolf Brazil (B2B Reseller Platform) | Apr 2024 – Jan 2026
 
-- Signed the first 8 retail partners from zero, building a catalogue of 1,000+ products and 100+ sign-ups in the 3-month MVP.
-- Designed the marketplace's payments side, including an automated split-payment flow between the platform, suppliers and resellers.
-- Pitched investors and incubators, winning places on the USP Entrepreneurship Centre pre-acceleration programme and Sebrae Startups.
+- Signed the first 8 retail partners from zero, building a catalogue of 1,000+ products and 100+ sign-ups in a 3-month MVP.
+- Designed the marketplace's automated split-payment flow between the platform, suppliers and resellers.
+- Pitched investors and won places on the USP Entrepreneurship Centre and Sebrae Startups programmes.
 
 ### Investment Analyst Intern | Jeri Participações (VC Fund, Brazil) | Sep 2023 – Dec 2023
 
@@ -51,7 +52,7 @@ A-Levels: Further Mathematics (A\*), Mathematics (A), Physics (A\*)
 
 ## SKILLS & TOOLS
 
-**Core:** Strategic Merchant Account Management, Retention & Churn Reduction, Expansion & Upsell, Commercial Negotiation, Data-Driven Insight, Enterprise & C-Level Stakeholder Management, Payments & Embedded Finance, Multi-Market Europe
+**Core:** Relationship Management & Retention, Commercial Acumen, Project Management, Client Feedback into Product, Cross-Team Collaboration, Independent Prioritisation, Payments & Embedded Finance, Multi-Market Europe
 
 **Tools:** HubSpot, Amplitude, Jira, Notion, Claude Code, Excel & PowerPoint (advanced), Microsoft Suite
 
