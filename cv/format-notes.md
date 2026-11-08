@@ -14,7 +14,7 @@ CSAM CV as the master layout. Facts still come only from the master profile.
    across multi-market European brands."
 2. How he works: C-suite relationships, working with internal teams (CEO and CCO, product) to grow accounts.
 3. Results and style: strong growth (and retention where the role is about current business), "clear
-   communicator and collaborator", partners (Google, Pinterest) and the product team driving customer value.
+   communicator and collaborator", partnerships such as Google (Pinterest removed) and the product team driving customer value.
 4. Drive: "Driven and proactive – co-founded a B2B marketplace in Brazil with an automated split-payment
    flow, signing its first 8 retail partners from zero."
 5. Background: South America, Europe and Africa, and M-Pesa in Kenya.

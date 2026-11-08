@@ -18,53 +18,61 @@ reasons and gaps.
   layout by target role, and when to use extra evidence from past CVs. The old repo evidence bank in
   `cv/archive/` is superseded: don't draft from it.
 
+## The method lives in the Application playbook
+
+The full method, with examples, do's and don'ts and the known traps, is the **Application playbook**:
+live Claude Doc https://claude.ai/artifact/QhRxhPALUb1jLPttK7FeLn, repo copy `cv/application-playbook.md`.
+The app's Process page (Make stage) summarises each step and links to it. Read the playbook before drafting.
+When a rule changes, update the doc, the repo copy and the app's PROCESS `how` text together.
+
 ## Working doc (one per application)
 
 Draft in a Claude Doc, not Google Docs, so Harry can comment and edit inside Claude.
 
-1. Create the doc "<Company> · <Role> · application" with three tabs, in order: **How this was
-   made** (Inputs, Gauntlet scorecard, What changed from the last version), **CV**, **Cover letter**.
-2. Write `workspace` on the application row (`app/SCHEMA.md`): doc link, version, steps done, and
-   `open_question`.
+1. Create the doc "<Company> · <Role> · application" with four tabs, in order: **How this was made**
+   (Decode, coverage matrix, review log, changes from the base CV), **CV**, **Cover letter** (with a paragraph
+   map), **Form answers**.
+2. Write `workspace` on the application row (`app/SCHEMA.md`): doc link, version, steps done, review result
+   (stored in `workspace.gauntlet`), and `open_question`.
 3. Ask at most **one** question, as a doc comment anchored on the words it concerns.
 4. Keep the markdown copies in the application folder in step (`cv-vN.md`, `cover-letter-vN.md`).
 
-## Decode the job (before any drafting)
+## 1. Decode the job (no stop: runs straight into drafting)
 
-Mirrors the app's Process page, step "Decode the job". Write the output as a "Decode" section at the top of the
-working doc.
+Write it at the top of How this was made. Every sentence of the posting that asks for something is a row, in the
+posting's words, compound asks split. Columns: requirement, section, must or nice, keywords, best proof with its
+number, strength 0 to 3, where it lives (CV, letter, both, form), gap handling. Total the fit score. Every 0 or 1
+gets a decision (bridge in the letter, reframe a true bullet, or leave it). Write the angle in one line, one
+sourced company fact, and the change plan (summary sentences 2 and 3, bullets, Core line). A 5+ year ask is
+flagged but drafting carries on.
 
-1. **Get the full posting.** Never draft from a search summary. If the site is blocked, ask Harry to paste it.
-2. **Requirements table.** Every "What you'll do" and "Who you are" point in the posting's own words, plus
-   seniority and years asked, and which points are must-haves.
-3. **Match and score before drafting.** Best proof for each point from the master profile (see the proof bank in
-   `cv/cover-letter-playbook.md`), scored 0 to 3. Name the gaps now and how the CV and letter handle them. Flag a
-   5+ year ask so Harry can decide whether to apply.
-4. **Research the company.** One specific, sourced fact for "why this company". No generic praise.
-5. **Pick the base.** The most recently submitted CV (`cv/format-notes.md`). Plan the 5 to 10% that changes.
+## 2. Draft from the decode
 
-## Drafting order and rules
+- **CV proves, letter argues, form answers compress the letter.** Must-haves always have a CV line. Soft skills get
+  a concrete CV bullet, plus a letter sentence if central. Motivation, why the company and gaps go in the letter
+  only. Nice-to-haves go in the Core line or one letter clause.
+- Fill the **coverage matrix** (requirement → CV line, letter line, form line, score). A must-have answered only in
+  the letter is not covered. Each CV bullet answers one requirement, two at most.
+- Order: CV (summary sentences 2 and 3, Core line, bullets), matrix, letter from the paragraph map, form answers.
 
-CV first (summary, bullets, skills), then the letter (`cv/cover-letter-playbook.md`), then form answers from the
-letter's paragraphs. The CV and letter do's and don'ts on the app's Process page (step "Draft in a working doc") are
-the checklist while writing. Keep the two in step when a rule changes.
+## 3. Review agent (replaces the gauntlet; required before Harry sees a draft)
 
-## Gauntlet (required before Harry sees a draft): seven checks in this order
+Loop: run all seven checks, fix every failure, start again from check 1. Stop when a round is clean, or after
+round 3. Anything only Harry can decide stays unchanged and becomes an open item.
 
-Later fixes must not undo earlier ones, so the order is fixed:
+1. **Truth.** Every figure, name, date and scope claim traces to the master profile. No known traps.
+2. **Coverage.** Matrix complete, every must-have 2 or 3 in the CV, every gap decided, nothing answered twice in
+   the same words.
+3. **Reader tests.** Six-second skim, hiring manager, red team.
+4. **ATS.** The posting's top keywords in exact form, standard headings.
+5. **Voice and AI tells.** No semicolons, ≈ or ~, colon joins, stacked clauses, CV first person, "I want", stock
+   lines, padding words.
+6. **Consistency.** Figures, dates, titles, names match across CV, letter and form answers.
+7. **Format last.** CV one page, letter 250 to 350 words, form answers within limits.
 
-1. **Truth.** Every figure traced to a ✅ line, credit levels respected, singular vs plural, dates, nothing claimed
-   that is still in flight.
-2. **Job description match.** Re-score every point 0 to 3. Every point reaches 2 or is a named gap. Record the table.
-3. **Hiring manager and red team.** What would they challenge (seniority, gaps, overclaims)?
-4. **ATS.** The posting's keywords appear in the summary, bullets and skills line.
-5. **Voice and AI tells.** No semicolons, ≈ or ~ before numbers, colon joins, stock lines, lists of "I" statements,
-   stacked clauses, first person in the CV. Read every paragraph aloud.
-6. **Six-second skim.** The top third shows title, book and the role's top requirement.
-7. **Format last.** One page, no orphaned words, PDF render. Every earlier fix changes length.
-
-Up to three rounds. Record the scorecard and the rating table in the working doc. Anything still open goes to Harry
-as one comment.
+Record a review log (round, failures, what changed) in How this was made, set `workspace.gauntlet`
+`{result, rounds, fixes}`, and post one hand-over comment at the top of the doc: fit score before and after, open
+items, and anything not done and why.
 
 ## Comments, edits and the learning journal
 

@@ -64,7 +64,7 @@ workspace: {                       # written by Claude when drafting starts; sho
   version,                         # draft version (1, 2, ...)
   cv_pdf_asset, letter_pdf_asset,  # asset ids of the styled PDFs in this app's file store
   drive_folder_url,                # Google Drive folder holding the final files
-  gauntlet: {result: "Pass"|"Needs work", rounds, fixes},
+  gauntlet: {result: "Pass"|"Needs work", rounds, fixes},   # the review agent loop, shown as "Review agent" (field name kept)
   steps_done[],                    # ids from the app's PROCESS list: decode, draft, gauntlet, review,
                                    # learn, export, apply, track
   open_question,                   # the one thing Claude is waiting on Harry for, or empty

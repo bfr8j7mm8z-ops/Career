@@ -24,7 +24,7 @@ and expert guidance rather than hard recruiter data.
 3. **Pick the blocks.** The hook (why this role), two or three proofs for the top points (why me), the company reason
    (why this company), and one value statement (what I'd do first).
 4. **Draft the four paragraphs**, 250 to 350 words.
-5. **Gauntlet.** Truth check against the master profile. Map each paragraph to the job description points it answers
+5. **Review agent** (loops until clean, see `cv/application-playbook.md`). Truth check against the master profile. Map each paragraph to the job description points it answers
    (record the map in the working doc). AI-tell check (no semicolons, no ≈ or ~, no colons joining clauses, no stock
    phrases reused from another letter). Read aloud for simple, natural sentences. Word count.
 6. **Harry reviews** in the working doc. Lessons go into the learning journal.

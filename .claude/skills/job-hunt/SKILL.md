@@ -108,7 +108,7 @@ For each, follow `references/drafting.md`:
 2. Tailor from the master profile (facts) and the master CV (layout). Trim and reorder, mirror the
    posting's real wording where it's true. **Never add a skill, tool, title or number the user
    doesn't have.** Gaps go in `notes.md`.
-3. Draft in the application's Claude Doc working doc, run the gauntlet, render styled files and
+3. Draft in the application's Claude Doc working doc, run the review agent loop, render styled files and
    log lessons in `edit_journal` (all in `references/drafting.md`). Includes the human-tone pass.
 4. `python3 -m automations.jobhunt decide <id> interested --folder applications/<folder>`
 5. Add a row to `job-search-log.md` with status `Researching`.
