@@ -7,7 +7,7 @@ for a structure we can replicate. Facts still come only from the master profile.
 
 | # | Paragraph | Job it does | Rules |
 |---|---|---|---|
-| 1 | **Why this role** | The hook, and why this role is the right next step | 2 to 3 sentences. Name the role. A personal hook (M-Pesa) only when it genuinely fits the company. |
+| 1 | **Why this role** | The hook, and why this role is the right next step | 2 to 3 sentences. Open with a professional statement about the industry or company, never "I want". Then name the role and why. A personal hook (M-Pesa) comes after, and only when it genuinely fits. |
 | 2 | **Why me** | Two or three proofs mapped to the top "What you'll do" points | One proof per job description point, each with its "so what". Tell the story behind a CV line, don't repeat the CV. |
 | 3 | **Why this company** | One specific, researched reason, tied to Harry's own work | Name a product, strategy or stated value, with a source. Never generic praise. The honest gap goes here, framed with evidence. |
 | 4 | **The value I'd add, and close** | What he'd do in the first months, then a call to action | Concrete and in the posting's words. One closing line inviting a conversation. |

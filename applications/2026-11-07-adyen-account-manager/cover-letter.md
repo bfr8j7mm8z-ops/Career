@@ -6,7 +6,7 @@ harrystichbury@gmail.com | +44 7860 883048 | linkedin.com/in/harrystichbury | Lo
 
 Dear Hiring Manager,
 
-I want my next role to be in payments, and an Account Manager role at Adyen is where that move makes most sense. It is the job I do now, growing relationships with international retail brands, but inside a company that processes payments for brands like them. I grew up in Kenya watching M-Pesa change how a country pays, so this is a problem I care about.
+Payments is where a merchant's relationship with its customers either works or breaks, and Adyen has built one platform that makes it work for merchants such as Uber, H&M and Microsoft. I'm applying for the Account Manager role because it is the work I already do, growing relationships with international retail brands, in the industry where I want to build my career. That interest started in Kenya, where I grew up watching M-Pesa change how a whole country pays.
 
 At Fospha I was hand-picked to run our Tier 1–2 accounts, a $1.24M ARR book including Dyson, Samsonite Group and Huel. Three things from that work fit this role. I build long-term relationships, and Dyson grew 4–5× across four markets while I led the relationship, working across the brand and its agency. I work closely with senior leaders, and with our CEO and CCO I won Huel's marketing mix modelling business from an incumbent. And I act as the client's voice inside the business. I showed product a measurement gap affecting four enterprise clients and got the fix shipped after it had sat in the backlog since 2024.
 
