@@ -23,3 +23,6 @@ to be reworked from his submitted PPRO CV.
 
 ## Status
 - 7 Nov 2026: drafted, gauntlet passed (2 rounds). Next: Harry reviews, reads the live posting, applies.
+- 8 Nov 2026: Harry's comments applied. Summary: "partnerships such as Google", one combined driven, proactive and adaptable
+  sentence, his "SLT" wording kept. Bullets: new-revenue pipeline, CEO and CCO bullet split out. Framing check against the
+  posting added to the doc (about 5/10 before, 7/10 after). CV still one page.

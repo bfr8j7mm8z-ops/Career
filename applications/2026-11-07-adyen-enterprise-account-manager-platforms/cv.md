@@ -4,7 +4,7 @@ London, UK | +44 7860 883048 | harrystichbury@gmail.com | linkedin.com/in/harrys
 
 ## PROFESSIONAL SUMMARY
 
-Enterprise Account Manager at a fast-paced SaaS scale-up, owning a $1.24M ARR book across multi-market European brands. Experienced in building C-suite relationships across accounts and working with internal teams to find enterprise expansion opportunities, including a three-way deal with an ad platform. Delivers strong growth and retention across existing and new brands as a clear communicator and collaborator, using partnerships with Google and Pinterest and the product team to drive value for customers. Driven and proactive – co-founded a B2B marketplace in Brazil with an automated split-payment flow, signing its first 8 retail partners from zero, and now moving into payments. Worked across South America, Europe and Africa, and grew up in Kenya watching M-Pesa change how a country pays.
+Enterprise Account Manager at a fast-paced SaaS scale-up, owning a $1.24M ARR book across multi-market European brands. Experienced in building C-suite relationships across accounts and working with internal SLT to find enterprise expansion opportunities. Delivers strong growth and retention across existing and new brands as a clear communicator and collaborator, using partnerships such as Google and the product team to drive value for customers. Driven and proactive, having co-founded a B2B marketplace in Brazil with an automated split-payment flow, and adaptable, bringing diverse perspectives from working across South America, Europe and Africa and growing up in Kenya watching M-Pesa change how a country pays.
 
 ## EXPERIENCE
 
@@ -14,8 +14,9 @@ Enterprise Account Manager at a fast-paced SaaS scale-up, owning a $1.24M ARR bo
 
 #### Enterprise Account Manager | Aug 2026 – Present
 
-- Own a Tier 1–2 book of $1.24M ARR (Dyson, Samsonite Group, TJX, Huel, GANT, Footasylum, FitFlop), grown 6% in two months, with $31K MRR of upsell pipeline and a new-market deal out for signature.
-- Closed $216K ARR of renewals within six weeks of starting, and saved an account that had served notice. Grew Huel into Fospha's largest marketing mix modelling contract, lifting account MRR by 79%, after setting the strategy with Fospha's CEO and CCO and structuring a Google-funded start that converts into a 12-month contract.
+- Own a Tier 1–2 book of $1.24M ARR (Dyson, Samsonite Group, TJX, Huel, GANT, Footasylum, FitFlop), grown 6% in two months, with $31K MRR of new-revenue pipeline from MMM upsells and a new Dyson market out for signature.
+- Closed $216K ARR of renewals within six weeks of starting, and saved an account that had served notice.
+- Partner with Fospha's CEO and CCO on our biggest accounts, preparing their client briefings and decks, drafting follow-ups and shaping deal strategy. That strategy won Huel's marketing mix modelling business from an incumbent, and it became Fospha's largest MMM contract, lifting account MRR by 79%.
 - Led the relationship as Dyson grew 4–5× across four European markets into Fospha's largest single-brand customer, by managing a complex brand-and-agency relationship, consulting on how to act on the data and building product champions in each market. Recently presented to Dyson's senior leadership in Paris (marketing, e-commerce and growth directors), and now building the plan to expand globally.
 - Brokered a three-way legal negotiation between TJX, Fospha and Google, and secured partner-funded programmes for TJX, Samsonite, American Tourister, TUMI and Hobbs, using them to grow budgets and keep at-risk clients.
 

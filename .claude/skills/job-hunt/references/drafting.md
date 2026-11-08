@@ -78,6 +78,14 @@ Harry for the Drive folder.
 - ATS-safe: single column, no tables/graphics, standard headings. Keyword coverage is a soft
   check, not a target to stuff towards.
 
+## Framing the CV to a job description
+
+Pick the six or so requirements in the posting's "What you'll do" and "Who you are". Give each experience
+bullet one of them, lead it with the posting's own verb while keeping every fact, and put the strongest match
+first. Score the match honestly (what the CV answers, what it can't) and record it in the working doc. Harry's
+own wording is kept. Give his CEO and CCO collaboration its own bullet rather than a clause, and don't use
+Pinterest in partnership wording.
+
 ## Cover letter (optional)
 
 Harry has sent the CV only for PPRO and Adyen (Nov 2026). Draft a letter only if he asks, or when the application goes
