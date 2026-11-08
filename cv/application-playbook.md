@@ -119,6 +119,11 @@ P1 rethink method: write the angle, find the company fact under it, sentence 1 a
 "I want", "I am writing to apply", "I am excited"), sentence 2 Harry's work echoing it, sentence 3 the
 bridge and personal reason, read aloud and fix the joints.
 
+Harry's voice (from his own rewrite of the Adyen AM letter, 8 Nov): describe the role and how he works in
+his own plain verbs ("run and project-manage", "led these relationships", "enjoy working closely with"),
+one idea and at most one number per sentence, client-by-client stories left to the CV and interview, and
+end a paragraph on what he enjoys or wants more of. Form answers use the same spoken voice with contractions.
+
 Letter don'ts: "I want" openings, repeating CV bullets without the story, reused lines, unverified client
 names, list paragraphs, claimed enthusiasm, hiding or overclaiming a gap.
 
