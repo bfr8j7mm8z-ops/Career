@@ -24,3 +24,6 @@ Copied from `../2026-11-07-adyen-enterprise-account-manager-platforms/` and re-a
 
 ## Status
 - 7 Nov 2026: drafted, gauntlet passed (2 rounds). CV only. Next: Harry reads the live posting, then applies with the CV and the form answers.
+- 8 Nov 2026: now the lead Adyen application (Platforms paused). Carried across the Platforms CV improvements: "internal SLT"
+  wording, the simple marketplace-and-adaptability sentence, new-revenue pipeline in bullet 1, a separate CEO and CCO bullet, and
+  the CEO and CCO in the letter's Huel sentence. CV one page, CV only.

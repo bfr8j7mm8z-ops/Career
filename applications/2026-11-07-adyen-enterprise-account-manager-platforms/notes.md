@@ -26,3 +26,5 @@ to be reworked from his submitted PPRO CV.
 - 8 Nov 2026: Harry's comments applied. Summary: "partnerships such as Google", one combined driven, proactive and adaptable
   sentence, his "SLT" wording kept. Bullets: new-revenue pipeline, CEO and CCO bullet split out. Framing check against the
   posting added to the doc (about 5/10 before, 7/10 after). CV still one page.
+- 8 Nov 2026: **Paused.** Harry won't apply for now: the posting asks about 5 years and he doesn't have enough experience.
+  Marked Withdrawn in the app. Kept in case he returns. Its improvements went into the Account Manager application.
