@@ -30,3 +30,5 @@ Copied from `../2026-11-07-adyen-enterprise-account-manager-platforms/` and re-a
 - 8 Nov 2026: rated against the job description (9/18 before, 16/18 after). Added project management (Dyson go-lives) and
   product feedback (DV360) bullets, opened bullet 1 with the hand-picked high-autonomy brief, skills line in the posting's words,
   TJX bullet removed. Harry's "Collaborated with" edit kept. Still one page.
+- 8 Nov 2026: letter rebuilt in the new four-paragraph structure (`cv/cover-letter-playbook.md`), 326 words, one page.
+  Still CV only unless Harry decides otherwise.

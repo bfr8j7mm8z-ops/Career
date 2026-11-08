@@ -99,14 +99,11 @@ Harry has sent the CV only for PPRO and Adyen (Nov 2026). Draft a letter only if
 to a recruiter who expects a covering note. Always draft answers to the application form's written questions
 (short, one key message, each fact tied to why it matters for the role).
 
-## Cover letter (under 300 words, when one is wanted)
+## Cover letter (when one is wanted)
 
-1. Opening: a concrete, researched reason for *this* company (one real detail, found via web
-   search). Not "I am writing to express my interest".
-2. Middle: two or three achievements mapped directly to the role's needs, plus a short **why this
-   role, why this company** paragraph tied to the posting's own words (Harry asked for it, Nov 2026).
-3. Close: availability and what they'd like to discuss.
-Specific, a little informal is fine, nothing that could be sent to any company.
+Follow `cv/cover-letter-playbook.md`: four paragraphs (why this role, why me, why this company, the value I'd add and
+close), 250 to 350 words, one researched company fact, proofs mapped to the posting, and a paragraph-to-posting map in
+the working doc. The same blocks produce the application form answers.
 
 ## Tone pass (required)
 

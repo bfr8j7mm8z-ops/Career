@@ -12,6 +12,7 @@
     work-connector data out of the repo.
 - **Master CV format:** the CV submitted to PPRO on 5 Nov 2026, described in `format-notes.md`. Start every
   new CV from it. It is also in the app's Profile with `is_master: true`.
+- **Cover letters and form answers:** built with `cover-letter-playbook.md` (structure, flow, proof bank).
 - **Earlier master CVs and letters** (voice reference): the GoCardless applications (CSAM Jun 2026;
   Global Partnerships Apr 2026), kept in the app's Profile.
 - **Finished documents** (.docx/PDF): Google Drive `Career / Applications`.
