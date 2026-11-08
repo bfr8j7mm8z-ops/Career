@@ -85,6 +85,10 @@ API keys (Reed is free; Adzuna may cost ~£8/month and is optional): see `refere
 `cv-vN.md` / `cover-letter-vN.md` into Word and PDF in the GoCardless CSAM style. Needs
 `python-docx` and, for PDF, LibreOffice. See `.claude/skills/job-hunt/references/drafting.md`.
 
+`python3 -m automations.docs.slim <in.docx> <out.docx> --b64 <out.b64>` strips unused styles and parts
+(about 40 KB down to 12 KB) so the file can be uploaded to Drive as a Google Doc. Used by "process my
+applications" when an application reaches Ready to apply (`.claude/skills/job-hunt/SKILL.md`).
+
 ## Weekly automatic run
 
 A scheduled task on Harry's account ("Weekly job search") starts a fresh cloud session every Friday at

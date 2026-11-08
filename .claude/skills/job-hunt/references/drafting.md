@@ -89,9 +89,9 @@ and set those rows to `status: "proposed"`.
 cover letter) builds Word and PDF in the GoCardless CSAM style: Calibri, one A4 page, name 16pt
 bold blue (#1A5276), section headings 11pt bold capitals with a blue rule, body 10pt (#2C3E50),
 grey details and right-aligned dates. The PDF renders with Carlito (metric-identical to Calibri)
-when Calibri isn't installed, so line breaks match Word. Check it is one page. Upload the PDFs to
-the app's file store (Artifact asset upload) and store the ids on `workspace`; send the files to
-Harry for the Drive folder.
+when Calibri isn't installed, so line breaks match Word. Check it is one page. Finished files go to Drive
+as Google Docs when Harry sets Ready to apply (SKILL.md, "Process my applications"). No PDFs are
+stored: Harry downloads the PDF from the Google Doc.
 
 ## CV
 

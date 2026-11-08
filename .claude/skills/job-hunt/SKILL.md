@@ -113,7 +113,28 @@ For each, follow `references/drafting.md`:
 4. `python3 -m automations.jobhunt decide <id> interested --folder applications/<folder>`
 5. Add a row to `job-search-log.md` with status `Researching`.
 
-## 7. Track outcomes
+## 7. Process my applications (the stage queue)
+
+Changing an application's stage in the app adds a `queue` item (`app/SCHEMA.md`); the app can't reach
+Google Drive, so Claude does these in a session. On "process my applications", and at the start of any
+session that has the Drive connector, read `applications`, do every `queue` item with `status: "waiting"`,
+then set it to `done` with `done_at` (and a short `note`), pinned to the version you read.
+
+- **drive_files** (Ready to apply): find or create the folder in Drive `Career / Applications`
+  (`1nF5mc-hDJ-f8cLd5qiQ6WA23L3F_6ZZu`) named `YYYY-MM-DD Company Role` (date = when drafting started).
+  Render the CV (and the letter only if one is being sent) with `automations.docs.render`, shrink it with
+  `python3 -m automations.docs.slim <in.docx> <out.docx> --b64 <out.b64>`, and upload with Drive
+  `create_file` (docx content type, converted to a Google Doc) into the folder. Upload the form answers as
+  a Google Doc too (`text/markdown` or plain text). Store `drive_folder_url`, `drive_folder_id`,
+  `drive_cv_url`, `drive_letter_url`, `drive_form_url` on `workspace`. Harry makes the PDF himself. If he
+  reports the Google Doc runs past one page, tighten the markdown and upload again.
+- **folder_applied**: add " (Applied)" to the folder name.
+- **interview_prep**: write an "Interview prep" Google Doc in the folder: likely questions from the
+  job description, his stories mapped to them (master profile only), and questions to ask.
+- **folder_outcome**: Offer adds " (Offer)"; Rejected, Withdrawn and Ghosted replace any suffix with " (Old)".
+- If a folder can't be found or an upload fails, leave the item `waiting`, set `note`, and tell Harry.
+
+## 8. Track outcomes
 
 - When the user says they applied, set the log row to `Applied` with the date.
 - With a personal Gmail connected, search only for messages from companies in the log

@@ -190,6 +190,30 @@ const REMOTE = [["any", "Any"], ["remote", "Fully remote"], ["hybrid", "Hybrid"]
 const POSTED = [1, 3, 7, 14, 30];
 const SOURCES = [["indeed", "Indeed"], ["reed", "Reed"], ["career_pages", "Career pages"], ["alert_emails", "Job alert emails"], ["chrome", "Chrome (desk only)"]];
 const APP_STATUSES = ["Preparing", "Ready to apply", "Applied", "Interviewing", "Offer", "Rejected", "Withdrawn", "Ghosted"];
+// What each stage means, whose turn it is, and the job it queues for Claude (done in a Claude session:
+// "process my applications"). The app can't reach Google Drive itself.
+const STAGE_FLOW = {
+  "Preparing": {turn: "Claude, then you", next: "Claude builds the working doc and runs the review agent. Then you review and comment. Set Ready to apply when you're happy."},
+  "Ready to apply": {turn: "Claude, then you", next: "Claude puts the CV (and letter, if used) and the form answers into this job's Drive folder as Google Docs. You download the PDF, apply, then set Applied.",
+    action: "drive_files", label: "Create the Drive folder and Google Docs"},
+  "Applied": {turn: "You", next: "Wait for a reply and chase on the follow-up date. Set Interviewing if they invite you.",
+    action: "folder_applied", label: "Mark the Drive folder (Applied)"},
+  "Interviewing": {turn: "Claude, then you", next: "Claude adds an interview prep doc to the Drive folder. Log each round in Next step.",
+    action: "interview_prep", label: "Write interview prep in the Drive folder"},
+  "Offer": {turn: "You", next: "Decide. Ask Claude to compare it against your brief if useful.", action: "folder_outcome", label: "Mark the Drive folder (Offer)"},
+  "Rejected": {turn: "Done", next: "Closed. Note any feedback in Notes.", action: "folder_outcome", label: "Mark the Drive folder (Old)"},
+  "Withdrawn": {turn: "Done", next: "Closed.", action: "folder_outcome", label: "Mark the Drive folder (Old)"},
+  "Ghosted": {turn: "Done", next: "Closed after no reply.", action: "folder_outcome", label: "Mark the Drive folder (Old)"},
+};
+const addDays = n => new Date(Date.now() + n * 864e5).toISOString().slice(0, 10);
+async function changeStage(a, status) {
+  const now = nowIso(), f = STAGE_FLOW[status] || {};
+  const upd = {status, stage_since: now, updated_at: now};
+  if (f.action) upd.queue = [...(a.queue || []).filter(q => q.status === "done" || q.action !== f.action),
+    {action: f.action, label: f.label, stage: status, status: "waiting", requested_at: now}];
+  if (status === "Applied") { upd.applied_at = now; if (!a.follow_up) upd.follow_up = addDays(7); if (!a.next_step) upd.next_step = "Chase if no reply"; }
+  return write(() => S.db.doc("applications/" + a.id).update(upd), f.action ? "Saved. Queued for Claude: " + f.label : "Saved");
+}
 const DOC_KINDS = ["Master profile", "CV", "Cover letter", "Annual review", "Claude profile report", "LinkedIn export", "Other"];
 
 const blankProject = () => ({
@@ -674,7 +698,7 @@ function viewApps(col) {
   col.append(h("div", {class: "head"}, h("div", {}, h("h1", {}, "Applications"), h("p", {class: "sub"}, "Everything you've shortlisted, with its stage, next step and follow-up date."))));
   if (!S.apps.length) { col.append(h("div", {class: "card empty"}, h("h2", {}, "No applications yet"), h("p", {}, "Shortlist a job from a project's Interested tab and it appears here."))); return; }
   const today = new Date().toISOString().slice(0, 10);
-  const closed = ["Rejected", "Withdrawn", "Offer"];
+  const closed = ["Rejected", "Withdrawn", "Offer", "Ghosted"];
   const sorted = [...S.apps].sort((a, b) => (closed.includes(a.status) - closed.includes(b.status)) || ((a.follow_up || "9999") .localeCompare(b.follow_up || "9999")));
   const due = sorted.filter(a => a.follow_up && a.follow_up <= today && !closed.includes(a.status));
   if (due.length) col.append(h("div", {class: "banner warn"}, `${due.length} follow-up${due.length > 1 ? "s" : ""} due: ` + due.map(a => a.company).join(", ")));
@@ -702,7 +726,7 @@ function viewApps(col) {
     const ref = S.db.doc("applications/" + a.id);
     const url = safeUrl(a.url);
     const save = (field, value) => write(() => ref.update({[field]: value, updated_at: nowIso()}));
-    const status = h("select", {id: "st-" + a.id, onchange: e => write(() => ref.update({status: e.target.value, stage_since: nowIso(), updated_at: nowIso()}))}, APP_STATUSES.map(s => h("option", {value: s, selected: a.status === s}, s)));
+    const status = h("select", {id: "st-" + a.id, onchange: e => changeStage(a, e.target.value)}, APP_STATUSES.map(s => h("option", {value: s, selected: a.status === s}, s)));
     const fu = h("input", {type: "date", id: "fu-" + a.id, value: a.follow_up || "", onchange: e => save("follow_up", e.target.value)});
     const next = h("input", {type: "text", id: "nx-" + a.id, value: a.next_step || "", placeholder: "Next step", onchange: e => save("next_step", e.target.value)});
     const notes = h("textarea", {id: "nt-" + a.id, placeholder: "Notes", style: "min-height:60px", onchange: e => save("notes", e.target.value)}, a.notes || "");
@@ -723,10 +747,24 @@ function viewApps(col) {
         h("div", {class: "field"}, h("label", {class: "label", for: "st-" + a.id}, "Stage"), status),
         h("div", {class: "field"}, h("label", {class: "label", for: "fu-" + a.id}, "Follow up on"), fu)),
       h("div", {class: "field"}, h("label", {class: "label", for: "nx-" + a.id}, "Next step"), next),
+      stagePanel(a),
       workspacePanel(a),
       h("details", {}, h("summary", {}, "Notes"), h("div", {style: "margin-top:6px"}, notes)),
       h("div", {class: "row", style: "justify-content:flex-end"}, rm)));
   }
+}
+
+/* What happens at this stage, whose turn it is, and anything queued for Claude. */
+function stagePanel(a) {
+  const st = a.status || "Preparing", f = STAGE_FLOW[st] || {};
+  const q = a.queue || [], waiting = q.filter(x => x.status === "waiting"), done = q.filter(x => x.status === "done").slice(-1);
+  const quiet = st === "Applied" && daysAgo(a.stage_since) >= 21;
+  return h("div", {style: "display:grid;gap:6px"},
+    h("p", {class: "small"}, h("b", {}, "What happens now"), h("span", {class: "mute"}, ` · ${f.turn || ""}`), h("br"), f.next || ""),
+    waiting.length ? h("div", {class: "banner small"}, "Waiting for Claude: " + waiting.map(x => x.label).join(", ") + ". Say “process my applications” in a Claude session.") : null,
+    done.map(x => h("span", {class: "small mute"}, `Done ${fmtDate(x.done_at)}: ${x.label}${x.note ? " · " + x.note : ""}`)),
+    quiet ? h("div", {class: "banner warn small row", style: "justify-content:space-between;gap:8px"}, "No reply in three weeks.",
+      h("button", {class: "btn", onclick: () => changeStage(a, "Ghosted")}, "Mark Ghosted")) : null);
 }
 
 /* One place per application: the working doc, the files and how far through the process it is. */
@@ -734,7 +772,6 @@ function workspacePanel(a) {
   const w = a.workspace;
   if (!w) return h("p", {class: "mute small"}, "No workspace yet. Ask Claude to “draft the application for " + (a.company || "this job") + "” and a working doc appears here.");
   const link = (href, label, primary) => { const u = safeUrl(href); return u ? h("a", {class: "btn" + (primary ? " primary" : ""), href: u, target: "_blank", rel: "noopener noreferrer"}, label) : null; };
-  const asset = (id, label) => id && /^[0-9a-f]{32}$/.test(id) ? h("a", {class: "btn", href: "/_blob/" + id, target: "_blank", rel: "noopener"}, label) : null;
   const g = w.gauntlet || {};
   const steps = new Set(w.steps_done || []);
   const done = PROCESS.filter(st => st.app && steps.has(st.id)).length, total = PROCESS.filter(st => st.app).length;
@@ -745,8 +782,8 @@ function workspacePanel(a) {
         g.result ? h("span", {class: "chip " + (g.result === "Pass" ? "ok" : "warn")}, `Review agent: ${g.result}${g.rounds ? ` · ${g.rounds} rounds` : ""}`) : null,
         h("span", {class: "chip"}, `${done}/${total} steps`), lessons ? h("span", {class: "chip"}, `${lessons} lesson${lessons > 1 ? "s" : ""}`) : null)),
     w.open_question ? h("div", {class: "banner warn small"}, "Waiting on you: " + w.open_question) : null,
-    h("div", {class: "links"}, link(w.doc_url, "Open working doc", true), asset(w.cv_pdf_asset, "CV (PDF)"), asset(w.letter_pdf_asset, "Letter (PDF)"),
-      link(w.drive_folder_url, "Drive folder"), link(a.url, "Job posting")),
+    h("div", {class: "links"}, link(w.doc_url, "Open working doc", true), link(w.drive_folder_url, "Drive folder"),
+      link(w.drive_cv_url, "CV (Google Doc)"), link(w.drive_letter_url, "Letter (Google Doc)"), link(w.drive_form_url, "Form answers"), link(a.url, "Job posting")),
     h("p", {class: "mute small"}, "Comment or edit in the doc, then tell Claude “process my comments on " + (a.company || "this application") + "”. What changes is logged in the journal on the Process page."));
 }
 
@@ -762,9 +799,9 @@ const PROCESS = [
   {"id": "gauntlet", "phase": "Make", "app": true, "title": "Review agent", "body": "A final checker that reads the whole doc like a sceptical reviewer, fixes what fails and runs every check again, until a full round passes or three rounds are done. You only see drafts that already pass.", "state": "live", "doc": "https://claude.ai/artifact/QhRxhPALUb1jLPttK7FeLn", "how": [{"t": "The loop", "items": ["Run all seven checks. Fix every failure. Start again from check 1, because a fix in one place can break another.", "Stop when a round finds nothing, or after round 3.", "Anything only you can decide (which of two figures, a sensitive point) is left as it was and listed as an open item."]}, {"t": "The seven checks and what passing means", "items": ["1. Truth: every figure, name, date and scope claim traces to the master profile, most recent figure first, nothing from the known traps.", "2. Coverage: the matrix is complete, every must-have scores 2 or 3 in the CV, every gap has a decision, nothing answered twice in the same words.", "3. Reader tests: the six-second skim shows fit, each bullet makes a hiring manager want to ask about it, and the red team finds no claim you couldn't defend.", "4. ATS: the posting's top keywords appear in their exact form, under standard headings.", "5. Voice and AI tells: no semicolons, ≈, ~, colon joins, stacked clauses, \"I want\", \"passionate\", \"leverage\", \"spearheaded\" or stock lines.", "6. Consistency: figures, dates, titles and names match across CV, letter and form answers. British spelling.", "7. Format, last: CV exactly one page, letter 250 to 350 words, form answers within limits. Every earlier fix changes length."]}, {"t": "What you get", "items": ["A review log in the doc: each round's failures and what changed.", "One comment at the top of the doc: fit score before and after, open items for you, and anything it chose not to do and why."]}]},
   {"id": "review", "phase": "Make", "app": true, "title": "You review", "body": "Judge taste, emphasis and truth. The rules are already checked. Comment, strike through or edit in the doc, then send comments to Claude.", "state": "live", "doc": "https://claude.ai/artifact/QhRxhPALUb1jLPttK7FeLn", "how": [{"t": "How to get changes made", "items": ["Comment on the exact words and mention @Claude. The reply and the edit appear in the doc.", "Strike through text to mean \"remove it\".", "Edit directly if you prefer. Claude keeps your wording word for word in every later round.", "Answer the open items from the review agent's comment."]}, {"t": "What to look for", "items": ["Does it sound like you? Does it lead with what you'd lead with in an interview? Is there anything you wouldn't want to be asked about?"]}]},
   {"id": "learn", "phase": "Make", "app": true, "title": "Learn", "body": "Every comment and edit becomes a journal entry. Lessons that apply everywhere become rules in the playbook and new checks for the review agent.", "state": "live", "note": "Runs when you comment, or when you ask", "doc": "https://claude.ai/artifact/QhRxhPALUb1jLPttK7FeLn", "how": [{"t": "What happens to each comment", "items": ["The change is made in the doc and replied to on its thread.", "One-off preferences stay with the application. General lessons become rules.", "Every change is logged below under \"What Claude has learned\".", "New rules go into the playbook and the review agent's checks, so they are caught automatically next time.", "New facts about you are suggested as profile updates for you to approve.", "The review agent runs again on the changed drafts."]}]},
-  {"id": "export", "phase": "Make", "app": true, "title": "Export", "body": "Styled PDF and Word (Calibri, one page), saved to this app and to Drive, Career / Applications.", "state": "live", "how": [{"t": "Steps", "items": ["Rendered with the standard renderer: Calibri, blue headings with a rule, one A4 page.", "The CV PDF is checked to be exactly one page.", "Uploaded to Drive in a folder named like the repo folder, and attached to the Applications card (always the latest version).", "Once you submit and mark it Applied, that CV becomes the base for the next application."]}]},
+  {"id": "export", "phase": "Make", "app": true, "title": "Ready to apply: files to Drive", "body": "When you set Ready to apply, Claude creates the job's Drive folder and puts the CV (and letter, if used) and the form answers in it as Google Docs. You make the PDF.", "state": "live", "note": "Queued in the app, done in your next Claude session (\"process my applications\")", "how": [{"t": "Where", "items": ["Google Drive, Career / Applications, one folder per application named like \"2026-11-08 Adyen Account Manager\"."]}, {"t": "What goes in", "items": ["CV as a Google Doc with the standard styling (Calibri, blue headings, one page).", "Cover letter as a Google Doc, only when one is being sent.", "Form answers as a Google Doc, ready to paste into the application form."]}, {"t": "Your part", "items": ["Open the CV, check it is one page, then File > Download > PDF.", "Apply, then set the stage to Applied."]}]},
   {"id": "apply", "phase": "Apply", "app": true, "title": "Assisted apply", "body": "Claude fills the application form in Chrome. You check it and press Submit.", "state": "planned", "note": "Chrome is off. Form answers are drafted in the working doc meanwhile."},
-  {"id": "track", "phase": "Apply", "app": true, "title": "Track and follow up", "body": "Stage, time in stage, next step and follow-up dates in Applications, with company and stage filters.", "state": "live"},
+  {"id": "track", "phase": "Apply", "app": true, "title": "Track and follow up", "body": "Each stage tells you what happens now and whose turn it is. Stage changes queue Claude's part, which is done in your next session.", "state": "live", "how": [{"t": "Stage by stage", "items": ["Preparing: Claude drafts the working doc and runs the review agent, then you review.", "Ready to apply: Claude puts the Google Docs in the Drive folder. You make the PDF and apply.", "Applied: follow-up set for 7 days later with \"Chase if no reply\", and the Drive folder is marked (Applied).", "Interviewing: Claude adds an interview prep doc to the Drive folder.", "Offer, Rejected, Withdrawn, Ghosted: the folder is marked (Offer) or (Old). After three weeks with no reply, the card offers Mark Ghosted."]}, {"t": "Claude's queue", "items": ["Anything waiting for Claude shows on the card. Say \"process my applications\" in a Claude session to clear it.", "The Friday search can't reach Google Drive, so Drive work always happens in a session."]}]},
   {"id": "outreach", "phase": "Apply", "title": "Outreach drafts", "body": "Short notes to the hiring team, drafted for you to send.", "state": "planned", "note": "Phase 4"},
   {"id": "improve", "phase": "Improve", "title": "Weekly review", "body": "Claude reads your “no” reasons and the journal, then suggests changes to briefs and style rules.", "state": "planned", "note": "Phase 2"},
 ];

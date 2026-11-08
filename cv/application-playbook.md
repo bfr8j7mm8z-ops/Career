@@ -13,7 +13,7 @@ Process page (Make stage) summarises each step and links to the doc.
 | 3. Review agent | Check everything, fix, check again, until it passes | Claude, looping | Review log, clean drafts |
 | 4. Harry reviews | Read the drafts, comment, strike through, edit | Harry | Comments and edits |
 | 5. Learn | Apply the comments, log each lesson, rerun the review agent | Claude | Journal entries, updated playbook |
-| 6. Export | Styled .docx and PDF, one page, to Drive | Claude | Files in Career / Applications |
+| 6. Ready to apply | You set Ready to apply. CV (and letter if used) and form answers go to the job's Drive folder as Google Docs. You make the PDF | Claude, then Harry | Google Docs in Career / Applications |
 
 Principles:
 1. The posting sets the questions. The drafts answer them, and the coverage matrix proves it.
@@ -154,9 +154,13 @@ In the app's database the result is stored in `workspace.gauntlet` (field name k
 - **Learn:** apply each change and reply on its thread, decide one-off or general, log it in the edit
   journal, add general rules to this playbook and the review agent's checks, propose new facts as profile
   updates, rerun the review agent.
-- **Export:** `python3 -m automations.docs.render cv|letter <md> <out.docx> --pdf`, check one page, upload
-  to Drive Career / Applications in a `YYYY-MM-DD-company-role` folder, attach to the app card. Once
-  submitted and marked Applied, that CV becomes the new base.
+- **Ready to apply:** Harry sets the stage in the app, which queues the Drive step. In the next session
+  ("process my applications") Claude renders the CV, uploads it as a Google Doc (plus the letter if
+  used, and the form answers) into Drive Career / Applications / `YYYY-MM-DD Company Role`, and links
+  them on the card. Harry checks it is one page, downloads the PDF and applies. Later stages: Applied
+  marks the folder (Applied) and sets a 7-day follow-up, Interviewing adds an interview prep doc,
+  Offer/Rejected/Withdrawn/Ghosted mark the folder (Offer) or (Old). Once applied, that CV becomes the
+  new base.
 
 ## Known traps
 

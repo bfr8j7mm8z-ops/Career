@@ -59,11 +59,21 @@ job_id, project_id, title, company, url, location,
 status: Preparing | Ready to apply | Applied | Interviewing | Offer | Rejected | Withdrawn | Ghosted,
 next_step, follow_up, notes, created_at, updated_at,
 stage_since,                       # when `status` last changed (the app sets it); "time in stage" on the card
+applied_at,                        # set by the app on Applied (it also fills follow_up = +7 days and
+                                   # next_step "Chase if no reply" when empty)
+queue[]: {action, label, stage, status: "waiting"|"done", requested_at, done_at, note}
+                                   # Claude's part of a stage change, added by the app. Actions:
+                                   # drive_files (Ready to apply), folder_applied (Applied),
+                                   # interview_prep (Interviewing), folder_outcome (Offer/Rejected/
+                                   # Withdrawn/Ghosted). Claude does them when asked to "process my
+                                   # applications" and sets status "done" + done_at.
 workspace: {                       # written by Claude when drafting starts; shown on the card
   doc_url, doc_id,                 # the Claude Doc working doc (tabs: How this was made, CV, Cover letter)
   version,                         # draft version (1, 2, ...)
-  cv_pdf_asset, letter_pdf_asset,  # asset ids of the styled PDFs in this app's file store
-  drive_folder_url,                # Google Drive folder holding the final files
+  drive_folder_url, drive_folder_id,   # this application's folder in Drive Career / Applications
+  drive_cv_url, drive_letter_url, drive_form_url,   # the Google Docs Claude put there (no PDFs: Harry
+                                   # downloads the PDF from the Google Doc). cv_pdf_asset and
+                                   # letter_pdf_asset are retired.
   gauntlet: {result: "Pass"|"Needs work", rounds, fixes},   # the review agent loop, shown as "Review agent" (field name kept)
   steps_done[],                    # ids from the app's PROCESS list: decode, draft, gauntlet, review,
                                    # learn, export, apply, track
