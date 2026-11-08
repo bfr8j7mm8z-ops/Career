@@ -29,16 +29,42 @@ Draft in a Claude Doc, not Google Docs, so Harry can comment and edit inside Cla
 3. Ask at most **one** question, as a doc comment anchored on the words it concerns.
 4. Keep the markdown copies in the application folder in step (`cv-vN.md`, `cover-letter-vN.md`).
 
-## Gauntlet (required before Harry sees a draft)
+## Decode the job (before any drafting)
 
-Decode the posting into requirements and keywords, map each to master-profile evidence, draft, then
-run six critics: **truth checker** (every figure traced to a ✅ line; credit levels respected),
-**6-second recruiter**, **hiring manager** for this role, **ATS reader**, **voice/humaniser**, and
-**red team** (what an interviewer could catch out). The voice critic checks Harry's AI-tell list:
-no semicolons; no ≈ or ~ before numbers (round, or write "about"); no colon joining two halves of a
-bullet; few lists of three; vary bullet shape and length, with some one-liners; no stacked
-"by doing X, Y and Z" clauses; no first person in the CV. Fix and re-run, up to three rounds. Record each
-critic's finding, the fix and the final result in the "Gauntlet scorecard" table.
+Mirrors the app's Process page, step "Decode the job". Write the output as a "Decode" section at the top of the
+working doc.
+
+1. **Get the full posting.** Never draft from a search summary. If the site is blocked, ask Harry to paste it.
+2. **Requirements table.** Every "What you'll do" and "Who you are" point in the posting's own words, plus
+   seniority and years asked, and which points are must-haves.
+3. **Match and score before drafting.** Best proof for each point from the master profile (see the proof bank in
+   `cv/cover-letter-playbook.md`), scored 0 to 3. Name the gaps now and how the CV and letter handle them. Flag a
+   5+ year ask so Harry can decide whether to apply.
+4. **Research the company.** One specific, sourced fact for "why this company". No generic praise.
+5. **Pick the base.** The most recently submitted CV (`cv/format-notes.md`). Plan the 5 to 10% that changes.
+
+## Drafting order and rules
+
+CV first (summary, bullets, skills), then the letter (`cv/cover-letter-playbook.md`), then form answers from the
+letter's paragraphs. The CV and letter do's and don'ts on the app's Process page (step "Draft in a working doc") are
+the checklist while writing. Keep the two in step when a rule changes.
+
+## Gauntlet (required before Harry sees a draft): seven checks in this order
+
+Later fixes must not undo earlier ones, so the order is fixed:
+
+1. **Truth.** Every figure traced to a ✅ line, credit levels respected, singular vs plural, dates, nothing claimed
+   that is still in flight.
+2. **Job description match.** Re-score every point 0 to 3. Every point reaches 2 or is a named gap. Record the table.
+3. **Hiring manager and red team.** What would they challenge (seniority, gaps, overclaims)?
+4. **ATS.** The posting's keywords appear in the summary, bullets and skills line.
+5. **Voice and AI tells.** No semicolons, ≈ or ~ before numbers, colon joins, stock lines, lists of "I" statements,
+   stacked clauses, first person in the CV. Read every paragraph aloud.
+6. **Six-second skim.** The top third shows title, book and the role's top requirement.
+7. **Format last.** One page, no orphaned words, PDF render. Every earlier fix changes length.
+
+Up to three rounds. Record the scorecard and the rating table in the working doc. Anything still open goes to Harry
+as one comment.
 
 ## Comments, edits and the learning journal
 
