@@ -4,7 +4,7 @@ London, UK | +44 7860 883048 | harrystichbury@gmail.com | linkedin.com/in/harrys
 
 ## PROFESSIONAL SUMMARY
 
-Enterprise Account Manager at a fast-paced SaaS scale-up, owning a $1.24M ARR book across multi-market European brands. Experienced in building C-suite relationships across accounts and working with internal SLT to find enterprise expansion opportunities. Delivers strong growth and retention across existing and new brands as a clear communicator and collaborator, using partnerships such as Google and the product team to drive value for customers. Driven and proactive, having co-founded a B2B marketplace in Brazil with an automated split-payment flow, and adaptable, bringing diverse perspectives from working across South America, Europe and Africa and growing up in Kenya watching M-Pesa change how a country pays.
+Enterprise Account Manager at a fast-paced SaaS scale-up, owning a $1.24M ARR book across multi-market European brands. Experienced in building C-suite relationships across accounts and working with internal SLT to find enterprise expansion opportunities. Delivers strong growth and retention across existing and new brands as a clear communicator and collaborator, using partnerships such as Google and the product team to drive value for customers. Co-founded a B2B marketplace in Brazil with an automated split-payment flow and worked across South America, Europe and Africa, showing drive, proactivity and adaptability. Grew up in Kenya watching M-Pesa change how a country pays.
 
 ## EXPERIENCE
 
