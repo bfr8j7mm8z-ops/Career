@@ -6,7 +6,7 @@ harrystichbury@gmail.com | +44 7860 883048 | linkedin.com/in/harrystichbury | Lo
 
 Dear Hiring Manager,
 
-Payments is where a merchant's relationship with its customers either works or breaks, and Adyen has built one platform that makes it work for merchants such as Uber, H&M and Microsoft. I'm applying for the Account Manager role because it is the work I already do, growing relationships with international retail brands, in the industry where I want to build my career. That interest started in Kenya, where I grew up watching M-Pesa change how a whole country pays.
+Payments is the part of a merchant's business that customers only notice when it goes wrong, and Adyen has built its reputation on making it work across markets and channels. For the past two years I have helped international retail brands grow their revenue across Europe, so I know what merchants at that scale expect from a partner. The Account Manager role brings that work into payments, an industry I have been drawn to since growing up in Kenya and watching M-Pesa change how a whole country pays.
 
 At Fospha I was hand-picked to run our Tier 1–2 accounts, a $1.24M ARR book that includes Dyson, Samsonite Group and Huel. With Dyson, I led the relationship as the account grew 4–5× across four markets, working closely with the brand and its agency. With Huel, I worked alongside our CEO and CCO to win their marketing mix modelling business from an incumbent. Just as important, I make sure what clients tell me reaches the people who can act on it. When four enterprise clients struggled with the same measurement gap, I took the evidence to product and got the fix shipped after it had sat in the backlog since 2024.
 
