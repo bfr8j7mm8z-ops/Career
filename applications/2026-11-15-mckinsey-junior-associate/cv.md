@@ -14,7 +14,7 @@ Enterprise Account Manager at a fast-paced SaaS scale-up, working as a strategic
 
 #### Enterprise Account Manager | Aug 2026 – Present
 
-- Hand-picked as strategic partner to Fospha's largest clients (Dyson, Samsonite Group, TJX, Huel, GANT), a $1.24M ARR book. Runs 10+ client working sessions a week and has shaped 2027 marketing strategies that clients have taken to their boards and senior leadership teams.
+- Hand-picked as strategic partner to Fospha's largest clients (Dyson, Samsonite Group, TJX, Huel, GANT), a $1.24M ARR book. Runs 10+ client working sessions a week and has shaped the 2027 marketing strategy that Dyson took to its board and senior leadership.
 - Diagnosed why Dyson's markets were getting different results from the same data and got the market teams and their agency to act on it. Italy's summer sale grew 40% year on year, a single 5.0 ROAS threshold was agreed across Southern Europe, and the findings were presented to Dyson's senior leadership in Paris.
 - Built the business case that secured Footasylum's renewal with its private-equity owner, evidencing more than £1M of campaign revenue that was invisible in Google Analytics.
 - Collaborated with Fospha's CEO and CCO on strategy for the biggest accounts. That strategy won Huel's marketing mix modelling business from an incumbent and lifted account revenue by 79%.
