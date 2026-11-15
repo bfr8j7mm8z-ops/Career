@@ -9,6 +9,13 @@ CSAM CV as the master layout. Facts still come only from the master profile.
   headings with a rule, 10pt body, right-aligned dates). Check the page count after every change.
 - Sections in order: PROFESSIONAL SUMMARY, EXPERIENCE, EDUCATION, SKILLS & TOOLS.
 
+## Style (15 Nov 2026)
+- Harry prefers the **plain** style: black text only, no rules or colour, left-aligned name, 10.5pt, dates
+  right-aligned. Render with `--style plain`. Use it for new CVs from now on (McKinsey Junior Associate was
+  the first). `classic` (blue headings with rules) is the old look.
+- After uploading to Drive as a Google Doc, export it to PDF (Drive download with `application/pdf`) and
+  count the pages: Google can wrap differently from Word. Keep two to three lines of slack.
+
 ## Summary (Harry's own structure, about 5 lines)
 1. Role and book: "Enterprise Account Manager at a fast-paced SaaS scale-up, owning a $1.24M ARR book
    across multi-market European brands."

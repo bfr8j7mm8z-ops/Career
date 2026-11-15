@@ -9,6 +9,9 @@ Usage, from the repo root:
     python3 -m automations.docs.render cv APPLICATION_DIR/cv-v2.md OUT_DIR/Name_CV.docx [--pdf]
     python3 -m automations.docs.render letter APPLICATION_DIR/cover-letter-v2.md OUT_DIR/Name_Letter.docx [--pdf]
 
+CV styles: --style classic (default: blue headings with rules, centred header, 10pt) or --style plain
+(black only, no rules, left-aligned, 10.5pt, wider margins: the consulting look Harry prefers).
+
 CV markdown: "# NAME", a contact line, "## SECTION", "### Title | Company | Dates" (or "### Company | Dates" then "#### Role | Dates"),
 "*context line*", "- bullet", "**Label:** text", "**Bold line**" and plain paragraphs.
 Letter markdown: the first two lines are name and contact; the last line is the signature.
@@ -75,55 +78,72 @@ def _rule(p, color="1A5276"):
     pPr.append(bdr)
 
 
-def render_cv(md, out):
+BLACK = RGBColor(0, 0, 0)
+STYLES = {
+    # The June 2026 look: blue name and headings with a rule, grey details, centred header, 10pt.
+    "classic": dict(margins=(41, 46, 34, 30), centre=True, head=BLUE, ink=INK, soft=GREY, rule=True,
+                    name=16, contact=9, section=11, employer=10.5, role=10, dates=10, body=10, small=9.5,
+                    sec_before=7, sec_after=3, emp_before=4, role_before=3, bullet_after=1),
+    # Plain consulting look: black only, no rules, left-aligned, larger type, wider margins.
+    "plain": dict(margins=(46, 46, 36, 30), centre=False, head=BLACK, ink=BLACK, soft=BLACK, rule=False,
+                  name=17, contact=10, section=11.5, employer=10.5, role=10.5, dates=10.5, body=10.5, small=10.5,
+                  sec_before=8, sec_after=3, emp_before=5, role_before=4, bullet_after=1),
+}
+
+
+def render_cv(md, out, style="classic"):
+    st = STYLES[style]
     doc = Document()
-    s = _page(doc, 41, 46, 34, 30)
+    s = _page(doc, *st["margins"])
     width = s.page_width - s.left_margin - s.right_margin
+    head_align = WD_ALIGN_PARAGRAPH.CENTER if st["centre"] else None
+    ink, soft = st["ink"], st["soft"]
     lines = [l.rstrip() for l in md.splitlines()]
     contact_done = False
     for line in lines:
         if not line.strip():
             continue
         if line.startswith("# "):
-            _inline(_para(doc, WD_ALIGN_PARAGRAPH.CENTER), line[2:], 16, BLUE, bold=True)
+            _inline(_para(doc, head_align), line[2:], st["name"], st["head"], bold=True)
         elif not contact_done and "|" in line and "@" in line:
-            _inline(_para(doc, WD_ALIGN_PARAGRAPH.CENTER, after=2), line, 9, GREY)
+            _inline(_para(doc, head_align, after=2), line, st["contact"], soft)
             contact_done = True
         elif line.startswith("## "):
-            p = _para(doc, before=7, after=3)
-            _inline(p, line[3:].upper(), 11, BLUE, bold=True)
-            _rule(p)
+            p = _para(doc, before=st["sec_before"], after=st["sec_after"])
+            _inline(p, line[3:].upper(), st["section"], st["head"], bold=True)
+            if st["rule"]:
+                _rule(p)
         elif line.startswith("#### "):
             # A role within the employer above: "#### Title | Dates".
             title, _, dates = (x.strip() for x in line[5:].rpartition("|"))
-            p = _para(doc, before=3, after=0)
+            p = _para(doc, before=st["role_before"], after=0)
             p.paragraph_format.tab_stops.add_tab_stop(width, WD_TAB_ALIGNMENT.RIGHT)
-            _inline(p, title, 10, INK, bold=True)
-            _inline(p, "\t" + dates, 9.5, GREY, italic=True)
+            _inline(p, title, st["role"], ink, bold=True)
+            _inline(p, "\t" + dates, st["dates"] - (0.5 if st["rule"] else 0), soft, italic=True)
         elif line.startswith("### "):
             # "### Title | Company | Dates", or "### Company | Dates" when roles follow as "####".
             parts = [x.strip() for x in line[4:].split("|")]
             title, company, dates = parts[0], " | ".join(parts[1:-1]), parts[-1]
-            p = _para(doc, before=4, after=0)
+            p = _para(doc, before=st["emp_before"], after=0)
             p.paragraph_format.tab_stops.add_tab_stop(width, WD_TAB_ALIGNMENT.RIGHT)
-            _inline(p, title, 10.5, INK, bold=True)
+            _inline(p, title, st["employer"], ink, bold=True)
             if company:
-                _inline(p, " | " + company, 10.5, GREY)
-            _inline(p, "\t" + dates, 10, GREY)
+                _inline(p, " | " + company, st["employer"], soft)
+            _inline(p, "\t" + dates, st["dates"], soft)
         elif line.startswith("- "):
-            p = _para(doc, after=1)
+            p = _para(doc, after=st["bullet_after"])
             f = p.paragraph_format
             f.left_indent, f.first_line_indent = Pt(18), Pt(-10)
             f.tab_stops.add_tab_stop(Pt(18))
-            _inline(p, "•\t" + line[2:], 10, INK)
+            _inline(p, "•\t" + line[2:], st["body"], ink)
         elif line.startswith("*") and line.endswith("*") and not line.startswith("**"):
-            _inline(_para(doc, after=1), line.strip("*"), 9.5, GREY, italic=True)
+            _inline(_para(doc, after=1), line.strip("*"), st["small"], soft, italic=True)
         elif re.match(r"^\*\*[^*]+:\*\*", line):
-            _inline(_para(doc, after=1), line, 9.5, INK)
+            _inline(_para(doc, after=1), line, st["small"], ink)
         elif line.startswith("**") and line.endswith("**"):
-            _inline(_para(doc, before=2), line, 10, INK, bold=True)
+            _inline(_para(doc, before=2), line, st["body"], ink, bold=True)
         else:
-            _inline(_para(doc, after=1), line, 9.5 if "|" in line else 10, GREY if "|" in line else INK)
+            _inline(_para(doc, after=1), line, st["small"] if "|" in line else st["body"], soft if "|" in line else ink)
     doc.save(out)
 
 
@@ -155,7 +175,11 @@ def main(argv):
         return 2
     kind, src, out = argv[0], Path(argv[1]), Path(argv[2])
     out.parent.mkdir(parents=True, exist_ok=True)
-    (render_cv if kind == "cv" else render_letter)(src.read_text(encoding="utf-8"), out)
+    style = argv[argv.index("--style") + 1] if "--style" in argv else "classic"
+    if kind == "cv":
+        render_cv(src.read_text(encoding="utf-8"), out, style)
+    else:
+        render_letter(src.read_text(encoding="utf-8"), out)
     print(out)
     if "--pdf" in argv:
         print(to_pdf(out))

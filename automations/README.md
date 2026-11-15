@@ -83,7 +83,7 @@ API keys (Reed is free; Adzuna may cost ~£8/month and is optional): see `refere
 
 `python3 -m automations.docs.render cv|letter <markdown> <out.docx> [--pdf]` turns an application's
 `cv-vN.md` / `cover-letter-vN.md` into Word and PDF in the GoCardless CSAM style. Needs
-`python-docx` and, for PDF, LibreOffice. See `.claude/skills/job-hunt/references/drafting.md`.
+`python-docx` and, for PDF, LibreOffice. Add `--style plain` for the black, rule-free consulting look (Harry's preferred style from 15 Nov 2026). See `.claude/skills/job-hunt/references/drafting.md`.
 
 `python3 -m automations.docs.slim <in.docx> <out.docx> --b64 <out.b64>` strips unused styles and parts
 (about 40 KB down to 12 KB) so the file can be uploaded to Drive as a Google Doc. Used by "process my
