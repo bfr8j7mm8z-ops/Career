@@ -2,10 +2,6 @@
 
 London, UK | +44 7860 883048 | harrystichbury@gmail.com | linkedin.com/in/harrystichbury
 
-## PROFESSIONAL SUMMARY
-
-Enterprise Account Manager at a fast-paced SaaS scale-up, working as a strategic partner to senior marketing and e-commerce leaders at multi-market European brands. Promoted three times in two years through structured, data-led problem solving for clients and by leading a team of six. Co-founded a B2B marketplace in Brazil and has worked across South America, Europe and Africa. First-class engineer by training.
-
 ## EXPERIENCE
 
 ### Fospha (Blenheim Chalcot portfolio) | Sep 2024 – Present
@@ -24,6 +20,7 @@ Enterprise Account Manager at a fast-paced SaaS scale-up, working as a strategic
 
 - Led a pod of up to six CSMs and an intern serving 45+ clients (about a fifth of company revenue) while owning 19 accounts directly. Rated "over-performing" for stabilising the pod, and four team members progressed into new roles.
 - Surfaced £4.2M of upper-funnel revenue for TJX that last-click reporting valued at £214K, changing how TJX valued brand activity and moving its account health score from 2 to 5 in one quarter.
+- Built Samsonite Group's $5.6M annual media budget forecast and 2026 scenario model, used in its leadership budgeting. The client then put him forward to present the plan to its VPs.
 - Spotted the same measurement gap across four enterprise clients and built the evidence that got product to prioritise and ship the fix, outstanding since 2024.
 - Built the pod's operating system and 20+ AI automation workflows now used across the account management team.
 
