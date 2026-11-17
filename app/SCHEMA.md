@@ -101,6 +101,10 @@ Created by the app ("Run now": kind "manual") or the scheduler ("nightly").
 ```
 project_id, kind, status: "requested" | "running" | "done" | "failed",
 requested_at, started_at, finished_at, counts: {found, kept, added}, notes[] (one per skipped/failed source), error
+fired_at, fire_error                 # set by the app's Run now button: fired_at when the "Job Hunt: Run now"
+                                     # scheduled task was started for this run; fire_error = the connector
+                                     # error code if it could not be (the request then waits for Claude or
+                                     # the Friday run)
 ```
 
 ## profile_docs/{doc_id}

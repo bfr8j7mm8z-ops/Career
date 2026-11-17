@@ -229,7 +229,7 @@ const blankProject = () => ({
 
 /* ------------------------------------------------------------------ state */
 const S = {
-  db: null, assets: null, sample: null, status: "loading",
+  db: null, assets: null, sample: null, mcp: null, starting: new Set(), status: "loading",
   projects: [], jobs: [], decisions: {}, deep: {}, apps: [], docs: [], runs: [], insights: [], updates: [], journal: [],
   view: "home", pid: null, ptab: "review", draft: null, dirty: false, changedKeys: new Set(),
   period: "all", confirm: null, appFilter: {company: "", stage: ""},
@@ -258,10 +258,11 @@ const daysAgo = d => { if (!d) return null; const n = Math.floor((Date.now() - n
 const agoText = d => { const n = daysAgo(d); return n == null ? "" : n <= 0 ? "today" : n === 1 ? "yesterday" : `${n}d ago`; };
 const fmtDate = d => { if (!d) return ""; const x = new Date(d); if (isNaN(x)) return ""; const same = x.getFullYear() === new Date().getFullYear();
   return x.toLocaleDateString("en-GB", same ? {day: "numeric", month: "short"} : {day: "numeric", month: "short", year: "numeric"}); };
+const agoShort = d => { if (!d) return ""; const m = Math.floor((Date.now() - new Date(d)) / 6e4); return m < 1 ? "just now" : m < 60 ? `${m} min ago` : m < 1440 ? `${Math.floor(m / 60)}h ago` : agoText(d); };
 const dateAgo = d => d ? `${fmtDate(d)} (${agoText(d)})` : "";
 const nextFriday = () => { const x = new Date(); x.setHours(19, 41, 0, 0); let n = (5 - x.getDay() + 7) % 7; if (n === 0 && new Date() > x) n = 7; x.setDate(x.getDate() + n); return x; };
 const inStage = (status, d) => { const n = daysAgo(d); return n == null ? status : n <= 0 ? `${status} since today` : `${status} for ${n} day${n === 1 ? "" : "s"}`; };
-const runLine = r => !r ? "Not run yet" : ["requested", "running"].includes(r.status) ? `Run ${r.status === "running" ? "in progress" : "requested"} ${agoText(r.requested_at)}` :
+const runLine = r => !r ? "Not run yet" : ["requested", "running"].includes(r.status) ? `Run ${r.status === "running" ? "in progress" : r.fired_at ? "started" : "requested"} ${agoShort(r.requested_at)}` :
   `Last run ${dateAgo(r.finished_at || r.requested_at)}${r.status === "failed" ? " (failed)" : r.counts ? ` · ${r.counts.found ?? 0} found, ${r.counts.added ?? 0} new` : ""}`;
 const scoreClass = s => s == null ? "s-na" : s >= 75 ? "s-hi" : s >= 55 ? "s-mid" : "s-lo";
 const toList = s => String(s || "").split(",").map(x => x.trim()).filter(Boolean);
@@ -278,8 +279,8 @@ async function boot() {
   render();
   const c = window.claude;
   if (!c?.use) { S.status = "nodb"; render(); return; }
-  const [db, assets, sample] = await Promise.all([c.use("db"), c.use("assets").catch(() => null), c.use("sample").catch(() => null)]);
-  S.db = db; S.assets = assets; S.sample = sample;
+  const [db, assets, sample, mcp] = await Promise.all([c.use("db"), c.use("assets").catch(() => null), c.use("sample").catch(() => null), c.use("mcp").catch(() => null)]);
+  S.db = db; S.assets = assets; S.sample = sample; S.mcp = mcp;
   if (!db) { S.status = "nodb"; render(); return; }
   S.status = "ready";
   const sub = (q, fn) => q.onSnapshot(snap => { fn(snap.docs.map(d => ({id: d.id, ...d.data()}))); render(); }, () => { S.status = "error"; render(); });
@@ -361,7 +362,11 @@ function freshnessBar(col) {
   const oldest = waiting.map(x => x.requested_at).sort()[0];
   const stale = done && daysAgo(done.finished_at) > 7;
   const bits = [h("span", {}, h("b", {}, "Jobs last pulled: "), done ? dateAgo(done.finished_at) : "never")];
-  if (waiting.length) bits.push(h("span", {}, h("b", {}, "Waiting: "), `${waiting.length} run${waiting.length > 1 ? "s" : ""} requested ${agoText(oldest)}. Ask Claude to process it`));
+  if (waiting.length) {
+    const started = waiting.every(x => x.fired_at && !x.fire_error);
+    bits.push(h("span", {}, h("b", {}, started ? "Searching: " : "Waiting: "), started ? `${waiting.length} search${waiting.length > 1 ? "es" : ""} started ${agoShort(oldest)}, usually done in about 10 minutes`
+      : `${waiting.length} run${waiting.length > 1 ? "s" : ""} requested ${agoShort(oldest)}. Ask Claude to process it`));
+  }
   bits.push(h("span", {}, h("b", {}, "Next automatic search: "), `Fri ${fmtDate(nextFriday())}, 8pm`));
   col.append(h("div", {class: "fresh" + (stale || waiting.length ? " warn" : "")}, ...bits));
 }
@@ -418,11 +423,19 @@ function viewProject(col) {
 
   col.append(h("div", {class: "head"},
     h("div", {}, h("h1", {}, p.name || "Untitled"), h("p", {class: "sub"}, p.status === "paused" ? "Paused. Not searched automatically." : p.nightly ? `Searched every night at 8pm · up to ${p.daily_cap || 50} jobs a day` : `Searched every Friday at 8pm · up to ${p.daily_cap || 50} new jobs · Run now in between`), h("p", {class: "small mute mono", style: "margin-top:4px"}, runLine(lastRun))),
-    h("div", {class: "row"}, h("button", {class: "btn", onclick: () => requestRun(p)}, "Run now"))));
+    h("div", {class: "row"}, (() => {
+      const busy = S.starting.has(p.id) || !!openRun(p.id);
+      return h("button", {class: "btn", disabled: busy, onclick: () => requestRun(p)}, S.starting.has(p.id) ? "Starting…" : busy ? "Searching…" : "Run now");
+    })())));
 
   if (lastRun && ["requested", "running"].includes(lastRun.status)) {
-    col.append(h("div", {class: "banner"}, lastRun.status === "running" ? "Searching now. New jobs appear below as they're scored." :
-      "Run requested. Automatic pickup is the next build phase. Until then, ask Claude in chat to “process my run requests”."));
+    const stuck = Date.now() - new Date(lastRun.requested_at) > RUN_WINDOW;
+    col.append(h("div", {class: "banner" + (stuck || lastRun.fire_error ? " warn" : "")},
+      stuck ? "This search hasn't finished after 45 minutes, so it may have stopped. Press Run now to try again." :
+      lastRun.fire_error ? FIRE_MSG(lastRun.fire_error) + " Your request is saved: ask Claude to process it, or the Friday search will pick it up." :
+      lastRun.status === "running" ? "Searching now. New jobs appear below as they're scored." :
+      lastRun.fired_at ? "Search started in the cloud. It usually takes about 10 minutes and new jobs appear here by themselves. It uses Reed and web search; ask Claude in chat if you also want Indeed checked." :
+      "Run requested. Ask Claude in chat to “process my run requests”."));
   } else if (lastRun?.status === "failed") {
     col.append(h("div", {class: "banner bad"}, "The last run failed: " + (lastRun.error || "no detail recorded") + "."));
   }
@@ -545,9 +558,47 @@ function passSheet(j, p, stage) {
   $("#sheet").showModal();
 }
 
+/* Run now: save a run request, then start the "Job Hunt: Run now" scheduled task through the Claude Code Remote
+   connector. That task searches this one project and updates the run. Without the connector the request still
+   saves and Claude (or the Friday search) picks it up. */
+const RUN_TRIGGER = "trig_01N243kicEjYdPn6kaApT5ZY";
+const RUN_CONNECTOR = "Claude Code Remote";
+const RUN_WINDOW = 45 * 60 * 1000;
+const FIRE_DEFINITE = new Set(["approval_required", "consent_required", "not_in_manifest", "server_not_connected", "selection_required", "needs_reauth", "blocked_by_policy", "not_granted", "capability_disabled", "bad_request"]);
+const FIRE_MSG = code => ({
+  approval_required: "Starting a search needs your OK. Press Run now again and allow it.",
+  consent_required: "Starting a search needs your OK. Press Run now again and allow it.",
+  not_in_manifest: "Starting searches is turned off for this page. Turn on Claude Code Remote in the page's permissions.",
+  server_not_connected: "Claude Code Remote isn't connected. Add it in claude.ai Settings, Connectors.",
+  selection_required: "Choose which Claude Code Remote connector to use, in claude.ai Settings, Connectors.",
+  needs_reauth: "Claude Code Remote needs reconnecting in claude.ai Settings, Connectors.",
+  blocked_by_policy: "Your organisation blocks starting tasks from this page.",
+  tool_error: "The search task couldn't be started.",
+}[code] || (FIRE_DEFINITE.has(code) ? "The search couldn't be started from here." : "Couldn't confirm the search started. Check back in a few minutes before pressing again."));
+const openRun = pid => S.runs.find(r => r.project_id === pid && ["requested", "running"].includes(r.status) && !r.fire_error && Date.now() - new Date(r.requested_at) < RUN_WINDOW);
+
 async function requestRun(p) {
-  const id = "r-" + uid();
-  await write(() => S.db.doc("runs/" + id).set({project_id: p.id, kind: "manual", status: "requested", requested_at: nowIso(), notes: []}), "Run requested");
+  if (!S.db || S.starting.has(p.id)) return;
+  if (openRun(p.id)) { toast("A search for this project is already on its way"); return; }
+  S.starting.add(p.id); render();
+  try {
+    // Reuse a request that failed to start for a definite reason, so retries don't pile up.
+    const retry = S.runs.find(r => r.project_id === p.id && r.status === "requested" && FIRE_DEFINITE.has(r.fire_error) && Date.now() - new Date(r.requested_at) < RUN_WINDOW);
+    const id = retry ? retry.id : "r-" + uid(), ref = S.db.doc("runs/" + id);
+    const saved = retry ? await write(() => ref.update({requested_at: nowIso(), fire_error: ""})) :
+      await write(() => ref.set({project_id: p.id, kind: "manual", status: "requested", requested_at: nowIso(), notes: []}));
+    if (!saved) return;
+    if (!S.mcp) { toast("Run requested. Open the app in claude.ai to start searches with this button, or ask Claude to process it."); return; }
+    try {
+      await S.mcp.callTool(RUN_CONNECTOR, "fire_trigger", {trigger_id: RUN_TRIGGER, text: `Run now. Run id ${id}, project id ${p.id} (${p.name || "Untitled"}).`}, {cache: false});
+      await write(() => ref.update({fired_at: nowIso()}));
+      toast("Search started. New jobs appear here in about 10 minutes.");
+    } catch (e) {
+      const code = e?.code || "unknown";
+      await write(() => ref.update({fire_error: code}));
+      toast(FIRE_MSG(code));
+    }
+  } finally { S.starting.delete(p.id); render(); }
 }
 
 /* ------------------------------------------------------------------ brief & filters */
@@ -790,7 +841,7 @@ function workspacePanel(a) {
 /* ------------------------------------------------------------------ process */
 // app: true = a step each application goes through (counted on the workspace panel).
 const PROCESS = [
-  {"id": "search", "phase": "Find", "title": "Search", "body": "Claude searches Reed, Indeed and company careers pages against each project's brief and filters.", "state": "live", "note": "Automatic every Friday at 8pm. Run now in between, then ask Claude to process it.", "how": [{"t": "Sources", "items": ["Reed (API), Indeed (connector) and careers pages found by web search. Chrome sources are off.", "The project's brief and filters decide the searches: pay floor, location, office days, industries, how recent."]}, {"t": "When it runs", "items": ["Every Friday evening a scheduled task runs the search on its own.", "Run now adds a request. Ask Claude to \"process my run request\", or the Friday run picks it up."]}]},
+  {"id": "search", "phase": "Find", "title": "Search", "body": "Claude searches Reed, Indeed and company careers pages against each project's brief and filters.", "state": "live", "note": "Automatic every Friday at 8pm. Run now starts a search for that project straight away.", "how": [{"t": "Sources", "items": ["Reed (API), Indeed (connector) and careers pages found by web search. Chrome sources are off.", "The project's brief and filters decide the searches: pay floor, location, office days, industries, how recent."]}, {"t": "When it runs", "items": ["Every Friday evening a scheduled task runs the search on its own.", "Run now starts a cloud search for that one project straight away. It takes about 10 minutes and new jobs appear on their own.", "Run now uses Reed and web search. Indeed is only available when you ask Claude in a session, so ask there if you want it checked too.", "If Run now can't start the search (you declined the permission, or the connector is off), the request is saved and Claude or the Friday run picks it up."]}]},
   {"id": "rank", "phase": "Find", "title": "Rank", "body": "Up to 50 new jobs per project, scored against the brief and your master profile, best first.", "state": "live", "how": [{"t": "How a job is scored", "items": ["A match score from 0 to 100 against your master profile and the project's brief.", "One honest reason, plus the gaps (for example a 5+ year ask, or no payments experience).", "Jobs you've already decided on, or that match past \"Not for me\" reasons, are skipped."]}]},
   {"id": "triage", "phase": "Find", "title": "You triage", "body": "Interested, or Not for me with reasons. Reasons feed “Why I said no”.", "state": "live", "how": [{"t": "What happens next", "items": ["Interested moves the job to a closer look. Not for me asks for reasons, which tune future searches."]}]},
   {"id": "deep", "phase": "Find", "title": "Closer look", "body": "Company intel and a fit score for jobs marked Interested. You shortlist or pass.", "state": "live", "how": [{"t": "What Claude checks", "items": ["Company health, reviews, pay data and hiring process.", "A fit score from 0 to 100 with the gaps spelled out.", "Shortlisting creates the card in Applications."]}]},

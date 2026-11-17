@@ -96,6 +96,18 @@ A scheduled task on Harry's account ("Weekly job search") starts a fresh cloud s
 available), ranks new jobs into the app, closes any pending Run-now requests, and sends a push
 notification. It never drafts, applies or contacts anyone. Manage it from claude.ai (scheduled tasks).
 
+## Run now (the button)
+
+The app's **Run now** button saves a run request and starts the scheduled task "Job Hunt: Run now"
+(`trig_01N243kicEjYdPn6kaApT5ZY`, no schedule) through the Claude Code Remote connector (the page's `mcp`
+capability, tool `fire_trigger`). The fired message names the run id and project id; the task searches that
+one project, writes jobs, and marks the run done (about 10 minutes). Like the weekly run it uses Reed and web
+search only: unattended sessions have no Indeed connector. If the button can't start it (permission declined,
+connector off), the request stays at "requested" for Claude or the Friday run. Manage the task from claude.ai
+(scheduled tasks). The app's stored capability declaration is
+`{assets, db, sample, mcp: Claude Code Remote [fire_trigger]}`; restate all of it when republishing with
+`capabilities`.
+
 ## Not set up yet
 
 - Gmail outcome tracking needs a personal inbox connected.
